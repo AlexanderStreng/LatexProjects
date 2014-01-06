@@ -1,7 +1,139 @@
 \documentclass[11pt]{report}
 \begin{document}
 \section{REXOS overall architecture}
-\section{Scheduling \& Planning}
+
+\section{Scheduling \& Planning - TODO - }
+The normal scheduling algorithm used in the simulator is taken from \emph{L. van Moergestel’s paper ‘Multiagent-based agile manufacturing: from user requirements to product.} \textbf{- INSERT QUOTE HERE - } and the batch scheduling algorithm is described below. Scheduling is done by the product agent, which represents a product.
+The product consists of steps, which are specific tasks defined by a set of parameters. Think of screwing, glu-ing or welding. All the equiplets in a grid can perform a certain set of these tasks. The ability to perform such a task is called a capability.  Each equiplet only has a limited set of these capabilities.
+
+\subsection{Planning - TODO}
+In the simulation a grid consisting of equiplets is defined. Each equiplet has its own set of capabilities. Now consider a product with an n amount of product steps($\phi$):\\
+
+$< \phi_1, \phi_2, ... \phi_n >$\\
+
+Once the product (agent) spawns, it will match all possible equiplets to complete all of its steps. Meaning that it compiles a collection containing equiplets combined with the product steps they can perform. That seems like a lot, but the equiplets do not have a large set of capabilities. The resulting collection is:\\
+
+$< E1(\phi_1, \phi_3), E2(\phi_2, \phi_3, \phi_1), E3(\phi_1) >$\\
+
+Once this collection has been compiled,  the product(agent) starts negotiating with the equiplets. It informs with each of the equiplets to evaluate whether or not the step can be performed with the given parameters at the given equiplet.  Once all equiplets have been queried and matched, the actual planning begins.
+The first step in the planning consist of reducing the transition time between product steps. First a production matrix is constructed. The rows represent the equiplets while the columns represent the product steps.
+
+\begin{table}[htbp]
+\centering
+\normalsize
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+	& $\phi$1 & $\phi$2 & $\phi$3 & $\phi$4 & $\phi$5 \\
+\hline
+Equiplet 1 & 1.0 & 0.0 & 1.0 & 1.0 & 1.0 \\
+\hline
+Equiplet 2 & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 \\
+\hline
+Equiplet 3 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 \\
+\hline
+Equiplet 4 & 1.0 & 0.0 & 1.0 & 1.0 & 0.0 \\
+\hline
+\end{tabular}
+\caption{Initial production matrix}
+\end{table}
+
+First off, all equiplets that are capable of performing a step have their value raised to 1.
+The next step is to minimize transition. 
+
+
+To prevent excess transition between equiplets during manufacturing, all equiplets with sequential steps have their value raised by the length of the sequence -1.  Resulting in the following matrix:
+
+\begin{table}[htbp]
+\centering
+\normalsize
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+	& $\phi$1 & $\phi$2 & $\phi$3 & $\phi$4 & $\phi$5 \\
+\hline
+Equiplet 1 & 1.0 & 0.0 & 3.0 & 3.0 & 3.0 \\
+\hline
+Equiplet 2 & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 \\
+\hline
+Equiplet 3 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 \\
+\hline
+Equiplet 4 & 1.0 & 0.0 & 2.0 & 2.0 & 0.0 \\
+\hline
+\end{tabular}
+\caption{Production matrix after transition optimisation}
+\end{table}
+
+As is shown in figure (above) E1 is able to perform step 3, 4 \& 5. The corresponding values where increased by 2 ( sequence length is 3, minus 1 ).
+
+Another easy but important optimization is load balancing. All equiplets are responsible for their own schedule which makes calculating the load at a given time feasible.
+Consider a product querying a equiplet to calculate its load for scheduling its 57’th step. This step has to be carried out not at release time, but at release time + $\Delta$ ( where $\Delta$delta is the time the previous 56 steps will take, including travel time. ) meaning that the equiplet has to calculate load over that time ( called a window).
+
+Consider the following 2 schedules:
+
+
+
+If the equiplet would calculate load over release time + window length, it would not be a correct calculation. In above image equiplet 1 has a load of 90\% whereas equiplet 2 has a load of 20\%.
+In order to favor the equiplets with least load, all numbers in the matrix are multiplied with ( 1 – (load) ).
+
+Applying this to our current production matrix, and a imaginary constant load ( E1 – 60\%, E2 – 20\%, E3 – 40\% and E4 – 10\% ), the matrix will result in:
+
+\begin{table}[htbp]
+\centering
+\normalsize
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+	& $\phi$1 & $\phi$2 & $\phi$3 & $\phi$4 & $\phi$5 \\
+\hline
+Equiplet 1 & 0.4 & 0.0 & 1.2 & 1.2 & 1.2 \\
+\hline
+Equiplet 2 & 0.0 & 0.8 & 0.0 & 0.0 & 0.0 \\
+\hline
+Equiplet 3 & 0.0 & 0.0 & 0.0 & 0.0 & 0.6 \\
+\hline
+Equiplet 4 & 0.4 & 0.0 & 1.2 & 1.2 & 0.0 \\
+\hline
+\end{tabular}
+\caption{Production matrix after load balancing}
+\end{table}
+
+(steps Ø 3,Ø 4 \& Ø 5 on E1 are multiplied by ( 1 – 0.6 ) which results in 3 * 0.4  )
+As seen in the figure above, E1 which has a load of 60\% is suddenly not the best option for steps 3 \& anymore. This way, a proper load balance between the equiplets is achieved.
+
+Another important optimization is reducing the travel time between steps. Much like reducing the transition time between steps that can be executed on the same equiplet, this optimization is meant to reduce travel time within the grid. In order to do so, a distance matrix is utilized. This matrix has equiplets in both the rows as columns, and travel times between these as values ( in amount of timeslots required to travel  from 1 to another ):
+
+\begin{table}[htbp]
+\centering
+\normalsize
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+	& Equiplet 1 & Equiplet 2 & Equiplet 3 & Equiplet 4  \\
+\hline
+Equiplet 1 & x & 3.0 & 1.0 & 2.0 \\
+\hline
+Equiplet 2 & 3.0 & x & 6.0 & 3.0 \\
+\hline
+Equiplet 3 & 1.0 & 6.0 & x & 6.0 \\
+\hline
+Equiplet 4 & 2.0 & 3.0 & 6.0 & x \\
+\hline
+\end{tabular}
+\caption{Grid distance matrix}
+\end{table}
+
+Now, utilising the production matrix, the product will try and use a path of least resistance algorithm to find the most suitable path within the grid.
+
+
+
+
+Ignoring all 0 values,  the following possible paths are presented:
+ 
+
+Combined with the weight of the values in the production matrix, a couple of feasible paths are calculated. These parts are then scheduled sequentially. ( taking the best path first ).
+
+\subsection{Scheduling}
+ locking/atomair 
+ schedule equiplet
+ error handling
+ 
 \section{Simulation}
 \subsection{GUI}
 \end{document}
