@@ -1,7 +1,78 @@
 \documentclass[11pt]{report}
 \begin{document}
-\section{Problem Analysis}
+\section{Problem Analysis - TODO}
+Project REXOS is a fairly young project\footnote{Started in 2008}, meaning that alot of the architecture and structure are not properly implemented yet. The first problem to tackle will be to significantly re-organise and properly restructure the current code / project. It is also important that the project is able to deal with multiple product agents and multiple equiplets.
+
+The previous implementation of the equiplet\footnote{It was built for demonstrating purposes} has only a few things in common with the current implementation. The current implementation of the equiplet fits better into the architecture. Due to the changes that were made, the previous performance test results are no longer accurate and therefore it is unknown what the performance of the current implementation actually is. Also, the previous performance tests lacked in depth information about the performance of the REXOS platform.
+
+In order to make sure that the current architecture is feasible for multiple equiplets, the performance has to be retested. Testcases have to be made for the different aspects of REXOS, for example: message communication of the JADE part, chatter of ROS nodes and IO speeds of the Blackboards.
+
+Reconfigurability is one of the key features needed in an RMS such as REXOS.\cite{Koren} Due to certain other priorities withing the project, this subject has not been researched / implemented yet. Because of the importance of reconfigurability, this will be the main problem during the semester.
+
 \section{Initial Situation}
-\section{Goals}
-\section{Research Questions}
+
+\section{Goals - TODO}
+In short the goals of this project are:
+\begin{itemize}
+\item gaining a stable platform to have reliable research results and that future projects can continue without big issues
+\item Getting a picture of how the current platform performs and if the platform needs improvement or change
+\item Create a proposition on how to implement reconfigurability within the REXOS platform, so one of the key features of a future REXOS can be developed.
+\end{itemize}
+\subsection{Stable REXOS platform}
+Prior to the research that has to be done. The current platform's stability has to be improved. This has to be done because testing solutions or performing tests will be more accurate and reliable. Also when a stable platform is provided to a next project, developing or researching using that platform will be easier and more reliable. Stabilizing a platform can be done continuously, but in this project it will have a time limit and when the project supervisor thinks that the platform is stable enough.
+
+\subsection{Performance}
+After the platform has been stabilized, the platform will be tested. The goal of testing the platform is to get a picture on how 'good' the current platform is. A conclusion can be made out of the performance results if certain parts of the REXOS architecture has to be changed or improved. An important feature that has to be reached of REXOS is scalability. Untill today there has not been any research to the scalability of REXOS. With the performance results, the scalability of the current REXOS platform can be described.
+
+\subsection{Reconfigurability}
+Reconfiguring an equiplet is one of the main features of a future REXOS platform in a factory. Up until this moment there is not yet any research of implementing reconfigurability of an equiplet within the REXOS platform. With the research to reconfigurability within the REXOS platform, the goal is to create a proposition of how reconfigurability can be implemented on the MAS level of REXOS. The document will describe what has to be changed within the REXOS architecture in order to make reconfigurability work on a higher level.
+
+\section{Research Questions - TODO}
+The main assignment is to research the best way of implementing reconfiguration, and when time allows for it, implement it as well.
+
+In this assignment, a list of pro's and con's will be compiled for different ways of implementing reconfigurability, the possibilities have not been researched as of yet. One this list is done, the team will make a decision about how to implement reconfigurability.
+
+Once a decision has been made, code will need to be written for the ROS components as well as for MAS. This code will need to be tested thoroughly to make sure it meets the quality standard.
+
+If for any reason, the implementation revealed difficulties or in some way proved to be impossible, another method of implementation can be chosen from the initial list of options. This does mean however, that new code will need to be written and tested.
+
+A report will be compiled with all of the implementation options, their pro's and con's, the reasons for choosing the implemented method and any difficulties encountered along the way.
+
+While working on this assignment, there are the following risks:
+
+\begin{itemize}
+	\item It might prove necessary to modify large amounts of the base code
+	\item An efficient method of implementing reconfigurability might not exist
+\end{itemize}
+
+\subsection{Sub questions}
+The subtasks in this project are defined to be the stabilisation of the platform and the testing of performance. This means that we need to gather a broad range of metrics to ascertain whether or not the system can cope with various loads. There currently a number of known sub assignments, but these are subject to change throughout the project.
+
+The known sub assignments are:
+
+\begin{itemize}
+	\item Stabilizing the platform
+	
+	The platform is currently not running in a stable manner, there are inconsistencies in how jade agents communicate with each other and with ROS, this creates confusion during debugging. This is just one result from having the previous implementation of the platform written as a demonstrator.
+	\item Implementing multiple product agents and equiplets
+	
+	Because the platform was set up as a demonstrator, multiple product agent support and multiple equiplet support has not been implemented. This is required for collecting meaningful test data.
+	\item Demonstrators
+	The equiplets in the lab will be displayed at the precision fair\footnote{http://www.precisiebeurs.nl} in 2013. For this reason demonstrators need to be written and tested extensively.
+	
+	The demonstrators going on display will feature the following equiplets:
+	\begin{itemize}
+		\item 3D-Printer
+		\item Pick-and-place
+		\item Stewart-Gough
+	\end{itemize}
+	
+	\item Performance tests
+	
+	The performance of the platform is unknown, for this reason tests must be run and their data well documented. This data will be used in an extension of the FAIM\cite{FAIM2013} Paper in a journal.
+	\item Infrastructure of the project
+	
+	The current filestructure is quite messy and requires cleaning to meet the quality criteria. The source code requires refactoring to comply to the new code standard.
+\end{itemize}
+
 \end{document}
