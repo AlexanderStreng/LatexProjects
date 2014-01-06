@@ -1,0 +1,8 @@
+\documentclass[11pt]{report}
+\begin{document}
+\section{REXOS Architecture}
+\subsection{Initial situation}
+\subsection{Demo's}
+\subsection{final situation}
+\section{Simulation}
+\end{document}
