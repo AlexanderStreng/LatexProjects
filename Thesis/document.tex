@@ -2,6 +2,7 @@
 \usepackage{titlesec}
 \usepackage{url}
 \usepackage{subfiles}
+\usepackage[titletoc]{appendix}
 \usepackage[a4paper]{geometry}
 
 \titleformat{\chapter}
@@ -13,7 +14,7 @@
 \title{\textbf{THESIS}}
 \author{\\
 		University of Applied Sciences Utrecht\\
-		\\
+		\\-
 		Alexander Streng - 1568055\\
 		Duncan Jenkins - 1574726\\
 		Roy Scheefhals - 1563303}
@@ -65,9 +66,10 @@ Version & When & Who & What \\ \hline
 \chapter{Evaluation}
 \subfile{./tex/Evaluation}
 
-\renewcommand{\thesection}{\roman{section}}
-\chapter{(BIJLAGE)Execution plan}
-\chapter{(BIJLAGE)Paper?}
+\begin{appendices}
+\subfile{./tex/Appendix}
+\end{appendices}
+
 %References
 \subfile{./tex/Bibliography}
 
