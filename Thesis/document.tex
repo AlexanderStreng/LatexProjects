@@ -1,0 +1,60 @@
+\documentclass{report}
+\usepackage{titlesec}
+\usepackage{url}
+\usepackage{subfiles}
+\usepackage[a4paper]{geometry}
+
+\titleformat{\chapter}
+  {\Large\bfseries} % format
+  {}                % label
+  {0pt}             % sep
+  {\huge}           % before-code
+ 
+\title{\textbf{REXOS 3.0 PERFORMANCE AND RECONFIGURABILITY PROJECT PLAN}}
+\author{Daniel Telgen\\
+		University of Applied Sciences Utrecht\\
+		\\
+		Alexander Streng - 1568055\\
+		Duncan Jenkins - 1574726\\
+		Roy Scheefhals - 1563303}
+
+\begin{document}
+
+\maketitle
+\tableofcontents \clearpage
+
+\section*{Versioning} 
+\begin{tabular}{ | l | l | p{6cm} | p{6cm} |}
+\hline
+Version & When & Who & What \\ \hline
+0.1 & 23-09-2013 &  Duncan Jenkins & Created initial document, created headings. \\ \hline
+0.2 & 28-09-2013 &  Duncan Jenkins, Roy Scheefhals & Made project description \\ \hline
+0.3 & 01-10-2013 &  Alexander Streng & Overhauled document to LaTeX and redone sections \\ \hline
+0.4 & 02-10-2013 &  Alexander Streng, Duncan Jenkins, Roy Scheefhals & First version of document with all sections  \\ \hline
+0.5 & 04-10-2013 & Alexander Streng, Duncan Jenkins, Roy Scheefhals & After proofreading, fixed small errors and oversights. Added section methods and tools. \\ \hline
+0.6 & 04-10-2013 & Alexander Streng, Duncan Jenkins, Roy Scheefhals & Processed project supervisor feedback into the document.
+\\ \hline
+\end{tabular}
+\clearpage
+
+
+\renewcommand{\thesection}{\roman{section}}
+
+%Foreword, acronyms definition of terms 
+\subfile{./tex/Preface} 
+
+\renewcommand{\thesection}{\arabic{section}}
+\chapter{Introduction} 
+\subfile{./tex/Introduction} 
+
+\chapter{The project}
+\subfile{./tex/Project}
+
+\chapter{The assignment}
+\subfile{./tex/Assignment}
+
+%References
+\subfile{./tex/Bibliography}
+
+
+\end{document}

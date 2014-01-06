@@ -1,0 +1,192 @@
+\documentclass[11pt]{report}
+\begin{document}
+
+\section{Problem description}
+Project REXOS is a fairly young project\footnote{Started in 2008}, meaning that alot of the architecture and structure are not properly implemented yet. The first problem to tackle will be to significantly re-organise and properly restructure the current code / project. It is also important that the project is able to deal with multiple product agents and multiple equiplets.
+
+The previous implementation of the equiplet\footnote{It was built for demonstrating purposes} has only a few things in common with the current implementation. The current implementation of the equiplet fits better into the architecture. Due to the changes that were made, the previous performance test results are no longer accurate and therefore it is unknown what the performance of the current implementation actually is. Also, the previous performance tests lacked in depth information about the performance of the REXOS platform.
+
+In order to make sure that the current architecture is feasible for multiple equiplets, the performance has to be retested. Testcases have to be made for the different aspects of REXOS, for example: message communication of the JADE part, chatter of ROS nodes and IO speeds of the Blackboards.
+
+Reconfigurability is one of the key features needed in an RMS such as REXOS.\cite{Koren} Due to certain other priorities withing the project, this subject has not been researched / implemented yet. Because of the importance of reconfigurability, this will be the main problem during the semester.
+
+\section{Goals}
+%de doelstellingen (wat moet na afloop van het onderzoeksproject zijn bereikt);
+
+\subsection{Stable REXOS platform}
+Prior to the research that has to be done. The current platform's stability has to be improved. This has to be done because testing solutions or performing tests will be more accurate and reliable. Also when a stable platform is provided to a next project, developing or researching using that platform will be easier and more reliable. Stabilizing a platform can be done continuously, but in this project it will have a time limit and when the project supervisor thinks that the platform is stable enough.
+
+\subsection{Performance}
+After the platform has been stabilized, the platform will be tested. The goal of testing the platform is to get a picture on how 'good' the current platform is. A conclusion can be made out of the performance results if certain parts of the REXOS architecture has to be changed or improved. An important feature that has to be reached of REXOS is scalability. Untill today there has not been any research to the scalability of REXOS. With the performance results, the scalability of the current REXOS platform can be described.
+
+\subsection{Reconfigurability}
+Reconfiguring an equiplet is one of the main features of a future REXOS platform in a factory. Up until this moment there is not yet any research of implementing reconfigurability of an equiplet within the REXOS platform. With the research to reconfigurability within the REXOS platform, the goal is to create a proposition of how reconfigurability can be implemented on the MAS level of REXOS. The document will describe what has to be changed within the REXOS architecture in order to make reconfigurability work on a higher level.
+
+In short the goals of this project are:
+\begin{itemize}
+\item gaining a stable platform to have reliable research results and that future projects can continue without big issues
+\item Getting a picture of how the current platform performs and if the platform needs improvement or change
+\item Create a proposition on how to implement reconfigurability within the REXOS platform, so one of the key features of a future REXOS can be developed.
+\end{itemize}
+
+\section{Research assignment}
+%de onderzoeksopdracht met mogelijke deelopdrachten, met vermelding van de 
+%projectgrenzen en randvoorwaarden en, indien het afstudeerproject onderdeel 
+%uitmaakt van een groter project, de afbakening t.o.v. het grotere project;
+Because our research is only limited to certain aspects of the REXOS project, we had to establish clear project boundaries. Our project assignment consist of one main task and several smaller sub-tasks. 
+
+\subsection{Main assignment}
+The main assignment is to research the best way of implementing reconfiguration, and when time allows for it, implement it as well.
+
+In this assignment, a list of pro's and con's will be compiled for different ways of implementing reconfigurability, the possibilities have not been researched as of yet. One this list is done, the team will make a decision about how to implement reconfigurability.
+
+Once a decision has been made, code will need to be written for the ROS components as well as for MAS. This code will need to be tested thoroughly to make sure it meets the quality standard.
+
+If for any reason, the implementation revealed difficulties or in some way proved to be impossible, another method of implementation can be chosen from the initial list of options. This does mean however, that new code will need to be written and tested.
+
+A report will be compiled with all of the implementation options, their pro's and con's, the reasons for choosing the implemented method and any difficulties encountered along the way.
+
+While working on this assignment, there are the following risks:
+
+\begin{itemize}
+	\item It might prove necessary to modify large amounts of the base code
+	\item An efficient method of implementing reconfigurability might not exist
+\end{itemize}
+
+\subsection{Sub assignments}
+The subtasks in this project are defined to be the stabilisation of the platform and the testing of performance. This means that we need to gather a broad range of metrics to ascertain whether or not the system can cope with various loads. There currently a number of known sub assignments, but these are subject to change throughout the project.
+
+The known sub assignments are:
+
+\begin{itemize}
+	\item Stabilizing the platform
+	
+	The platform is currently not running in a stable manner, there are inconsistencies in how jade agents communicate with each other and with ROS, this creates confusion during debugging. This is just one result from having the previous implementation of the platform written as a demonstrator.
+	\item Implementing multiple product agents and equiplets
+	
+	Because the platform was set up as a demonstrator, multiple product agent support and multiple equiplet support has not been implemented. This is required for collecting meaningful test data.
+	\item Demonstrators
+	The equiplets in the lab will be displayed at the precision fair\footnote{http://www.precisiebeurs.nl} in 2013. For this reason demonstrators need to be written and tested extensively.
+	
+	The demonstrators going on display will feature the following equiplets:
+	\begin{itemize}
+		\item 3D-Printer
+		\item Pick-and-place
+		\item Stewart-Gough
+	\end{itemize}
+	
+	\item Performance tests
+	
+	The performance of the platform is unknown, for this reason tests must be run and their data well documented. This data will be used in an extension of the FAIM\cite{FAIM2013} Paper in a journal.
+	\item Infrastructure of the project
+	
+	The current filestructure is quite messy and requires cleaning to meet the quality criteria. The source code requires refactoring to comply to the new code standard.
+\end{itemize}
+
+\subsection{Project boundaries}
+Since the project is of a rather large size, the project boundaries need to be well defined. This means that most aspects of the project our out of scope.
+
+\begin{itemize}
+\item Within Scope
+	\begin{itemize}
+		\item Creating and maintaining the software related to ROS and MAS.
+	\end{itemize}
+\item Out of Scope
+	\begin{itemize}
+		\item Any aspects concerning the hardware of the equiplets.
+The vision related aspects
+	\end{itemize}
+\end{itemize}
+	
+\section{Research topics}
+%de onderzoeksvragen, hoofdvraag met daaruit voortvloeiende deelvragen die 
+%moeten worden beantwoord;
+According to the problem description, the following research topics will be answered at the end of this research project.
+\begin{itemize}
+\item \emph{Is the current hybrid architecture of REXOS with ROS, Blackboard, MongoDB and Jade usable for a grid of (arbitrary)100 equiplets?}
+\begin{itemize}
+\item Is the current architecture scalable?
+\item When is the performance high enough?
+\item How can we test if the performance is high enough?
+\item What can be improved in the architecture?
+\end{itemize}
+\item \emph{How far can an equiplet or parts of an equiplet be reconfigured?}
+\begin{itemize}
+\item Which steps can be fully automated and which steps have to be done manually?
+\item What consequences, if any, does this have for the architecture?
+\item Which parameters require human input?
+\item How do you add new functionality to a grid?
+\begin{itemize}
+\item Which demands must a reconfigurable equiplet satisfy?
+\item How do we prove that the grid is the best manufacturing layout?
+\item For what purposes is the concept applicable?
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\section{Means of research}
+%de te gebruiken (onderzoeks-)methoden/technieken/middelen, en, indien van
+%toepassing, de methode van kwaliteitsbewaking, zoals bv. testen;
+%ï‚· deelvragen voorkomend uit de gekozen ontwerpmethode (optioneel);
+\subsection{Performance REXOS}
+For this part quantitative research will be used. This is the gathering of statistics, which will then be used to create graphs and diagrams. These will then be used to assess the performance of the REXOS platform.
+ 
+To gather and process these statistics tools will need to be created. It was decided to create a logger which logs all messages between agents, between ROS nodes and between the two previous and blackboards. Besides this logger, a parser to read the logs will also be created. This parser will be capable of turning the log entries into metrics which can then be used to generate statistics.
+ 
+Taking into consideration that there are not very many equiplets to test with, a virtual equiplet will need to be created in the software, this equiplet will need to run everything a regular equiplet does, wih the exception of its modules, which are after all virtual. This also means virtual modules will need to be created.
+ 
+\subsection{Reconfigurability}
+To determine which way to implement reconfigurability, the possiblities will need to be researched and using a pro/con table it will be possible to make a number of initial choices. Based on these initial choices, research can be done to see what impact they would have on the current architecture. Finally, a decision will be made as to how it will be implemented.
+ 
+To implement reconfigurability, additional software needs to be written and added to the platform. Tests will need to be run every step of the way, to ensure the correct functioning of the platform. These tests include the following:
+ 
+\begin{itemize}
+ \item Running through the entire process of creating a product, this process includes the following actions
+  \begin{itemize}
+  \item Spawning agents
+  \item Entering product steps
+  \item Translating product steps
+  \item Scheduling equiplets
+  \item Executing steps
+  \end{itemize}
+ \item Calibrating modules, such as
+  \begin{itemize}
+  \item Delta robot
+  \item Camera
+  \end{itemize}
+ \item Connecting modules
+ \item Disconnecting modules
+\end{itemize}
+ 
+Every step during this part of the research will be documented and the end results will be delivered to the project supervisor. For a full list of products please check section~\ref{sec:Final products}
+
+\section{Final products}
+\label{sec:Final products}
+%de op te leveren producten met kwaliteitscriteria;
+At the end and during this research project, a variety of documents has to be made to make sure the project can be handed in so a follow-up project can start without ambiguities. A thesis has to be handed in containing the following items. These items apply for both main research topics.
+\begin{itemize}
+\item An analysis of the problems described
+\item describing possible solutions for the problems
+\item An argumented recommendation/choice of the proposed solutions
+\item evaluations of the made recommendations/choices and
+\item an evaluation of the whole result according to the assignment
+\end{itemize}
+More items can be added when needed. Both research topics will have some final products of its own; and will be described in the following 2 sections.
+\subsection{Reconfigurability}
+At some time, the REXOS platform has to be able to adapt when an equiplet has been reconfigured i.e. another module has been attached to the equiplet. This has to be done by writing additional software to REXOS. Research needs to be conducted to define the possible solutions of REXOS being able to handle reconfigurable equiplets. Test software will be developed to get more information on what the best solution is for REXOS. The most important code will be documented and delivered. The conclusion on what the best implementation of reconfigurability within REXOS will be described in the thesis.
+\subsection{Performance testing}
+Results of performance testing and follow-up recommendations according to the analyzed test data will be described in the thesis. Testing performance in a platform  means that there has to be software written to gather data and analyze it. The written software will be documented and delivered.
+
+\section{Quality criteria}
+In order to deliver a proper reasearch result, control of quality needs to be defined. This means that certain quality criteria should be established to which the final result shall be hold up against. Those criteria are:
+
+    \begin{itemize}
+        \item \emph{The results are measurable}\\
+        Due to the nature of the project, some final results won't be measurable. The results that are will be will be measured with the research questions in mind, determining whether we resloved the question.
+        \item \emph{The results are well documented}\\
+        It is important that all of our research is documented. Due to the state of which the project currently is in, we should also consider documenting existing software from the project.
+        Documenting the research means writing down choices made, outcomes of possible research and recording every action where a (difficult) choice was made.
+    \end{itemize}
+    
+    If one of the results fail to hold up against these criteria, it should be deemed unusable as a proper result.
+
+\end{document}
