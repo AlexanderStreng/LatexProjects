@@ -1,4 +1,4 @@
-\documentclass[11pt]{report}
+\documentclass{../local}
 \begin{document}
 
 \section{Initial Situation}
@@ -33,13 +33,34 @@ The previous implementation of the equiplet\footnote{It was built for demonstrat
 An important aspect of agile manufacturing is the ability to reconfigure the production machines \textbf{Insert ref here}. The current REXOS architecture didnt provide such a feature. An important focus was to research this, and document it so that future participants of the project would be able to use this information and implement it.
 
 \subsection{Switchable architecture (hierarchical  control vs heterarchical control)}
-Another idea that was coined during the project was that of implementing a switchable architecture. This would mean that during normal operation the system operates in a hierarchical fashion, whilst whenever an error occures  
+Another idea that was coined during the project was that of implementing a switchable architecture. This would mean that during normal operation the system operates in a hierarchical fashion, whilst whenever an error occures the system switches to heterarchical control. \textbf{Explain things - Normal heter control $->$ in batches hierarch control.}
 
 \subsection{Simulation}
 In order to make sure that the current architecture is feasible for multiple equiplets, the performance has to be retested. Testcases have to be made for the different aspects of REXOS, for example: message communication of the JADE part, chatter of ROS nodes and IO speeds of the Blackboards.
 
 %==================================Research questions===================================%
 \section{Research Questions - TODO}
+
+\begin{itemize}
+\item Hoe kan her-configuratie zo goed en zo efficiënt mogelijk worden geïmplementeerd in het huidige systeem? 
+\item En wat zijn vervolgens de implicaties hiervan op het de rest van het systeem?
+	\begin{itemize}
+		\item Welke methoden voor implementatie zijn er?
+		\item Wat voor impact op het systeem hebben deze verschillende methoden?
+		\item Wat zijn de voordelen van elke methode?
+	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item Wat is de performance \& stabiliteit van het huidige systeem en hoe kan het verbeterd worden ?
+	\begin{itemize}
+		\item Wat zijn de knelpunten in het huidige systeem?
+		\item Hoe lang duurt het gemiddeld voordat een agent antwoord krijgt van een andere agent?
+		\item Hoe lang duurt het gemiddeld om data op te vragen uit de database?
+		\item Hoe lang duurt het gemiddeld om data te schrijven naar de database?
+	\end{itemize}
+\end{itemize}
+
 The main assignment is to research the best way of implementing reconfiguration, and when time allows for it, implement it as well.
 
 In this assignment, a list of pro's and con's will be compiled for different ways of implementing reconfigurability, the possibilities have not been researched as of yet. One this list is done, the team will make a decision about how to implement reconfigurability.
@@ -49,13 +70,6 @@ Once a decision has been made, code will need to be written for the ROS componen
 If for any reason, the implementation revealed difficulties or in some way proved to be impossible, another method of implementation can be chosen from the initial list of options. This does mean however, that new code will need to be written and tested.
 
 A report will be compiled with all of the implementation options, their pro's and con's, the reasons for choosing the implemented method and any difficulties encountered along the way.
-
-While working on this assignment, there are the following risks:
-
-\begin{itemize}
-	\item It might prove necessary to modify large amounts of the base code
-	\item An efficient method of implementing reconfigurability might not exist
-\end{itemize}
 
 \subsection{Sub questions}
 The subtasks in this project are defined to be the stabilisation of the platform and the testing of performance. This means that we need to gather a broad range of metrics to ascertain whether or not the system can cope with various loads. There currently a number of known sub assignments, but these are subject to change throughout the project.
@@ -105,5 +119,11 @@ After the platform has been stabilized, the platform will be tested. The goal of
 Reconfiguring an equiplet is one of the main features of a future REXOS platform in a factory. Up until this moment there is not yet any research of implementing reconfigurability of an equiplet within the REXOS platform. With the research to reconfigurability within the REXOS platform, the goal is to create a proposition of how reconfigurability can be implemented on the MAS level of REXOS. The document will describe what has to be changed within the REXOS architecture in order to make reconfigurability work on a higher level.
 
 \section{Risks \& Conditions}
+While working on this assignment, there are the following risks:
+
+\begin{itemize}
+	\item It might prove necessary to modify large amounts of the base code
+	\item An efficient method of implementing reconfigurability might not exist
+\end{itemize}
 
 \end{document}
