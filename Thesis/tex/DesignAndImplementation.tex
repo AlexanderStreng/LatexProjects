@@ -1,4 +1,4 @@
-\documentclass[11pt]{report}
+\documentclass[11pt]{../local}
 \begin{document}
 \section{REXOS overall architecture}
 
@@ -130,10 +130,39 @@ Ignoring all 0 values,  the following possible paths are presented:
 Combined with the weight of the values in the production matrix, a couple of feasible paths are calculated. These parts are then scheduled sequentially. ( taking the best path first ).
 
 \subsection{Scheduling}
- locking/atomair 
- schedule equiplet
- error handling
+
+After the production plan has been made, the product agent will then schedule its plan at the corresponding equiplets. 
+
+In an agile manufacturing environment, there is a high possibility that multiple product agents will be scheduling at the same time at the same equiplet. When this happens, it is likely that the product agents will try to schedule at the same time. Resulting in concurrency errors.
+
+To prevent these situations, the planning and scheduling operations have to be atomic actions \textbf{-reference from L. Moergestel paper-}. Once a product agent starts requesting information of the schedule of an equiplet with the intention of scheduling new product steps, the equiplet will lock its schedule and give the key to that product agent. Other product agents needing to schedule cannot request any information of the schedule of this 'locked' equiplet's schedule. Once the product agent that received the key of the equiplet's schedule is done scheduling, the product agent will unlock this schedule and other product agents will be able to schedule on this equiplet again.
+
+Using the above mentioned planning algorithm will result in a lot of schedules used and locked by the product agent, but not all of these schedules will be chosen to produce on. Given the following situation: There are three equiplets providing capability one ( drilling ). When a product agent spawns and wants to schedule, whose product steps needs the capability drilling, it will lock all of the three equiplet's schedule. When a second product agent wants to schedule that needs the same capability, it cannot lock any of the required equiplets.
+
+The most efficient way of resolving this issue is to let the second product agent wait until the equiplet's schedules are unlocked. The main reason for this is that the planning algorithm has the best results when all of the possible equiplets for the required product steps are used. Excluding some of the equiplets from the algorithm will eventually result in an inefficient production route for some products.
+
+Using the above solution for the problem could cause a major software deadlock in the MAS system. A situation can occur that multiple product agents need to wait for eachother. The following figure will illustrate this:
+
+\includegraphics{../images/Scheduledeadlock}
+
+In the above picture two product agents are spawned at the same time and need the same equiplets. In the MAS system, the product agent will send lock requests to the equiplet agents. It is possible that the last sent message ( the message to EQ$_3$ ) will be received first. In above situation PA$_1$'s messages are received in order from EQ$_1$ to EQ$_3$ and PA$_2$'s messages from EQ$_3$ to EQ$_1$. For this example messages are processed at 1 message per tick.
+
+After the first tick, PA$_1$ has the lock of EQ$_1$ and PA$_2$ has the lock of EQ$_3$. After the second tick a race condition appears and in this case PA$_1$ gets the lock of EQ$_2$, PA$_2$ will not get the lock of EQ$_2$ and will need to wait for it at the end, but PA$_2$ will continue since he needs EQ$_3$. Now for the next tick, there is a problem. PA$_1$ requests the lock of EQ$_3$, but is not given the lock because PA$_2$ already has the lock. For the same reason the lock of EQ$_1$ cannot be given to PA$_2$. Given the above solution we end up in a deadlock because PA$_1$ will wait for the lock of EQ$_3$ to release and PA$_2$ will wait for the release of the lock of EQ$_1$.
+
+To solve this problem, this situation has to be detected and resolved. Detection can be done as following: When an product agent (PA$_1$) stumbles upon a locked equiplet (EQ$_3$), it will request the address of the product agent that locked EQ$_3$, resulting in the address of PA$_2$. PA$_1$ will then send a message to PA$_2$, notifying PA$_2$ that PA$_1$ is in need of the locked EQ$_3$. When PA$_2$  will detect a locked EQ$_1$ that is locked by PA$_1$, by asking EQ$_1$ the address of the locker, PA$_2$ will compare the address returned with its notification list and will detect the deadlock of two product agents that need eachother's locked equiplets.
+
+There is also another case where the above solution can probably not detect a deadlock with three or more product agents. Given the following case with three product agents //todo case
+
+To resolve this deadlock, the detector will start a negotiation with all of the involved product agents. A choice will have to be made who will start with producing. Based on what information can vary on the needs of the current grid setup. For example: if deadlines are a high priority, the product agent with the earliest deadline will be chosen first, or if the product with the shortest produce time are useful to let them schedule first. Further research on this topic can be done to provide an answer. The chosen equiplet will be given a queue of the remaining product agents sorted on who goes when and will be passed on until all of the 'deadlocked' product agents have finished scheduling.
+
+schedule representation
+freetimeslots
+schedule equiplet
+error handling
  
 \section{Simulation}
+
+
+
 \subsection{GUI}
 \end{document}
