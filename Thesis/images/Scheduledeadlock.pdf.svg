@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:latexdraw="http://latexdraw.sourceforge.net/namespaces/latexdraw"
+    version="1.1" baseProfile="full">
+    <g>
+        <g latexdraw:type="akinPoints" id="id6"
+            latexdraw:pathType="CURVES" latexdraw:interval="5" latexdraw:points="239.99999999999994 140.0 220.00000000000003 160.0 239.99999999999994 180.0 220.00000000000003 200.0 239.99999999999994 180.0 ">
+            <path d="M 239.99999999999994 140.0 " stroke-width="2.0"
+                stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="text" id="id11" fill="black" latexdraw:position="bl">
+            <text x="40.0" y="100.0"><![CDATA[PA 1]]></text>
+        </g>
+        <g latexdraw:type="text" id="id12" fill="black" latexdraw:position="bl">
+            <text x="120.0" y="40.0"><![CDATA[EQ 1]]></text>
+        </g>
+        <g latexdraw:type="text" id="id13" fill="black" latexdraw:position="bl">
+            <text x="220.0" y="40.0"><![CDATA[EQ 2]]></text>
+        </g>
+        <g latexdraw:type="text" id="id14" fill="black" latexdraw:position="bl">
+            <text x="300.0" y="40.0"><![CDATA[EQ 3]]></text>
+        </g>
+        <g latexdraw:type="text" id="id15" fill="black" latexdraw:position="bl">
+            <text x="360.0" y="160.0"><![CDATA[PA 2]]></text>
+        </g>
+        <g latexdraw:type="joinedLines" id="id70">
+            <polyline
+                points="359.99999999999983,160.0 300.0,160.0 300.0,120.0 300.0,160.0 220.0,160.0 220.0,120.0 220.0,160.0 139.99999999999994,160.0 139.99999999999994,120.0 139.99999999999994,160.0 "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id71">
+            <polyline
+                points="79.99999999999991,100.0 139.99999999999994,100.0 139.99999999999994,60.0 139.99999999999994,100.0 220.0,100.0 220.0,60.0 220.0,100.0 300.0,100.0 300.0,60.0 "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id72">
+            <polyline
+                points="320.0,160.0 340.0,180.0 320.0,160.0 340.0,140.0 340.0,140.0 "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="joinedLines" id="id99">
+            <polyline
+                points="100.0,80.0 120.0,100.0 100.0,120.0 100.0,120.0 "
+                stroke-width="2.0" stroke="black" fill="none" latexdraw:rotationAngle="0.0"/>
+        </g>
+        <g latexdraw:type="text" id="id102" fill="black" latexdraw:position="bl">
+            <text x="380.0" y="60.0"><![CDATA[EQ = Equiplet]]></text>
+        </g>
+        <g latexdraw:type="text" id="id103" fill="black" latexdraw:position="bl">
+            <text x="380.0" y="80.0"><![CDATA[PA = Product Agent]]></text>
+        </g>
+    </g>
+    <defs/>
+    <metadata>
+        <latexdraw:metadata>
+            <latexdraw:latexIncludes><![CDATA[
+]]></latexdraw:latexIncludes>
+            <latexdraw:displayXScale>true</latexdraw:displayXScale>
+            <latexdraw:displayYScale>true</latexdraw:displayYScale>
+            <latexdraw:unit>CM</latexdraw:unit>
+            <latexdraw:zoom>1.0</latexdraw:zoom>
+            <latexdraw:magneticGridStyle>CUSTOMISED</latexdraw:magneticGridStyle>
+            <latexdraw:gridGap>20</latexdraw:gridGap>
+            <latexdraw:magneticGrid>true</latexdraw:magneticGrid>
+            <latexdraw:version>3.0.0</latexdraw:version>
+            <latexdraw:size>
+                <latexdraw:width>1920</latexdraw:width>
+                <latexdraw:height>1080</latexdraw:height>
+            </latexdraw:size>
+            <latexdraw:position>
+                <latexdraw:x>74.0</latexdraw:x>
+                <latexdraw:y>1106.0</latexdraw:y>
+            </latexdraw:position>
+        </latexdraw:metadata>
+    </metadata>
+</svg>
