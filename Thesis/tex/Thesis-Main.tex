@@ -1,0 +1,70 @@
+\documentclass{../local}
+ 
+\title{\textbf{THESIS}}
+\author{\\
+		University of Applied Sciences Utrecht\\
+		\\
+		Alexander Streng - 1568055\\
+		Duncan Jenkins - 1574726\\
+		Roy Scheefhals - 1563303}
+
+\begin{document}
+
+\maketitle
+\tableofcontents \clearpage
+
+\section*{Versioning} 
+\begin{tabular}{ | l | l | p{6cm} | p{6cm} |}
+\hline
+Version & When & Who & What \\ \hline
+0.1 & 06-01-2014 & Alexander Streng & Created initial document \& set up all sections.\\ \hline
+0.1 & 06-01-2014 & Alexander Streng & Added Planning algorithm\\
+ \hline
+0.2 & 06-01-2014 & Duncan Jenkins & Added sections: project background, team, organization.\\ \hline
+0.3 & 07-01-2014 & Duncan Jenkins & Added section: assignment introduction. \\ \hline
+\end{tabular}
+\clearpage
+
+
+\renewcommand{\thesection}{\Roman{section}}
+
+\subfile{Foreword}
+\subfile{Summary}
+
+%Foreword, acronyms definition of terms 
+\subfile{Preface} 
+
+\renewcommand{\thesection}{\arabic{section}}
+
+\chapter{Introduction} 
+\subfile{Introduction}
+
+\chapter{The Assignment}
+\subfile{Assignment}
+
+\chapter{Approach}
+\subfile{Approach}
+
+\chapter{Design \& Implementation}
+\subfile{DesignAndImplementation}
+
+\chapter{Results}
+\subfile{Results}
+
+\chapter{Conclusions}
+\subfile{Conclusions}
+
+\chapter{Recommendations}
+
+\chapter{Evaluation}
+\subfile{Evaluation}
+
+\begin{appendices}
+\subfile{Appendix}
+\end{appendices}
+
+%References
+\subfile{Bibliography}
+
+
+\end{document}
