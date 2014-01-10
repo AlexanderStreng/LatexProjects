@@ -65,16 +65,16 @@ Equiplet 4 & 1.0 & 0.0 & 2.0 & 2.0 & 0.0 \\
 As is shown in figure (above) E1 is able to perform step 3, 4 \& 5. The corresponding values where increased by 2 ( sequence length is 3, minus 1 ).
 
 Another easy but important optimization is load balancing. All equiplets are responsible for their own schedule which makes calculating the load at a given time feasible.
-Consider a product querying a equiplet to calculate its load for scheduling its 57’th step. This step has to be carried out not at release time, but at release time + $\Delta$ ( where $\Delta$delta is the time the previous 56 steps will take, including travel time. ) meaning that the equiplet has to calculate load over that time (called a window).
+Consider a product querying a equiplet to calculate its load for scheduling its 57’th step. This step has to be carried out not at release time, but at release time + $\Delta$ ( where $\Delta$delta is the time the previous 56 steps will take, including travel time. ) meaning that the equiplet has to calculate load over that time ( called a window).
 
 Consider the following 2 schedules:
 
 %\includegraphics[width=.98\linewidth]{}
 
 If the equiplet would calculate load over release time + window length, it would not be a correct calculation. In above image equiplet 1 has a load of 90\% whereas equiplet 2 has a load of 20\%.
-In order to favor the equiplets with least load, all numbers in the matrix are multiplied with ( 1 - (load) ).
+In order to favor the equiplets with least load, all numbers in the matrix are multiplied with ( 1 – (load) ).
 
-Applying this to our current production matrix, and a imaginary constant load ( E1 - 60\%, E2 - 20\%, E3 - 40\% and E4 - 10\% ), the matrix will result in:
+Applying this to our current production matrix, and a imaginary constant load ( E1 – 60\%, E2 – 20\%, E3 – 40\% and E4 – 10\% ), the matrix will result in:
 
 \begin{table}[htbp]
 \centering
@@ -95,7 +95,7 @@ Equiplet 4 & 0.4 & 0.0 & 1.2 & 1.2 & 0.0 \\
 \caption{Production matrix after load balancing}
 \end{table}
 
-(steps Ø 3,Ø 4 \& Ø 5 on E1 are multiplied by ( 1 - 0.6 ) which results in 3 * 0.4  )
+(steps Ø 3,Ø 4 \& Ø 5 on E1 are multiplied by ( 1 – 0.6 ) which results in 3 * 0.4  )
 As seen in the figure above, E1 which has a load of 60\% is suddenly not the best option for steps 3 \& anymore. This way, a proper load balance between the equiplets is achieved.
 
 Another important optimization is reducing the travel time between steps. Much like reducing the transition time between steps that can be executed on the same equiplet, this optimization is meant to reduce travel time within the grid. In order to do so, a distance matrix is utilized. This matrix has equiplets in both the rows as columns, and travel times between these as values ( in amount of timeslots required to travel  from 1 to another ):
@@ -130,11 +130,66 @@ Ignoring all 0 values,  the following possible paths are presented:
 Combined with the weight of the values in the production matrix, a couple of feasible paths are calculated. These parts are then scheduled sequentially. ( taking the best path first ).
 
 \subsection{Scheduling}
- locking/atomair 
- schedule equiplet
- error handling
+After the production plan has been made, the product agent will then schedule its plan at the corresponding equiplets. The schedule of an equiplet has to be easily accessable and easily to manipulate. Also calculating the load of an equiplet or gaps in the schedule needs to be fast.
+
+\subsubsection{Representation of an equiplet's schedule }
+ \textbf{ in paper70 sections 2.1 and 5.6 } it is described that a planning blackboard (BB-planning) represent the schedule of an equiplet. The paper defines that a circular buffer of timeslots is being used for the storage of scheduled product steps. The number of timeslots within this circular buffer is constant. This also means that a product agent cannot schedule steps later than the said constant number of timeslots. 
+
+Using this approach has several disadvantages when used in an agile manufacturing environment. These disadvantages are mainly performance related.
+
+- A circular buffer has limits to its size. For example: given a size of $\phi$ amount of seconds as a timeslot and the buffer size has to be two hours, there has to be $432000 / \phi$ amount of timeslots available in the circular buffer. 
+
+This would also mean that if the $\phi$ amount of seconds has to be in tens of milliseconds, the circular buffer would increase with a factor 100. A timeslot in tens of milliseconds is a valid case since for example modern pick and place robots can move at 200 picks per minute  \footnote{http://www.expo21xx.com/news/new-staubli-tp80-fast-picker-the-next-generation-of-high-speed-pickers/}. The size of the buffer could also increase into several hours since there are for example low cost 3D printers that could take several hours to complete. 
+
+Another requirement of REXOS is that product agents have to be able to schedule a day in the future with a timeslot length of for example 10 milliseconds. This will result in a cicular buffer with 8,6 million items for every equiplet. Which is too much. 
+
+For REXOS we took another approach to fix this problem. We abandoned the idea of using a circular buffer, but we still need to store the schedules of equiplets. Parts that have to be saved on these schedules are steps of a product and time information about when that step will be executed and how long that will take. 
+
+In reality an equiplet lives from product step to product step. When an equiplet does not have a product step planned, it doesnt have to do anything special. Translating this to software means that having a linked list of product steps is enough to let the equiplet function. Using a circular buffer will store every timeslot that will happen, meaning that these stored timeslots could be empty. Having a load of 20\% would mean that that 80\% of the timeslots would be empty. This is lost memory and having a linked list would lose this performace problem.
+
+Calculating available free time slots for a given product step would be faster using the aforementoned solution. Rather than iterating through and counting all of the elements when using a circular buffer, a free time slot can be calculated between 2 elements of the linked list solution. The same applies to calculating the load of an equiplet.
+
+\subsubsection{Locking a schedule of an equiplet}
+In REXOS, there is a high possibility that multiple product agents will be scheduling at the same equiplet simultaneously. When this happens, it is likely that the product agents will try to schedule at the same time. Resulting in concurrency errors.
+
+To prevent these situations, the planning and scheduling operations have to be atomic actions \textbf{-reference from L. Moergestel paper-}. Once a product agent starts requesting information of the schedule of an equiplet with the intention of scheduling new product steps, the equiplet will lock its schedule and give the key to that product agent. Other product agents needing to schedule cannot request any information of the schedule of this 'locked' equiplet's schedule. Once the product agent that received the key of the equiplet's schedule is done scheduling, the product agent will unlock this schedule and other product agents will be able to schedule on this equiplet again.
+
+Using the above mentioned planning algorithm will result in a lot of schedules used and locked by the product agent, but not all of these schedules will be chosen to produce on. Given the following situation: There are three equiplets providing capability one ( drilling ). When a product agent spawns and wants to schedule, whose product steps needs the capability drilling, it will lock all of the three equiplet's schedule. When a second product agent wants to schedule that needs the same capability, it cannot lock any of the required equiplets.
+
+The most efficient way of resolving this issue is to let the second product agent wait until the equiplet's schedules are unlocked. The main reason for this is that the planning algorithm has the best results when all of the possible equiplets for the required product steps are used. Excluding some of the equiplets from the algorithm will eventually result in an inefficient production route for some products.
+
+Using the above solution for the problem could cause a major software deadlock in the MAS system. A situation can occur that multiple product agents need to wait for eachother. The following figure will illustrate this:
+
+\begin{center}
+\includegraphics{../images/Scheduledeadlock}
+\end{center}
+
+In the above picture two product agents are spawned at the same time and need the same equiplets. In the MAS system, the product agent will send lock requests to the equiplet agents. It is possible that the last sent message ( the message to EQ$_3$ ) will be received first. In above situation PA$_1$'s messages are received in order from EQ$_1$ to EQ$_3$ and PA$_2$'s messages from EQ$_3$ to EQ$_1$. For this example messages are processed at 1 message per tick.
+
+After the first tick, PA$_1$ has the lock of EQ$_1$ and PA$_2$ has the lock of EQ$_3$. After the second tick a race condition appears and in this case PA$_1$ gets the lock of EQ$_2$, PA$_2$ will not get the lock of EQ$_2$ and will need to wait for it at the end, but PA$_2$ will continue since he needs EQ$_3$. Now for the next tick, there is a problem. PA$_1$ requests the lock of EQ$_3$, but is not given the lock because PA$_2$ already has the lock. For the same reason the lock of EQ$_1$ cannot be given to PA$_2$. Given the above solution we end up in a deadlock because PA$_1$ will wait for the lock of EQ$_3$ to release and PA$_2$ will wait for the release of the lock of EQ$_1$.
+
+To solve this problem, this situation has to be detected and resolved. Detection can be done as following: When an product agent (PA$_1$) stumbles upon a locked equiplet (EQ$_3$), it will request the address of the product agent that locked EQ$_3$, resulting in the address of PA$_2$. PA$_1$ will then send a message to PA$_2$, notifying PA$_2$ that PA$_1$ is in need of the locked EQ$_3$. When PA$_2$  will detect a locked EQ$_1$ that is locked by PA$_1$, by asking EQ$_1$ the address of the locker, PA$_2$ will compare the address returned with its notification list and will detect the deadlock of two product agents that need eachother's locked equiplets.
+
+There is also another case where the above solution can probably not detect a deadlock with three or more product agents. Given the following case with three product agents: PA$_1$ needs EQ$_1$ and $_2$, PA$_2$ needs EQ$_2$ and EQ$_3$ and PA$_3$ needs EQ $_3$ and EQ$_1$. all three product agents will lock their first equiplet at the same time. At the the second lock round, A circle of waits will be created ( see figure 2 ), but two product agents aren't waiting on eachother like the first case. 
+
+\begin{center}
+\includegraphics{../images/CircleDeadlock}
+\end{center}
+
+Solving this problem can be done by forwarding waiting notifications. Given the situation is that PA$_1$ already sent a waiting notification to PA$_2$. When PA$_2$ needs to send the waiting notification PA$_3$, it will pass its waiting notification queue along to PA$_3$. PA$_3$ will do this also to PA$_1$. When PA$_1$ processes the incoming message with the forwarded waiting notification queue, it will notice that his own product agent name is in the list. Meaning that the waiting notification has made a circel, resulting in a deadlock.
+
+Resolving the deadlock is the same at for both cases, the detector will start a negotiation with all of the involved product agents. A choice will have to be made who will start with producing. Based on the needs of the current grid setup, the information needed for making the choice can vary. For example: if deadlines are a high priority, the product agent with the earliest deadline will be chosen first, or if the product with the shortest produce time are useful to let them schedule first. Further research on this topic can be done to provide an answer. The chosen equiplet will be given a queue of the remaining product agents sorted on who goes when and will be passed on until all of the 'deadlocked' product agents have finished scheduling.
+
+
+
+
+
+error handling
  
 \section{Simulation}
+
+
+
 \subsection{GUI}
 \subsubsection{Requirements}
 These requirements were set up using the MoSCoW method. All requirements are listed first, a more detailed description for each requirement can be found directly following the list. Each entry on the list has either an 'M', 'S', 'C' or 'W' following it for the MoSCoW method.

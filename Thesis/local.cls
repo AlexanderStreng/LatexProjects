@@ -2,6 +2,7 @@
 
 \usepackage{graphicx}
 \usepackage{titlesec}
+\usepackage{wrapfig}
 \usepackage{url}
 \usepackage{subfiles}
 \usepackage[titletoc]{appendix}
