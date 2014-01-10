@@ -12,3 +12,6 @@
   {}                % label
   {0pt}             % sep
   {\huge}           % before-code
+  
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}

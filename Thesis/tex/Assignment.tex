@@ -1,33 +1,83 @@
-\documentclass[11pt]{report}
+\documentclass{../local}
 \begin{document}
+
+% ================================== Problem analysis =================================== %
 \section{Problem Analysis - TODO}
-Project REXOS is a fairly young project\footnote{Started in 2008}, meaning that alot of the architecture and structure are not properly implemented yet. The first problem to tackle will be to significantly re-organise and properly restructure the current code / project. It is also important that the project is able to deal with multiple product agents and multiple equiplets.
+In this chapter we strive to explain something about the initial situation in current day manufacturing, the solution REXOS offers and try to analyse the problems and challenges with the current REXOS architecture.
 
-The previous implementation of the equiplet\footnote{It was built for demonstrating purposes} has only a few things in common with the current implementation. The current implementation of the equiplet fits better into the architecture. Due to the changes that were made, the previous performance test results are no longer accurate and therefore it is unknown what the performance of the current implementation actually is. Also, the previous performance tests lacked in depth information about the performance of the REXOS platform.
+\subsection{Initial Situation}
+\label{sec:InitialSituation}
 
+\subsubsection{Current manufacturing systems}
+%smth about current manufacturing systems and why there so fcked%
+Most current day manufacturing systems consist of large production lines able to produce only one type of product at high speeds. A prime example of these are \emph{dedicated manufacturing lines} (DML) which specialize on producing a specific product at a specific capacity. The capacity of the DML and volume of products produced are high, but the diversity of products is low. This results in a high volume - low mix production process. Preparing these kinds of production lines take time and make it impossible to quickly develop and test new kinds of products. In order to keep up with current global demand, a more flexible way of producing needs to be invented. That is where FMS\footnote{Flexible manufacturing systems - see definition of terms for more detail.} and RMS\footnote{Reconfigurable Machines} comes in to play. \textbf{Still needs refs}
+
+\subsubsection{New manufacturing paradigms}
+%Lets tell smth about new paradigms, flexible manufacturing, agile etc%
+In order to overcome the downsides of static manufacturing, new manufacturing paradigms will have to be invented. A feasible new paradigm is FMS. Y. Koren describes FMS as '\emph{Flexible manufacturing systems (FMS) consist of computer numerically con-trolled (CNC) machines and other programmable automation and can produce a variety of products on the same system.}\footnote{Koren, Y., 1983, "Computer Control of Manufacturing Systems," McGraw Hill, New York.}\textbf{INSERT PROPER REF SEE FOETNOOT} which results in production machines that can produce a multitude of products. This way, a higher mix of products can be archieved. Another solution is the use of RMs. Y. Koren describes RMS as '\emph{Reconfigurable machines (RMs) are machines whose structures can be changed to provide alternative functionality or/and upgradeable capacity on demand}'\footnote{General RMS Characteristics. Comparison with Dedicated and Flexible Systems}\textbf{INSERT PROPER REF SEE FOETNOOT} which relies on the configurability of the production machines in order to archieve a high mix of products in the production line. 
+
+\subsubsection{REXOS as an answer}
+%Tell smth about the GOALS and PURPOSES of rexos, and why it was invented.%
+The Utrecht University of applied sciences formulated their own solution regarding production. The project is called REXOS for Reconfigurable equiplets operating system, REQs-OS. The heart and soul of the REXOS project is the equiplet, which is a reconfigurable, autonomous production machine. A equiplet consists of interchangable modules which can perform a specific task. When operating in a grid, \textbf{WAT IS EEN GRIT? UITLEG DINGEN} equiplets can cooperate in order to archieve a common goal, producing a product. 
+
+\subsection{Current state of the REXOS architecture}
+%smth aboot how the curr architecture was implemented, by ubiquitous students etc%
+
+\subsubsection{Equiplets}
+%smth about the current implementation of the equiplets - respresented by a MAS & ROS side etcetc%
+Equiplets where first designed by the --\textbf{ DINGEN institute of machinebouw }-- *insert picture here *
+When the equiplets first started they had no coherent software whatsoever. Currently the equiplets are all part of the REXOS architecture, and are virtually represented as an entity.
+
+
+\subsubsection{MAS}
+%Tell smth about implementation of the curr MAS system, what purpose it serves, and how its implemented.%
+The MAS\footnote{Multi agent system. See abbrivations for more detail.} was designed to be the intelligent side of the the REXOS platform. It incorperates virtual autonomous entities known as agents. An overview of the system is given in image 2
+\textbf{--INSERT system overview image here ---}
+
+
+\subsubsection{ROS}
+%Tell smth about implementation of the curr ROS system, what purpose it serves, and how its implemented.%
+The current ROS side of the system represents all the hardware in code. All ROS actions are non-autonomous and driven by the intelligent side of REXOS. This means that all MAS- Agents take smart and cognitive decisions and ROS executes these. 
+\\
+The main focus of this research project was to improve the REXOS platform as it exists today. As described in section \ref{sec:InitialSituation} the architecture was buggy, and not properly implemented. Besides implementing and / or researching a better architecture, a need for new kind of implementation was present aswell.
+
+\subsection{Reconfiguring}
+%Tell smth about the possibility of reconfiguring, its importance etc%
+An important aspect of agile manufacturing is the ability to reconfigure the production machines \textbf{Insert ref here}. The current REXOS architecture didnt provide such a feature. An important focus was to research this, and document it so that future participants of the project would be able to use this information and implement it.
+
+
+\subsection{Switchable architecture (hierarchical  control vs heterarchical control)}
+%Tell smth about the how switchable architectures came to exist, why it can be advantageous%
+Another idea that was coined during the project was that of implementing a switchable architecture. This would mean that during normal operation the system operates in a hierarchical fashion, whilst whenever an error occures the system switches to heterarchical control. \textbf{Explain things - Normal heter control $->$ in batches hierarch control.}
+
+\subsection{Simulation}
+%smth bout the sim, what we done with it, what its purposes are.%
 In order to make sure that the current architecture is feasible for multiple equiplets, the performance has to be retested. Testcases have to be made for the different aspects of REXOS, for example: message communication of the JADE part, chatter of ROS nodes and IO speeds of the Blackboards.
 
-Reconfigurability is one of the key features needed in an RMS such as REXOS.\cite{Koren} Due to certain other priorities withing the project, this subject has not been researched / implemented yet. Because of the importance of reconfigurability, this will be the main problem during the semester.
 
-\section{Initial Situation}
-
-\section{Goals - TODO}
-In short the goals of this project are:
-\begin{itemize}
-\item gaining a stable platform to have reliable research results and that future projects can continue without big issues
-\item Getting a picture of how the current platform performs and if the platform needs improvement or change
-\item Create a proposition on how to implement reconfigurability within the REXOS platform, so one of the key features of a future REXOS can be developed.
-\end{itemize}
-\subsection{Stable REXOS platform}
-Prior to the research that has to be done. The current platform's stability has to be improved. This has to be done because testing solutions or performing tests will be more accurate and reliable. Also when a stable platform is provided to a next project, developing or researching using that platform will be easier and more reliable. Stabilizing a platform can be done continuously, but in this project it will have a time limit and when the project supervisor thinks that the platform is stable enough.
-
-\subsection{Performance}
-After the platform has been stabilized, the platform will be tested. The goal of testing the platform is to get a picture on how 'good' the current platform is. A conclusion can be made out of the performance results if certain parts of the REXOS architecture has to be changed or improved. An important feature that has to be reached of REXOS is scalability. Untill today there has not been any research to the scalability of REXOS. With the performance results, the scalability of the current REXOS platform can be described.
-
-\subsection{Reconfigurability}
-Reconfiguring an equiplet is one of the main features of a future REXOS platform in a factory. Up until this moment there is not yet any research of implementing reconfigurability of an equiplet within the REXOS platform. With the research to reconfigurability within the REXOS platform, the goal is to create a proposition of how reconfigurability can be implemented on the MAS level of REXOS. The document will describe what has to be changed within the REXOS architecture in order to make reconfigurability work on a higher level.
-
+%==================================Research questions===================================%
 \section{Research Questions - TODO}
+
+\begin{itemize}
+\item Hoe kan her-configuratie zo goed en zo efficiënt mogelijk worden geïmplementeerd in het huidige systeem? 
+\item En wat zijn vervolgens de implicaties hiervan op het de rest van het systeem?
+	\begin{itemize}
+		\item Welke methoden voor implementatie zijn er?
+		\item Wat voor impact op het systeem hebben deze verschillende methoden?
+		\item Wat zijn de voordelen van elke methode?
+	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item Wat is de performance \& stabiliteit van het huidige systeem en hoe kan het verbeterd worden ?
+	\begin{itemize}
+		\item Wat zijn de knelpunten in het huidige systeem?
+		\item Hoe lang duurt het gemiddeld voordat een agent antwoord krijgt van een andere agent?
+		\item Hoe lang duurt het gemiddeld om data op te vragen uit de database?
+		\item Hoe lang duurt het gemiddeld om data te schrijven naar de database?
+	\end{itemize}
+\end{itemize}
+
 The main assignment is to research the best way of implementing reconfiguration, and when time allows for it, implement it as well.
 
 In this assignment, a list of pro's and con's will be compiled for different ways of implementing reconfigurability, the possibilities have not been researched as of yet. One this list is done, the team will make a decision about how to implement reconfigurability.
@@ -37,13 +87,6 @@ Once a decision has been made, code will need to be written for the ROS componen
 If for any reason, the implementation revealed difficulties or in some way proved to be impossible, another method of implementation can be chosen from the initial list of options. This does mean however, that new code will need to be written and tested.
 
 A report will be compiled with all of the implementation options, their pro's and con's, the reasons for choosing the implemented method and any difficulties encountered along the way.
-
-While working on this assignment, there are the following risks:
-
-\begin{itemize}
-	\item It might prove necessary to modify large amounts of the base code
-	\item An efficient method of implementing reconfigurability might not exist
-\end{itemize}
 
 \subsection{Sub questions}
 The subtasks in this project are defined to be the stabilisation of the platform and the testing of performance. This means that we need to gather a broad range of metrics to ascertain whether or not the system can cope with various loads. There currently a number of known sub assignments, but these are subject to change throughout the project.
@@ -73,6 +116,31 @@ The known sub assignments are:
 	\item Infrastructure of the project
 	
 	The current filestructure is quite messy and requires cleaning to meet the quality criteria. The source code requires refactoring to comply to the new code standard.
+\end{itemize}
+%==================================Goals===================================%
+\section{Goals - TODO}
+In short the goals of this project are:
+\begin{itemize}
+\item gaining a stable platform to have reliable research results and that future projects can continue without big issues
+\item Getting a picture of how the current platform performs and if the platform needs improvement or change
+\item Create a proposition on how to implement reconfigurability within the REXOS platform, so one of the key features of a future REXOS can be developed.
+\end{itemize}
+
+\subsection{Stable REXOS platform}
+Prior to the research that has to be done. The current platform's stability has to be improved. This has to be done because testing solutions or performing tests will be more accurate and reliable. Also when a stable platform is provided to a next project, developing or researching using that platform will be easier and more reliable. Stabilizing a platform can be done continuously, but in this project it will have a time limit and when the project supervisor thinks that the platform is stable enough.
+
+\subsection{Performance}
+After the platform has been stabilized, the platform will be tested. The goal of testing the platform is to get a picture on how 'good' the current platform is. A conclusion can be made out of the performance results if certain parts of the REXOS architecture has to be changed or improved. An important feature that has to be reached of REXOS is scalability. Untill today there has not been any research to the scalability of REXOS. With the performance results, the scalability of the current REXOS platform can be described.
+
+\subsection{Reconfigurability}
+Reconfiguring an equiplet is one of the main features of a future REXOS platform in a factory. Up until this moment there is not yet any research of implementing reconfigurability of an equiplet within the REXOS platform. With the research to reconfigurability within the REXOS platform, the goal is to create a proposition of how reconfigurability can be implemented on the MAS level of REXOS. The document will describe what has to be changed within the REXOS architecture in order to make reconfigurability work on a higher level.
+
+\section{Risks \& Conditions}
+While working on this assignment, there are the following risks:
+
+\begin{itemize}
+	\item It might prove necessary to modify large amounts of the base code
+	\item An efficient method of implementing reconfigurability might not exist
 \end{itemize}
 
 \end{document}
