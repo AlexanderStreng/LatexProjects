@@ -57,7 +57,9 @@ Another idea that was coined during the project was that of implementing a switc
 
 \subsection{Simulation}
 %smth bout the sim, what we done with it, what its purposes are.%
-In order to make sure that the current architecture is feasible for multiple equiplets, the performance has to be retested. Testcases have to be made for the different aspects of REXOS, for example: message communication of the JADE part, chatter of ROS nodes and IO speeds of the Blackboards.
+In order to gather performance data, the decision was made to create a simulator for REXOS. The advantages of running a scenario using a simulation over running a scenario on the actual platform is that a simulated environment is a controlled environment. This means that the amount of products scheduled, the configuration of the grid and any potential errors can be configured. This allows the team to run numerous amounts of variations in grid composition when using the same products. Another aspect that the simulation enables is the testing of the maximum capacity for a grid of an arbitrary size. In turn, this also answers one of the research questions: Is REXOS scalable?
+
+% some more stuff to be added
 
 
 %==================================Research questions===================================%
@@ -94,11 +96,11 @@ If for any reason, the implementation revealed difficulties or in some way prove
 A report will be compiled with all of the implementation options, their pro's and con's, the reasons for choosing the implemented method and any difficulties encountered along the way.
 
 \subsection{Sub questions}
-The subtasks in this project are defined to be the stabilisation of the platform and the testing of performance. This means that we need to gather a broad range of metrics to ascertain whether or not the system can cope with various loads. There currently a number of known sub assignments, but these are subject to change throughout the project.
+The subtasks in this project are defined to be the stabilisation of the platform and the testing of performance. This means that we needed to gather a broad range of metrics to ascertain whether or not the system can cope with various loads. These are the sub assignments that ended up being executed during the project.
 
-The known sub assignments are:
+The sub assignments are:
 
-\begin{itemize}
+\begin{itemize} %change to what we did
 	\item Stabilizing the platform
 	
 	The platform is currently not running in a stable manner, there are inconsistencies in how jade agents communicate with each other and with ROS, this creates confusion during debugging. This is just one result from having the previous implementation of the platform written as a demonstrator.
