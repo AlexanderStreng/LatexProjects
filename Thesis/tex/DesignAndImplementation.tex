@@ -194,31 +194,46 @@ error handling
 
 \subsection{GUI}
 \subsubsection{Requirements}
-These requirements were set up using the MoSCoW method. All requirements are listed first, a more detailed description for each requirement can be found directly following the list. Each entry on the list has either an 'M', 'S', 'C' or 'W' following it for the MoSCoW method.
+These requirements were set up using the MoSCoW method. All requirements are listed first, a more detailed description for each requirement can be found directly following the list.
 \begin{enumerate}
-\item Simulation Interface - M
-\begin{enumerate}
-\item Start simulation - M
-\item Stop simulation - S
-\item Insert error into equiplet - M
-\item Visualize grid - C
-\item Read configuration files - S
-\item Open simulation editor - S
-\end{enumerate}
-\item Simulation Editor Interface - S
-\begin{enumerate}
-\item Create the following virtual objects: - M
-\begin{enumerate}
-\item Capability
-\item Equiplet
-\item Product
-\item Batch
-\item Grid
-\end{enumerate}
-\item When creating the above, be able to assign previously made objects where applicable (ex. Create new capability \{ Saw \}, Create new equiplet with the capability \{ Saw \}) - M
-\item Output capabilities.csv, products.csv, batches.csv, grid.json - M
-\item Read above files and create objects from the parsed input - S
-\end{enumerate}
+\item Must Have
+	\begin{enumerate}
+	\item Simulation Interface
+		\begin{enumerate}
+		\item Start simulation
+		\item Insert error into equiplet
+		\end{enumerate}
+	\end{enumerate}
+\item Should Have
+	\begin{enumerate}
+	\item Simulation Interface
+		\begin{enumerate}
+		\item Stop simulation
+		\item Read configuration files
+		\item Open simulation editor
+		\end{enumerate}
+	\end{enumerate}
+	\begin{enumerate}
+	\item Simulation Editor Interface
+		\begin{enumerate}
+		\item Create the following virtual objects:
+			\begin{enumerate}
+			\item Capability
+			\item Equiplet
+			\item Product
+			\item Batch
+			\item Grid
+			\end{enumerate}
+		\item When creating the above, be able to assign previously made objects where applicable (ex. Create new capability \{ Saw \}, Create new equiplet with the capability \{ Saw \})
+		\item Output capabilities.csv, products.csv, batches.csv, grid.json
+		\item Read above files and create objects from the parsed input
+		\end{enumerate}
+	\end{enumerate}
+\item Could Have
+	\item Simulation Interface
+		\begin{enumerate}
+		\item Visualize grid
+		\end{enumerate}
 \end{enumerate}
 
 \begin{description}
