@@ -70,7 +70,7 @@ In order to gather performance data, the decision was made to create a simulator
 
 
 %==================================Research questions===================================%
-\section{Research Questions - TODO}
+\section{Research Questions}
 Not all of the research questions that have been formulated in the research plan have been researched and analyzed. Reason for this is that the project leader's needs has changed during the project. Below is a list of the research questions that were originally formulated.
 \begin{itemize}
 \item How can reconfigurability of equiplets efficiently be implemented into the system?
@@ -105,35 +105,37 @@ When an equiplets needs reconfiguration, this will impact products that needs pr
 	\end{itemize}
 \end{itemize}
 
-Another research question came up during the project that had a high priority. During brainstorm sessions question came up concerning if REXOS should have a Hierarchical or Heterarchical setup. This resulted in the following research questions:
+Another research question came up during the project that had a high priority. During brainstorm sessions question came up concerning if REXOS should have a Hierarchical or Heterarchical setup. Stated was that both setups had its own advantages and disadvantages. Choosing a right setup is neccesary. It is possible that switching between both setups could be feasible too.
 
 \begin{itemize}
 \item Is REXOS best suited for a hierarchical or a heterarchical setup?
 	\begin{itemize}
 	\item How can this be tested?
 	\item Could there be a better result when switching between these setups?
+	\item If so, when will it be feasible to switch between the setups?
 	\end{itemize}
 \end{itemize}
 
+The addition of this new research question resulted in a lower priority of the 'performance and stability' research question.
 %==================================Goals===================================%
-% not 100% sure this section should be here, half and half
-\section{Goals - TODO}
-In short the goals of this project are:
+\section{Goals}
+In short the goals of the project are:
 \begin{itemize}
-\item gaining a stable platform to have reliable research results and that future projects can continue without big issues
-\item Getting a picture of how the current platform performs and if the platform needs improvement or change
-\item Create a proposition on how to implement reconfigurability within the REXOS platform, so one of the key features of a future REXOS can be developed.
+\item having a stable platform to have reliable research results and that future projects can continue without big issues, also the performance has been improved
+\item having a new implemented scheduling algorithm
+\item answering the question if a hierarchical or heterarchical setup is better for REXOS. 
 \end{itemize}
+Below these goals are described more in detail.
 
 \subsection{Stable REXOS platform}
 Prior to the research that has to be done. The current platform's stability has to be improved. This has to be done because testing solutions or performing tests will be more accurate and reliable. Also when a stable platform is provided for the next project, developing or researching using that platform will be easier and more reliable. Stabilizing a platform can be done continuously, but in this project it will have a time limit and when the project supervisor thinks that the platform is stable enough.
 
-\subsection{Performance}
-After the platform has been stabilized, the platform will be tested. The goal of testing the platform is to get a picture on how 'good' the current platform is. A conclusion can be made out of the performance results if certain parts of the REXOS architecture has to be changed or improved. An important feature that has to be reached of REXOS is scalability. Untill today there has not been any research to the scalability of REXOS. With the performance results, the scalability of the current REXOS platform can be described.
+After the platform has been stabilized, the platform will be tested. After testing, there will be a picture of where the bottlenecks of the system are. The goal is that these bottlenecks will be resolved.
 
 \subsection{Scheduling}
 Current implementation of scheduling for products at equiplets don't exist yet in REXOS.  The goal is that at the end of the project an efficient scheduling algorithm will be functional and working in REXOS. This implementation can then be tested afterwards for efficiency with proper tools.
 
-\subsection{Hierarchical of heterarchical}
+\subsection{Hierarchical or heterarchical}
+Choosing the right setup for REXOS could determine the flexibility, scalability and efficiency of the platform. Using testing tools with different cases, a decision can be made what setup is better for certain cases. The goal of this project is to find out when hierarchical is better than heterarchical and vice versa.
 
 \end{document}
