@@ -71,10 +71,9 @@ In order to gather performance data, the decision was made to create a simulator
 
 %==================================Research questions===================================%
 \section{Research Questions - TODO}
-During the course of the project, a number of questions were formulated about REXOS. The goal of these questions was by doing research. The questions that were formulated are:
-
+Not all of the research questions that have been formulated in the research plan have been researched and analyzed. Reason for this is that the project leader's needs has changed during the project. Below is a list of the research questions that were originally formulated.
 \begin{itemize}
-\item How can reconfigurability efficiently be implemented into the system?
+\item How can reconfigurability of equiplets efficiently be implemented into the system?
 \item And how will this impact the rest of the system?
 	\begin{itemize}
 		\item What methods of implementation exist?
@@ -90,6 +89,18 @@ During the course of the project, a number of questions were formulated about RE
 		\item What is the average time an agent needs to wait for a reply from another agent?
 		\item On average, how long does it take to read data from the database?
 		\item On average, how long does it take to write data to the database?
+	\end{itemize}
+\end{itemize}
+
+The research question 'How can reconfigurability efficiently be implemented into the system?' and 'And how will this impact the rest of the system?' has not been researched. Reason for this is because in brainstorm sessions conclusions have been made that other issues had to be looked in to before above questions could be answered. 
+
+When an equiplets needs reconfiguration, this will impact products that needs producing, especially schedules of these products will be affected. There was no scheduling alogrithm implemented in REXOS before the project. The project leader's decision was that a scheduling algorigthm in REXOS was more important than reconfiguration of an equiplet. A scheduling algorithm for REXOS was already researched and described in \textbf{REFERENCE TO PAPER 70}. This resulted in the following new research questions:
+
+\begin{itemize}
+\item Is the scheduling algorithm defined in \cite{} suitable for implementation in REXOS?
+	\begin{itemize}
+	\item Which parts of the algorithm is suitable for REXOS and what parts are not?
+	\item If some parts can't be added directly, what is a better way to implement these?
 	\end{itemize}
 \end{itemize}
 
