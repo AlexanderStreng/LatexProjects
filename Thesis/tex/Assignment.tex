@@ -59,11 +59,19 @@ Another idea that was coined during the project was that of implementing a switc
 %smth bout the sim, what we done with it, what its purposes are.%
 In order to gather performance data, the decision was made to create a simulator for REXOS. The advantages of running a scenario using a simulation over running a scenario on the actual platform is that a simulated environment is a controlled environment. This means that the amount of products scheduled, the configuration of the grid and any potential errors can be configured. This allows the team to run numerous amounts of variations in grid composition when using the same products. Another aspect that the simulation enables is the testing of the maximum capacity for a grid of an arbitrary size. In turn, this also answers one of the research questions: Is REXOS scalable?
 
-% some more stuff to be added
+\subsubsection{Test Cases}
+
+\begin{description}
+	\item[Exclusive Batch Reservation vs No Reservation] \hfill \\
+	In this case, the benefits of reserving equiplets exclusively for certain batch groups will be weighed against the benefits of not making reservations in various situations.
+	\item[Heterarchical vs Hierarchical] \hfill \\
+	In this case, situations are tested where equiplets fall into an error state and what the benefits are when equiplets switch to heterarchical scheduling and when they do not.
+\end{description}
 
 
 %==================================Research questions===================================%
 \section{Research Questions - TODO}
+During the course of the project, a number of questions were formulated about REXOS. The goal of these questions was by doing research. The questions that were formulated are:
 
 \begin{itemize}
 \item How can reconfigurability efficiently be implemented into the system?
@@ -85,46 +93,8 @@ In order to gather performance data, the decision was made to create a simulator
 	\end{itemize}
 \end{itemize}
 
-The main assignment is to research the best way of implementing reconfiguration, and when time allows for it, implement it as well.
-
-In this assignment, a list of pro's and con's will be compiled for different ways of implementing reconfigurability, the possibilities have not been researched as of yet. One this list is done, the team will make a decision about how to implement reconfigurability.
-
-Once a decision has been made, code will need to be written for the ROS components as well as for MAS. This code will need to be tested thoroughly to make sure it meets the quality standard.
-
-If for any reason, the implementation revealed difficulties or in some way proved to be impossible, another method of implementation can be chosen from the initial list of options. This does mean however, that new code will need to be written and tested.
-
-A report will be compiled with all of the implementation options, their pro's and con's, the reasons for choosing the implemented method and any difficulties encountered along the way.
-
-\subsection{Sub questions}
-The subtasks in this project are defined to be the stabilisation of the platform and the testing of performance. This means that we needed to gather a broad range of metrics to ascertain whether or not the system can cope with various loads. These are the sub assignments that ended up being executed during the project.
-
-The sub assignments are:
-
-\begin{itemize} %change to what we did
-	\item Stabilizing the platform
-	
-	The platform is currently not running in a stable manner, there are inconsistencies in how jade agents communicate with each other and with ROS, this creates confusion during debugging. This is just one result from having the previous implementation of the platform written as a demonstrator.
-	\item Implementing multiple product agents and equiplets
-	
-	Because the platform was set up as a demonstrator, multiple product agent support and multiple equiplet support has not been implemented. This is required for collecting meaningful test data.
-	\item Demonstrators
-	The equiplets in the lab will be displayed at the precision fair\footnote{http://www.precisiebeurs.nl} in 2013. For this reason demonstrators need to be written and tested extensively.
-	
-	The demonstrators going on display will feature the following equiplets:
-	\begin{itemize}
-		\item 3D-Printer
-		\item Pick-and-place
-		\item Stewart-Gough
-	\end{itemize}
-	
-	\item Performance tests
-	
-	The performance of the platform is unknown, for this reason tests must be run and their data well documented. This data will be used in an extension of the FAIM\cite{FAIM2013} Paper in a journal.
-	\item Infrastructure of the project
-	
-	The current filestructure is quite messy and requires cleaning to meet the quality criteria. The source code requires refactoring to comply to the new code standard.
-\end{itemize}
 %==================================Goals===================================%
+% not 100% sure this section should be here, half and half
 \section{Goals - TODO}
 In short the goals of this project are:
 \begin{itemize}
@@ -141,13 +111,5 @@ After the platform has been stabilized, the platform will be tested. The goal of
 
 \subsection{Reconfigurability}
 Reconfiguring an equiplet is one of the main features of a future REXOS platform in a factory. Up until this moment there is not yet any research of implementing reconfigurability of an equiplet within the REXOS platform. With the research to reconfigurability within the REXOS platform, the goal is to create a proposition of how reconfigurability can be implemented on the MAS level of REXOS. The document will describe what has to be changed within the REXOS architecture in order to make reconfigurability work on a higher level.
-
-\section{Risks \& Conditions}
-While working on this assignment, there are the following risks:
-
-\begin{itemize}
-	\item It might prove necessary to modify large amounts of the base code
-	\item An efficient method of implementing reconfigurability might not exist
-\end{itemize}
 
 \end{document}
