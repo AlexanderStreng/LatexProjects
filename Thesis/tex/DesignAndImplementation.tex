@@ -143,9 +143,9 @@ Using this approach has several disadvantages when used in an agile manufacturin
 
 This would also mean that if the $\phi$ amount of seconds has to be in tens of milliseconds, the circular buffer would increase with a factor 100. A timeslot in tens of milliseconds is a valid case since for example modern pick and place robots can move at 200 picks per minute  \footnote{http://www.expo21xx.com/news/new-staubli-tp80-fast-picker-the-next-generation-of-high-speed-pickers/}. The size of the buffer could also increase into several hours since there are for example low cost 3D printers that could take several hours to complete. 
 
-Another requirement of REXOS is that product agents have to be able to schedule a day in the future with a timeslot length of for example 10 milliseconds. This will result in a circular buffer with 8,6 million items for every equiplet. Which is too much. % why is this too much?? %
+Another requirement of REXOS is that product agents have to be able to schedule a day in the future with a timeslot length of for example 10 milliseconds. This will result in a circular buffer with 8,6 million items for every equiplet. Which is a lot.
 
-For REXOS we took another approach to fix this problem. We abandoned the idea of using a circular buffer, but we still need to store the schedules of equiplets. Parts that have to be saved on these schedules are steps of a product and time information about when that step will be executed and how long that will take. 
+For REXOS we took another approach to avoid this issue. We abandoned the idea of using a circular buffer, but we still need to store the schedules of equiplets. Parts that have to be saved on these schedules are steps of a product and time information about when that step will be executed and how long that will take. 
 
 In reality an equiplet lives from product step to product step. When an equiplet does not have a product step planned, it doesnt have to do anything special. Translating this to software means that having a linked list of product steps is enough to let the equiplet function. Using a circular buffer will store every timeslot that will happen, meaning that these stored timeslots could be empty. Having a load of 20\% would mean that that 80\% of the timeslots would be empty. This is lost memory and utilizing a linked list would eliminate this performance problem.
 
@@ -182,9 +182,21 @@ Solving this problem can be done by forwarding waiting notifications. Given the 
 
 Resolving the deadlock is the same for both cases, the detector will start a negotiation with all of the involved product agents. A choice will have to be made who will start with producing. Based on the needs of the current grid setup, the information needed for making the choice can vary. For example: if deadlines are a high priority, the product agent with the earliest deadline will be chosen first, or if the product with the shortest produce time are useful to let them schedule first. Further research on this topic can be done to provide an answer. The chosen equiplet will be given a queue of the remaining product agents sorted on who goes when and will be passed on until all of the 'deadlocked' product agents have finished scheduling.
 
+\subsubsection{Equiplet Error}
+In real life situations, the hardware or software of equiplets can fail at any given time. There are two kinds of these so called errors, hardware failures and software failures. Software errors can occur when runtime undefined exceptions could occur. When the software cannot handle this exception, it will set the equiplet in error. Hardware errors will occur when the hardware does not act the way it is asked by the software. When the software detects odd behaviour of the hardware and cannot resolve it, the software will also set the equiplet in error.
 
- 
-% todo perhaps?
+When one of these errors occur, depending of the state of the equiplet, a number of decisions has to be made. The equiplet has to made decisions about the following: 
+\begin{itemize}
+\item When products have planned their steps at the failing equiplet, what happens to their planned steps?
+\item When the equiplet is producing, what does he have to do with the current product?
+\end{itemize}
+
+the equiplet will cancel its current action and notify the products that have been scheduled at this equiplet, that the equiplet has failed. With the current implementation, the products affected will reschedule all of its steps. In real life, it is possible that the error will be resolved early and some products will not be affected since they are scheduled later on. But the equiplet does not know when the error will be resolved. Later implementations can improve this by letting a schedule get out of its deadline ( soft deadlines ) or predicting when the error will be resolved by learning from previous errors.
+
+The difference between a software error and a hardware error lies within the ability to solve these errors autonomous. In most hardware error cases, some hardware needs replacing ( often done by an operator), and the equiplet can’t do this himself. Software errors can always be resolved by an equiplet, whether it will be processed and execution will be adapted or by a reset of the software. Both of these errors can result in the destruction of the product it was working on, i.e. the time lost due to error handling can cause the product to fail when it needs to glue 2 parts together and the glue will be dried before the equiplet could restore. It always depends on the situation if the product will be damaged during a software or hardware error.
+
+When an error happens, the equiplet can only take care of itself, but not for the product. The product agent itself needs to handle according to the situation. I.e. when the equiplet has damaged the product it was working on, the product agent has to restart its product, or just report it has failed. When a product was scheduled at the failing equiplet, it needs to reschedule its steps.
+
 \section{Simulation}
 % todo: short explanation about the simulation?
 
