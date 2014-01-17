@@ -332,11 +332,10 @@ While it is possible to create a new configuration rapidly using the interface, 
 
 \subsubsection{Visual Design}
 
-\begin{figure}[h!]
-	\centering
+\begin{center}
 	\includegraphics[width=12cm]{../images/EditorGUI-MainScreen}
-	\caption{The simulation editor interface.}
-\end{figure}
+	\captionof{figure}{The Simulation Editor Interface}
+\end{center}
 
 \subsubsection{Implementation}
 The main simulation interface was implemented by another team, which is why this section will only cover the simulation editor interface.
@@ -351,28 +350,39 @@ Since the goal of the interface is creating virtual objects that represent the o
 
 Another goal of the interface is to output the created objects in a particular format, to be used in the simulation itself. The resulting format can be found in the following figures.
 
-\begin{figure}[h!]
-	\centering
+\begin{center}
 	\includegraphics[width=7cm]{../images/capabilityFormat.png}
-	\caption{Capability Format}
-\end{figure}
+	\captionof{figure}{Capability Format}
+\end{center}
 
-\begin{figure}[h!]
-	\centering
+The figure above shows the format in which capabilities are exported. It's a comma-seperated values file (csv), in which the first field represents the name of a capability, and where the second field represents how long a step of this type would take, noted in timeslots.
+
+\begin{center}
 	\includegraphics[width=15cm]{../images/productFormat.png}
-	\caption{Product Format}
-\end{figure}
+	\captionof{figure}{Product Format}
+\end{center}
 
-\begin{figure}[h!]
-	\centering
+This figure shows the product format used for the simulation. On the left side of the file, the fields are listed, while on the right side an example is shown. The example product is a smoothie. It has 30 minutes to be prepared and it's made by adding apples, oranges, bananas and ice, followed by blending these ingredients.
+
+\begin{center}
 	\includegraphics[width=10cm]{../images/batchFormat.png}
-	\caption{Batch Format}
-\end{figure}
+	\captionof{figure}{Batch Format}
+\end{center}
 
-\begin{figure}[h!]
-	\centering
+This figure shows the format used for batches. The format is very similar to the one used for products. The amount indicates how many of these products should be made, and the interval specifies the time in seconds before another batch of products is started.
+
+\begin{center}
 	\includegraphics[width=13cm]{../images/equipletLayoutFormat.png}
-	\caption{Equiplet Layout Format}
-\end{figure}
+	\captionof{figure}{Equiplet Layout Format}
+\end{center}
+
+This figure shows the format used to save the equiplet layout (the layout of equiplets within a grid). Instead of a csv format or a regular text format, this file is coded in JSON. Each equiplet has a name, an array of capability names, specifies whether the equiplet is reserved for a particular batch id number and has an array of optional equiplet error entries. These equiplet errors are defined as being a hardware or software error, how often they appear and for how long, and also whether the product currently being made on the equiplet breaks due to the error.
+
+The file further specifies the grid, which is an array of arrays, each subarray represents a row of equiplets. Which means this example defines a grid of two rows of each two equiplets that looks like the following:
+
+\begin{center}
+	\includegraphics[width=8cm]{../images/exampleGridLayout.jpg}
+	\captionof{figure}{Example Grid Layout}
+\end{center}
 
 \end{document}

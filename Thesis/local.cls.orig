@@ -7,7 +7,11 @@
 \usepackage{subfiles}
 \usepackage[titletoc]{appendix}
 \usepackage[a4paper]{geometry}
+<<<<<<< HEAD
+\usepackage[export]{adjustbox}
+=======
 \usepackage{caption}
+>>>>>>> d5b8c5082408fd71b3aac005ea0f50e911a3e474
 
 \titleformat{\chapter}
   {\Large\bfseries} % format
