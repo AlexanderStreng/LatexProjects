@@ -110,6 +110,7 @@ One of the major downsides concerning reserved equiplets is what happends when o
 	\textbf{Error interval, duration, start time} & After 1 hour, the equiplet experiences an error lasting 1 hour \\ \hline
 	\end{tabular}
 \end{center}
+
 \begin{center}
 	\begin{figure}[h!]
 		\includegraphics[width=17cm]{../images/CombinedEquipletLoadNotAllowingOutsideReservation.png}
@@ -121,5 +122,38 @@ One of the major downsides concerning reserved equiplets is what happends when o
 
 Figure ~\ref{CombinedEquipletLoadNotAllowingOutsideReservation} demonstrates that after 1 hour equiplets 1, 2 \& 3 drop to 0\%  load. This is because of the fact that when equiplet 3 has an error, all the batch products fail. Because they cannot schedule somewhere else (they are only allowed to schedule at the reserved equiplets).
 In the next case we are going to look at what happends to the grid as a total when the batches are allowed to switch back to heterarchical scheduling. The same test case is used but this time the batch products are allowed to use the remaining equiplets in the grid as a 'backup'. The products can only use the remaining equiplet when one or more equiplets in the reserved line are in error.
-Lets 
+Lets see what happends to the combined equiplet load;
+
+\begin{center}
+	\begin{figure}[h!]
+		\includegraphics[width=17cm]{../images/CombinedEquipletLoadAllowingOutsideReservation.png}
+		\centering
+		\caption{Combined load of all equiplets in the grid}
+	\end{figure}
+	\label{fig:CombinedEquipletLoadAllowingOutsideReservation}
+\end{center}
+
+As shown in figure ~\ref{CombinedEquipletLoadAllowingOutsideReservation} around the 1 hour mark, right when equiplet 3 has its error, a small decline in load is visible. Right afterwards the reserved equiplets 1 \& 2 begin producing again. This is because the products are allowed to enter the grid for their needs. If we compare the load of all equiplets with the same capability, its becomes apparent what happends;
+
+\begin{center}
+	\begin{figure}[h!]
+		\includegraphics[width=17cm]{../images/CapabilityEquipletLoadNotAllowingOutsideReservation.png}
+		\centering
+		\caption{Load of all equiplets with capability P (allowing scheduling outside reserved equiplets)}
+	\end{figure}
+	\label{fig:CapabilityEquipletLoadNotAllowingOutsideReservation}
+\end{center}
+in figure ~\ref{CapabilityEquipletLoadNotAllowingOutsideReservation} the load of all equiplets with capability P is displayed. When equiplet 3 breaks down, equiplet 5 \& 9 continue producing in the same pace.
+
+\begin{center}
+	\begin{figure}[h!]
+		\includegraphics[width=17cm]{../images/CapabilityEquipletLoadAllowingOutsideReservation.png}
+		\centering
+		\caption{Load of all equiplets with capability P (not allowing scheduling outside reserved equiplets)}
+	\end{figure}
+	\label{fig:CapabilityEquipletLoadAllowingOutsideReservation}
+\end{center}
+in figure ~\ref{CapabilityEquipletLoadNotAllowingOutsideReservation} the load of all equiplets with capability P is displayed. When equiplet 3 breaks down and all the batch products enter the 'un-reserved' part of the grid, equiplets 5 \& 9 take over.
+
+
 \end{document}
