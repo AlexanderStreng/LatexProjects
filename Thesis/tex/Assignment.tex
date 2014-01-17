@@ -21,9 +21,6 @@ In order to overcome the downsides of static manufacturing, new manufacturing pa
 %Tell smth about the GOALS and PURPOSES of rexos, and why it was invented.%
 The Utrecht University of applied sciences formulated their own solution regarding production. The project is called REXOS for Reconfigurable equiplets operating system, REQs-OS. The heart and soul of the REXOS project is the equiplet, which is a low cost, reconfigurable and autonomous production machine. An equiplet consists of interchangable modules which can perform a specific task. These equiplets will be used in groups to make a complete manufacturing environment. The group of equiplets will have a dynamic logistic set-up, so products and parts can be transported between all systems. A group of equiplets is called a 'grid'.  When operating in a grid, equiplets can cooperate in order to archieve a common goal, producing a product. 
 
-\subsection{Current state of the REXOS architecture}
-%smth aboot how the curr architecture was implemented, by ubiquitous students etc%
-
 \subsubsection{Equiplets}
 %smth about the current implementation of the equiplets - respresented by a MAS & ROS side etcetc%
 \begin{wrapfigure}{r}{0.5\textwidth}
@@ -33,18 +30,13 @@ Equiplets were first designed by the --\textbf{ DINGEN institute of machinebouw 
 
 When the equiplets first started they had no coherent software whatsoever. Currently the equiplets are all part of the REXOS architecture, and are virtually represented as an entity.
 
+\subsection{GRID - TOOODOO -}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=12cm]{../images/Grid.png}
+	\caption{A equiplet grid}
+\end{figure}
 
-\subsubsection{MAS}
-%Tell smth about implementation of the curr MAS system, what purpose it serves, and how its implemented.%
-The MAS\footnote{Multi agent system. See abbreviations for more detail.} was designed to be the intelligent side of the the REXOS platform. It incorperates virtual autonomous entities known as agents. An overview of the system is given in image 2
-\textbf{--INSERT system overview image here ---}
-
-
-\subsubsection{ROS}
-%Tell smth about implementation of the curr ROS system, what purpose it serves, and how its implemented.%
-The current ROS side of the system represents all the hardware in code. All ROS actions are non-autonomous and driven by the intelligent side of REXOS. This means that all MAS-Agents take smart and cognitive decisions and ROS executes these. 
-\\
-The main focus of this research project was to improve the REXOS platform as it exists today. As described in section \ref{sec:InitialSituation} the architecture was buggy, and not properly implemented. Besides implementing and / or researching a better architecture, a need for new kind of implementation was present as well.
 
 \subsection{Reconfiguring}
 %Tell smth about the possibility of reconfiguring, its importance etc%

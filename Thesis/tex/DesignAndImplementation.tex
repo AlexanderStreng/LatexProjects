@@ -2,12 +2,53 @@
 \begin{document}
 \section{REXOS Overall Architecture}
 % How we changed the architecture, and why we made which decisions
+\begin{figure}[h!]
+\flushleft
+	\includegraphics[trim= 9cm 0cm 9cm 0cm, clip=true, width=1.1\linewidth]{../images/Decentralized_REXOS.png}
+	%we might want to increase the text on this image..%
+	\caption{System overview}
+\end{figure}
 
-\section{Scheduling \& Planning - TODO - }
-The normal scheduling algorithm used in the simulator is taken from \emph{L. van Moergestel’s paper ‘Multiagent-based agile manufacturing: from user requirements to product.} \textbf{- INSERT QUOTE HERE - } and the batch scheduling algorithm is described below. Scheduling is done by the product agent, which represents a product.
-The product consists of steps, which are specific tasks defined by a set of parameters. Think of screwing, glueing or welding. All the equiplets in a grid can perform a certain set of these tasks. The ability to perform such a task is called a capability.  Each equiplet only has a limited set of these capabilities.
+
+\subsection{Initial situation}
+An overview of the system is given in image 2
+\textbf{--INSERT system overview image here ---}
+
+\subsubsection{MAS}
+%Tell smth about implementation of the curr MAS system, what purpose it serves, and how its implemented.%
+The MAS\footnote{Multi agent system. See abbreviations for more detail.} was designed to be the intelligent and cognitive side of the the REXOS platform. It incorperates virtual autonomous entities known as agents and is implemented in JADE \textbf{ref2section}. As shown in figure \textbf{ref to system overview} there are currently 5 agents. 
+
+\begin{description}
+  \item[Product agent] \hfill \\
+		The product agents is a representation of the product. It is responsible for scheduling itself with the equiplets it need for finishing the product it represents.
+  \item[Equiplet agent] \hfill \\
+  		The equiplet agent is responsible for all communication with the product agent. It handles dealing with its own schedule aswell.
+  \item[Service agent] \hfill \\
+  		The service agent handles all service level translations. 
+  \item[Hardware agent] \hfill \\
+  		The hardware agent is responsible for 'controlling' the hardware. It also handles module step translations.
+  \item[Logistics agent] \hfill \\
+  		The logistics are handles all logistics within a grid. Its responsibilities include providing information about parts.
+\end{description}
+
+The MAS also provides a product abstraction. This means that a product 
+
+The current implementation of the MAS is lacking both capability and structure. Previous groups of students have worked on the project and set up the basic version of the MAS. 
+
+\subsubsection{Communication}
+%smth about the current communication situation%
+
+
+\subsubsection{ROS}
+%Tell smth about implementation of the curr ROS system, what purpose it serves, and how its implemented.%
+The current ROS side of the system represents all the hardware in code. All ROS actions are non-autonomous and driven by the intelligent side of REXOS. This means that all MAS-Agents take smart and cognitive decisions and ROS executes these. 
+\\
+The main focus of this research project was to improve the REXOS platform as it exists today. As described in section \ref{sec:InitialSituation} the architecture was buggy, and not properly implemented. Besides implementing and / or researching a better architecture, a need for new kind of implementation was present as well.
 
 \subsection{Planning - TODO}
+The normal planning algorithm used in the simulator is taken from \emph{L. van Moergestel’s paper ‘Multiagent-based agile manufacturing: from user requirements to product.} \textbf{- INSERT QUOTE HERE - } and the batch scheduling algorithm is described below. Scheduling is done by the product agent, which represents a product.
+The product consists of steps, which are specific tasks defined by a set of parameters. Think of screwing, glueing or welding. All the equiplets in a grid can perform a certain set of these tasks. The ability to perform such a task is called a capability.  Each equiplet only has a limited set of these capabilities.
+
 In the simulation a grid consisting of equiplets is defined. Each equiplet has its own set of capabilities. Now consider a product with an n amount of product steps($\phi$):\\
 
 $< \phi_1, \phi_2, ... \phi_n >$\\
