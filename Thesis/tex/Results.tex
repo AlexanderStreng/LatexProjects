@@ -14,9 +14,12 @@ Whilst we aimed to improve the architecture throughout the
 
 
 \section{Hierarchical scheduling vs. Heterarchical scheduling}
-In this section we will try to demonstrate and explain the results we got when testing the simulation and drawing conclusions about Hierarchical scheduling versus Heterarchical scheduling.
 
-Hierarchical scheduling in this example is defined as having certain reservations concerning batches. This means that in a grid, certain equiplets can be reserverd on a higher level (thus implying a hierarchy). Heterarchical scheduling allows for individualistic scheduling (i.e. no Interference from higher levels). 
+By utilizing the previously designed and implemented tools and components of REXOS, progress on the research question "Is REXOS best suited for a hierarchical or a heterarchical setup?" can be made. Scheduling products in the is one of the main components in REXOS. A lot of optimization can be reached on this matter. 
+
+By using the simulation with implemented scheduling algorithm, hierarchical scheduling versus heterarchical scheduling can be tested. In this section, the execution and results of these tests are described.
+
+Hierarchical scheduling in the following test cases is defined as having certain reservations concerning batches. This means that in a grid, certain equiplets can be reserverd on a higher level (thus implying a hierarchy) for the batch. Heterarchical scheduling allows for individualistic scheduling (i.e. no Interference from higher levels) and thus the batch will go through the grid alongside other products.
 	\subsection{Setup of the example case}
 	In this sample test case we try to demonstrate the various advantages and disadvantages hierarchical scheduling can have over normal heterarchical scheduling.  Next we discuss how switching between heterarchical  and hierarchical can negotiate the disadvantages.
 	Throughout this whole case we will use the same products, capabilities and grid - layout unless stated otherwise. The capabilities are as follows:
