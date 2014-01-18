@@ -14,21 +14,29 @@ Most current day manufacturing systems consist of large production lines able to
 
 \subsubsection{New manufacturing paradigms}
 %Lets tell smth about new paradigms, flexible manufacturing, agile etc%
-In order to overcome the downsides of static manufacturing, new manufacturing paradigms will have to be invented. A feasible new paradigm is FMS. Y. Koren describes FMS as '\emph{Flexible manufacturing systems (FMS) consist of computer numerically controlled (CNC) machines and other programmable automation and can produce a variety of products on the same system.}\footnote{Koren, Y., 1983, "Computer Control of Manufacturing Systems," McGraw Hill, New York.}\textbf{INSERT PROPER REF SEE FOETNOOT} which results in production machines that can produce a multitude of products. This way, a higher mix of products can be achieved. A second solution is the use of RMs. Y. Koren describes RMS as '\emph{Reconfigurable machines (RMs) are machines whose structures can be changed to provide alternative functionality or/and upgradeable capacity on demand}'\footnote{General RMS Characteristics. Comparison with Dedicated and Flexible Systems}\textbf{INSERT PROPER REF SEE FOETNOOT} which relies on the configurability of the production machines in order to archieve a high mix of products in the production line. A third solution could be the use of 'Grid Manufacturing', which is based on the use of RMS. Grids use a set of reconfigurable machine systems, called ’equiplets’ to offer a diversity of generic services. In this concept an equiplet is a simple, autonomous low cost platform that is highly standardized so it can easily be reconfigured to offer new manufacturing capabilities. Hence, equiplets are able to quickly adapt to new market needs.\footnote{Daniel Telgen et al, Agile Control Architecture for Reconfigurable Manufacturing Systems, Research Centre Technology \& Innovation, HU University of Applied Sciences Utrecht}\textbf{-Probably needs to be a bibitem}
+In order to overcome the downsides of static manufacturing, new manufacturing paradigms will have to be invented. A feasible new paradigm is FMS. Y. Koren describes FMS as '\emph{Flexible manufacturing systems (FMS) consist of computer numerically controlled (CNC) machines and other programmable automation and can produce a variety of products on the same system.}\cite{Koren} which results in production machines that can produce a multitude of products. This way, a higher mix of products can be achieved. A second solution is the use of RMs. Y. Koren describes RMS as '\emph{Reconfigurable machines (RMs) are machines whose structures can be changed to provide alternative functionality or/and upgradeable capacity on demand}'\footnote{General RMS Characteristics. Comparison with Dedicated and Flexible Systems}\textbf{INSERT PROPER REF SEE FOETNOOT} which relies on the configurability of the production machines in order to archieve a high mix of products in the production line. A third solution could be the use of 'Grid Manufacturing', which is based on the use of RMS. Grids use a set of reconfigurable machine systems, called ’equiplets’ to offer a diversity of generic services. In this concept an equiplet is a simple, autonomous low cost platform that is highly standardized so it can easily be reconfigured to offer new manufacturing capabilities. Hence, equiplets are able to quickly adapt to new market needs.\cite{GRIDPARADIGM}
 
 
 \subsubsection{REXOS as an answer}
 %Tell smth about the GOALS and PURPOSES of rexos, and why it was invented.%
 The Utrecht University of applied sciences formulated their own solution regarding production. The project is called REXOS for Reconfigurable equiplets operating system, REQs-OS. The heart and soul of the REXOS project is the equiplet, which is a low cost, reconfigurable and autonomous production machine. An equiplet consists of interchangable modules which can perform a specific task. These equiplets will be used in groups to make a complete manufacturing environment. The group of equiplets will have a dynamic logistic set-up, so products and parts can be transported between all systems. A group of equiplets is called a 'grid'.  When operating in a grid, equiplets can cooperate in order to archieve a common goal, producing a product. 
 
+Having these low cost and agile production robots, a large variety of products can be produced. This is also the main vision of REXOS. Having a manufacturing environment that can produce products of low amounts and with a high variety between them ( low volume, high mix ).
+
 \subsubsection{Equiplets}
 %smth about the current implementation of the equiplets - respresented by a MAS & ROS side etcetc%
 \begin{wrapfigure}{r}{0.5\textwidth}
 \includegraphics[width=5cm]{../images/Equiplet}
 \end{wrapfigure}
-Equiplets were first designed by the --\textbf{ DINGEN institute of machinebouw }-- 
+Equiplets were first designed by the Institute for Engineering \& Design at the University Utrecht.
 
-When the equiplets first started they had no coherent software whatsoever. Currently the equiplets are all part of the REXOS architecture, and are virtually represented as an entity.
+The first versions of the equiplets were standalone robots that only had software to move the module that was installed on. The REXOS platform did not exist at that time. Now with the REXOS platform, equiplets are a lot more sophisticated.
+
+As stated in the previous section, equiplets need to be flexible and reconfigurable, but also applicable for industrial systems. In order to achieve this, a hybrid system of MAS and ROS is used\cite{MASTA2013}.
+
+The current version of the equiplet now is represented by an agent entity, which is responsible for the negotiation between products and interpretation of tasks, and a ROS side, which is responsible for the hardware. The agent entity will respond to negotiations from product agents. These negotiations involve scheduling of steps ( product steps ) that the product agent needs done by the equiplet. When these negotiations are done, the agent entity of the equiplet sends data to the ROS part to execute the product step.
+
+Using this software for the equiplet, it is now capable to perform simple tasks with a high precision and high flexibility. 
 
 \subsection{GRID - TOOODOO -}
 \begin{figure}[h!]
@@ -52,6 +60,7 @@ Another idea that was coined during the project was that of implementing a switc
 In order to gather performance data, the decision was made to create a simulator for REXOS. The advantages of running a scenario using a simulation over running a scenario on the actual platform is that a simulated environment is a controlled environment. This means that the amount of products scheduled, the configuration of the grid and any potential errors can be configured. This allows the team to run numerous amounts of variations in grid composition when using the same products. Another aspect that the simulation enables is the testing of the maximum capacity for a grid of an arbitrary size. In turn, this also answers one of the research questions: Is REXOS scalable?
 
 \subsubsection{Test Cases}
+%why is this here ?%
 
 \begin{description}
 	\item[Exclusive Batch Reservation vs No Reservation] \hfill \\
