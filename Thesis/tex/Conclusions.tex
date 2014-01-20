@@ -4,53 +4,35 @@
 \section{Research Questions - TODO}
 
 \subsection{What is the performance and stability of the system and how can this be improved?}
-Answer: %How to answer what is the performance?? Stability was horrendous due to inconsistency
-\\Reasoning:
+This project started as the second iteration in the development of the autonomous \& cognitive part of the REXOS framework. Whilst the first iteration was implemented to be a mere 'proof of concept' alot of the current principles and mechanics stay in place. For starters, no error handling was present. Also implmenentation-wise alot of improvement had to be performed. 
 
-\subsubsection*{Where are the bottlenecks for the system?}
-Answer: %Not sure we have a conclusion for this as we only tested MAS
-\\Reasoning:
+The first improvement that was to be made was stabilizing the system. This meant searching for errors that would commonly crash the system and think of ways handle these. After stabilizing the system, improvements could be made. A new planning algorithm was implemented. The way agents communicate within the MAS layer has been generalized and made compliant with FIPA standards. A new knowledge database has been designed and implemented. 
 
-\subsubsection*{What is the average time an agent needs to wait for a reply from another agent?}
-Answer: %find in results
-\\Reasoning:
+Due to the complex nature of the project, constant changes are required. Just after researching, stabilizing and implementing most of the parts of the architecture, major new changes where announced but left unimplemented.
 
-\subsubsection{Is the scheduling algorithm defined in paper: 'Multiagent-based agile manufacturing\cite{PAPER70}' suitable for implementation in REXOS?}
-Answer: %Partially?
-\\Reasoning:
+\subsubsection{Is the scheduling algorithm defined in paper: 'Multiagent-based agile manufacturing' suitable for implementation in REXOS?}
+The scheduling algorithm desribed in the paper has its up and downsides. The biggest downside is that the scheduling algorithm described has been designed to work in theory. When trying to implement this algorithm in REXOS, several problems occured.
+
+\textbf{In paper70 sections 2.1 and 5.6 } it is described that a planning blackboard (BB-planning) represents the schedule of an equiplet. The paper defines that a circular buffer of timeslots is being used for the storage of scheduled product steps. The number of timeslots within this circular buffer is constant. This also means that a product agent cannot schedule steps later than the said constant number of timeslots. 
+
+Using this approach has several disadvantages when used in an agile manufacturing environment. These disadvantages are mainly performance related.
 
 \subsubsection*{Which parts of the algorithm are suitable for REXOS?}
-Answer: %Alex or Roy
-\\Reasoning:
+Mosts parts of the algorithm where used. There were only 2 parts that we couldnt use for implementation, mostly because they where tailor made for a specific situation. As explained in section \textbf{REF TO SECTION ABOVE} the circular buffer used in the paper cannot be used. The paper specifies a way to reduce travel times as well, but this was not implemented due to time constraints. 
 
 \subsubsection*{If some parts can't be implemented directly, what is a better way to implement these?}
-Answer: %Alex or Roy
-\\Reasoning:
+A circular buffer has limits to its size. For example: given a size of $\phi$ amount of seconds as a timeslot and the buffer size has to be two hours, there has to be $432000 / \phi$ amount of timeslots available in the circular buffer. 
+
+This would also mean that if the $\phi$ amount of seconds has to be in tens of milliseconds, the circular buffer would increase with a factor 100. A timeslot in tens of milliseconds is a valid case since for example modern pick and place robots can move at 200 operations per minute  \footnote{http://www.expo21xx.com/news/new-staubli-tp80-fast-picker-the-next-generation-of-high-speed-pickers/}. The size of the buffer could also increase into several hours since there are for example low cost 3D printers that could take several hours to complete. 
 
 \subsubsection*{What is the performance of this scheduling algorithm?}
-Answer: %Alex or Roy
-\\Reasoning:
+Due to time limitations we where not able to research the performance of this scheduling algorithm. We did however implement it in the simulation and tested it. 
 
 \subsection{Is REXOS best suited for a hierarchical or a heterarchical setup?}
-Answer: %If choosing one or the other, then the best would have to be ....
-\\Reasoning: %because advantages & disadvantages comparison between the two
+Due to the nature of REXOS, both setups should be feasable. In order to determine which setup would work best, the differences between both setups are researched and analysed. In chapter \textbf{REF TO CHAPEETER Results} test results are compiled. Test results show that when producing large batches it can be advantageous to switch to an hierarchical setup. This means reserving equiplets in a certain 'production line' within the current production line. 
 
 \subsubsection*{Is it possible to combine these setups?}
-Answer: %Yes
-\\Reasoning: %this part can be done so, and that part so
-
-\subsubsection*{If so, does this give a better result?}
-Answer: %It can
-\\Reasoning: %because advantage A solves disadvantage B
-
-\subsubsection*{If so, which combination works best?}
-Answer: %What did we decide?
-\\Reasoning: %Well, because...
-
-%- THESE MIGHT NOT BE NEEDED. WE COULD ADD AN DISCUSSION CHAPTER BUT MEH%
-%\section{Stable platform}
-%\section{Performance metrics / sim}
-%\section{Demo's}
+The major drawback of operating in a hierarchical fashon is the handling of errors. When a reserved line within the grid experiences a failure, a lot of products will fail \textbf{ref to section resulsta -> switching}. Switching back to heterarchical takes care of this problem. As shown in the results, switching back to heterarchical can prevent products from failing whenever the reserved equiplets experience errors. 
 
  
 \end{document}
