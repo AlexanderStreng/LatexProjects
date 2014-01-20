@@ -30,6 +30,13 @@ While improving the system, an agreement was reached that the database should al
   \captionof{figure}{Knowledge database design}
 \end{center}
 
+\subsubsection{REXOS vision}
+During this semester the interns implemented REXOS vision. This means that they implemented a new vision system which works properly with all the components of the REXOS architecture. The vision system is implemented in ROS, which means it is implemented as a node. The vision node is module specific. By calibrating the camera, distortion and fish eye effect is removed (as much as possible).
+
+\subsubsection*{Coordinate system}
+As a by-product of developing a new vision architecture, a new coordinate system was introduced. This systems uses position based parameters to define a precise coordinate system. This way all modules, independend of their location can use a generic convertion to determine their position on the equiplet.
+
+
 \section{Hierarchical scheduling vs. Heterarchical scheduling}
 
 By utilizing the previously designed and implemented tools and components of REXOS, progress on the research question "Is REXOS best suited for a hierarchical or a heterarchical setup?" can be made. Scheduling products in the is one of the main components in REXOS. A lot of optimization can be reached on this matter. 
