@@ -14,7 +14,6 @@ Advantage is that multiple product agents can use the same equiplets to calculat
 While this is a different approach than the locked scheduling solution, research is required to conclude which solution is better, or if a combination of both is feasible.
 
 \subsection{Scheduling algorithm improvements - TODO}
-%algorithm needs transportation algorithms built in
 The current scheduling algorithm takes different aspects of the condition and state of an equiplet into account. Choosing efficiently a suitable equiplet with these has been proven. What the algorithm doesn't take account for is transporting products between equiplets.
 
 When a product needs transportation to another equiplet for another product step to be excecuted, it is possible that a only looking at the state of the equiplet can be misleading. An equiplet that has for example a higher load could be better to produce because its position is closer to the product's current whereabouts. Also the availability of transportation resources can be limited and therefore slowing down the production.
@@ -28,4 +27,4 @@ At this time, the scheduling algorthm implemented into the simulation does not m
 
 The graphical user interface could be extended to make it possible to modify all the parameters in the simulation, this would improve the user experience enormously. Another feature that would improve user experience is adding he possibility of outputting graphs for statistical data, rather than csv (comma-seperated value) files.
 
-\end{document}Free scheduling uses the same planning algorithms as locked scheduling. 
+\end{document}
