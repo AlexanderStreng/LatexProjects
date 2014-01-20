@@ -1,52 +1,16 @@
 \documentclass{../local}
 \begin{document}
-\section{REXOS Overall Architecture}
-% How we changed the architecture, and why we made which decisions
 
+In this chapter we will describe the results gained in this project. We will tell something about gaining the the stable architecture, and the build up to the precision fair. We will also try to explain the results gained from research and simulation of the heterarchical vs. hierarchical system.
 
-\subsection{Initial situation}
-The initial situation in REXOS is students in the previous semester left it. Figure 1 shows a overview of all system components.
-\begin{figure}[h!]
-\flushleft
-	\includegraphics[width=1.1\linewidth]{../images/Decentralized_REXOS.jpg}
-	%we might want to increase the text on this image..%
-	\caption{System overview}
-\end{figure}
-When work on REXOS started, the project only functioned in a very limited way. It was designed to give a draw demo, which was far below requirements. The 'mainframe' of the architecture was present, but poorly implemented and documented.
-The current system houses 2 major components. MAS, which represents the intellegent part of the system, and ROS, the part responsible for executing commands.
+\section{REXOS Architecture}
+Throughout the whole project the main subject was constantly improving and modifying the current REXOS architecture. During the first part of the research a deadline was set to write and research feasable demo's for the precision fair. After the precision fair, a simulation had to be written in order to research the advantages of reserving batches (hierarchical control).
 
-\subsubsection{MAS}
-%Tell smth about implementation of the curr MAS system, what purpose it serves, and how its implemented.%
-The MAS\footnote{Multi agent system. See abbreviations for more detail.} was designed to be the intelligent and cognitive side of the the REXOS platform. It incorperates virtual autonomous entities known as agents and is implemented in JADE \textbf{ref2section}. As shown in figure \textbf{ref to system overview} there are currently 5 agents. 
+\subsection{Stable architecture}
+%smth about how messy the architecture was, is, and will be.
 
-\begin{description}
-  \item[Product agent] \hfill \\
-		The product agents is a representation of the product. It is responsible for scheduling itself with the equiplets it need for finishing the product it represents.
-  \item[Equiplet agent] \hfill \\
-  		The equiplet agent is responsible for all communication with the product agent. It handles dealing with its own schedule aswell.
-  \item[Service agent] \hfill \\
-  		The service agent handles all service level translations. 
-  \item[Hardware agent] \hfill \\
-  		The hardware agent is responsible for 'controlling' the hardware. It also handles module step translations.
-  \item[Logistics agent] \hfill \\
-  		The logistics are handles all logistics within a grid. Its responsibilities include providing information about parts.
-\end{description}
+\subsubsection{Demo's}
 
-The MAS also provides a product abstraction. This means that a product 
-
-The current implementation of the MAS is lacking both capability and structure. Previous groups of students have worked on the project and set up the basic version of the MAS. 
-
-\subsubsection{ROS}
-%Tell smth about implementation of the curr ROS system, what purpose it serves, and how its implemented.%
-The current ROS side of the system represents all the hardware in code. All ROS actions are non-autonomous and driven by the intelligent side of REXOS. This means that all MAS-Agents take smart and cognitive decisions and ROS executes these. 
-\\
-The main focus of this research project was to improve the REXOS platform as it exists today. As described in section \ref{sec:InitialSituation} the architecture was buggy, and not properly implemented. Besides implementing and / or researching a better architecture, a need for new kind of implementation was present as well.
-
-\subsubsection{Communication}
-Communication between the layers is an important aspect of REXOS. Communication is defined in distinct ways. All data exchange happens through blackboards.A blackboard is a MongoDB implementation with the advantage of allowing read write permissions. This means that blackboards can be configured to allow for one entity to read and write from it, whilst the other is only allowed to write on it. Communication between agents all happends through the JADE ACL(\textbf{ref /  dingen hier}). Communication between ROS and MAS also happends through blackboards.\\
-
-\subsection{Current Situation}
-\textbf{MAYBE EASE INTO THESE A LITTLE BIT BETTER. write smth about how where going in depth on planning / scheduling.}\\
 
 \subsection{Planning - TODO}
 The normal planning algorithm used in the simulator is taken from \emph{L. van Moergestel’s paper ‘Multiagent-based agile manufacturing: from user requirements to product.} \textbf{- INSERT QUOTE HERE - } and the batch scheduling algorithm is described below. Scheduling is done by the product agent, which represents a product.
@@ -227,7 +191,7 @@ Solving this problem can be done by forwarding waiting notifications. Given the 
 
 Resolving the deadlock is the same for both cases, the detector will start a negotiation with all of the involved product agents. A choice will have to be made who will start with producing. Based on the needs of the current grid setup, the information needed for making the choice can vary. For example: if deadlines are a high priority, the product agent with the earliest deadline will be chosen first, or if the product with the shortest produce time are useful to let them schedule first. Further research on this topic can be done to provide an answer. The chosen equiplet will be given a queue of the remaining product agents sorted on who goes when and will be passed on until all of the 'deadlocked' product agents have finished scheduling.
 
-\subsubsection{Equiplet Error}
+\subsection{Equiplet Error}
 In real life situations, the hardware or software of equiplets can fail at any given time. There are two kinds of these so called errors, hardware failures and software failures. Software errors can occur when runtime undefined exceptions could occur. When the software cannot handle this exception, it will set the equiplet in error. Hardware errors will occur when the hardware does not act the way it is asked by the software. When the software detects odd behaviour of the hardware and cannot resolve it, the software will also set the equiplet in error.
 
 When one of these errors occur, depending of the state of the equiplet, a number of decisions has to be made. The equiplet has to made decisions about the following: 
@@ -408,5 +372,6 @@ The file further specifies the grid, which is an array of arrays, each subarray 
 	\includegraphics[width=8cm]{../images/Grid.png}
 	\captionof{figure}{Example Grid Layout}
 \end{center}
+
 
 \end{document}
