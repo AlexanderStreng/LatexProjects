@@ -8,7 +8,7 @@
 The initial situation in REXOS is students in the previous semester left it. Figure 1 shows a overview of all system components.
 \begin{figure}[h!]
 \flushleft
-	\includegraphics[trim= 9cm 0cm 9cm 0cm, clip=true, width=1.1\linewidth]{../images/Decentralized_REXOS.png}
+	\includegraphics[width=1.1\linewidth]{../images/Decentralized_REXOS.jpg}
 	%we might want to increase the text on this image..%
 	\caption{System overview}
 \end{figure}
@@ -114,7 +114,12 @@ Consider a product querying a equiplet to calculate its load for scheduling its 
 
 Consider the following 2 schedules:
 
-%\includegraphics[width=.98\linewidth]{}
+\begin{figure}[h!]
+\flushleft
+	\includegraphics[width=1.1\linewidth]{../images/EquipletLoadWindowExample.jpg}
+	%we might want to increase the text on this image..%
+	\caption{Equiplet schedules}
+\end{figure}
 
 If the equiplet would calculate load over release time + window length, it would not be a correct calculation. In above image equiplet 1 has a load of 90\% whereas equiplet 2 has a load of 20\%.
 In order to favor the equiplets with least load, all numbers in the matrix are multiplied with ( 1 – (load) ).
