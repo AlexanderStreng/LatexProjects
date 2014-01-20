@@ -2,7 +2,7 @@
 \begin{document}
 
 \section{Recommendations}
-\subsection{Schedule Lock}
+\subsection{Schedule Lock - TODO}
 The schedule lock design described in section \ref{sec:schedulelock} ( locked scheduling ), is a proposed solution based on the dangers of multithreaded software. The design ensures that every product gets his time to plan his steps at the required equiplets. Also, when a deadlock appears it can be an oppertunity to let certain products with a high priority schedule first. However, It is possible to abandon the idea of using a lock for a schedule and use a 'first come, first served' design ( free scheduling ).
 
 The idea of locked scheduling is based on the idea that the data of the schedules of the equiplets may not change when a product agent is starting his schedule routine up until the product agent has saved his new schedule at the corresponding equiplets. To create an optimal plan, the product agent needs the schedules of all of the equiplets that can perform the needed product steps. In big grids with multiple equiplets for a single capability, the result of the plan will only include some of the equiplets mentioned before. So some didn't had its schedule changed and could have been used by another product agent without violating the 'atomic scheduling' rule.
@@ -13,7 +13,7 @@ Advantage is that multiple product agents can use the same equiplets to calculat
 
 This has to be researched though since %lang product korte stukjes batch
 
-\subsection{Scheduling algorithm improvements}
+\subsection{Scheduling algorithm improvements - TODO}
 %algorithm needs transportation algorithms built in
 
 \subsection{Simulation improvements}
