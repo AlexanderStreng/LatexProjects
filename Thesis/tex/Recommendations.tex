@@ -9,12 +9,17 @@ The idea of locked scheduling is based on the idea that the data of the schedule
 
 When not using locks for equiplet's schedules, this can be utilized. But using this kind of approach can be dangerous to the integrity of the built plan by the product agent, but can be resolved. Given the following situation with two product agents: PA$_1$ and PA$_2$, the following situation can occur. PA$_1$ has gathered all of the required data and has started calculating his optimal production path. PA$_2$ does the same, at the same time, and the result is the same as that of PA$_1$, but is done earlyer. After PA$_2$ has pushed his schedule to the equiplets earlyer, and used the equiplets that PA$_1$ was going to use too. PA$_1$'s calculated schedule has been compromised and will be detected when pushing his new schedule. This can be easily resolved by just restarting calculating the plan.
 
-Advantage is that multiple product agents can use the same equiplets to calculate the plans and that these plans don't interfere with each
+Advantage is that multiple product agents can use the same equiplets to calculate the plans and that these plans don't interfere with eachother. But this solution can be prone to error too. For example, having a product with a lot of product steps would require a relatively long schedule time, and a long batch with a very low amount of product steps. In the previously described situation, the batch products would cause the product to restart over and over again. This could result that the product can't schedule its steps because of faster interfering smaller products.
 
-This has to be researched though since %lang product korte stukjes batch
+While this is a different approach than the locked scheduling solution, research is required to conclude which solution is better, or if a combination of both is feasible.
 
 \subsection{Scheduling algorithm improvements - TODO}
 %algorithm needs transportation algorithms built in
+The current scheduling algorithm takes different aspects of the condition and state of an equiplet into account. Choosing efficiently a suitable equiplet with these has been proven. What the algorithm doesn't take account for is transporting products between equiplets.
+
+When a product needs transportation to another equiplet for another product step to be excecuted, it is possible that a only looking at the state of the equiplet can be misleading. An equiplet that has for example a higher load could be better to produce because its position is closer to the product's current whereabouts. Also the availability of transportation resources can be limited and therefore slowing down the production.
+
+So the algorithm needs to be improved by taking transportation components into account. This can be done by adding new formulas to the production matrix.
 
 \subsection{Simulation improvements}
 The simulation program was made in a very limited timeframe, therefor there are some features left out which would make it work a lot better. One of said features is the ability to simulate a certain number of products rather than simulating a certain amount of time. This new ability makes it possible to run a number of new test cases for gathering performance data.
