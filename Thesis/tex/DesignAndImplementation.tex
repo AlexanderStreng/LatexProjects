@@ -192,6 +192,7 @@ In reality an equiplet lives from product step to product step. When an equiplet
 Calculating available free time slots for a given product step would be faster using the aforementioned solution. Rather than iterating through and counting all of the elements when using a circular buffer, a free time slot can be calculated between 2 elements of the linked list solution. The same applies to calculating the load of an equiplet.
 
 \subsubsection{Locking a schedule of an equiplet}
+\label{sec:schedulelock}
 In REXOS, there is a high possibility that multiple product agents will be scheduling at the same equiplet simultaneously. When this happens, it is likely that the product agents will try to schedule at the same time. Resulting in concurrency errors.
 
 To prevent these situations, the planning and scheduling operations have to be atomic actions \textbf{-reference from L. Moergestel paper-}. Once a product agent starts requesting information of the schedule of an equiplet with the intention of scheduling new product steps, the equiplet will lock its schedule and give the key to that product agent. Other product agents needing to schedule cannot request any information of the schedule of this 'locked' equiplet's schedule. Once the product agent that received the key of the equiplet's schedule is done scheduling, the product agent will unlock this schedule and other product agents will be able to schedule on this equiplet again.

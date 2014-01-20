@@ -2,6 +2,22 @@
 \begin{document}
 
 \section{Recommendations}
+\subsection{Schedule Lock}
+The schedule lock design described in section \ref{sec:schedulelock} ( locked scheduling ), is a proposed solution based on the dangers of multithreaded software. The design ensures that every product gets his time to plan his steps at the required equiplets. Also, when a deadlock appears it can be an oppertunity to let certain products with a high priority schedule first. However, It is possible to abandon the idea of using a lock for a schedule and use a 'first come, first served' design ( free scheduling ).
+
+The idea of locked scheduling is based on the idea that the data of the schedules of the equiplets may not change when a product agent is starting his schedule routine up until the product agent has saved his new schedule at the corresponding equiplets. To create an optimal plan, the product agent needs the schedules of all of the equiplets that can perform the needed product steps. In big grids with multiple equiplets for a single capability, the result of the plan will only include some of the equiplets mentioned before. So some didn't had its schedule changed and could have been used by another product agent without violating the 'atomic scheduling' rule.
+
+When not using locks for equiplet's schedules, this can be utilized. But using this kind of approach can be dangerous to the integrity of the built plan by the product agent, but can be resolved. Given the following situation with two product agents: PA$_1$ and PA$_2$, the following situation can occur. PA$_1$ has gathered all of the required data and has started calculating his optimal production path. PA$_2$ does the same, at the same time, and the result is the same as that of PA$_1$, but is done earlyer. After PA$_2$ has pushed his schedule to the equiplets earlyer, and used the equiplets that PA$_1$ was going to use too. PA$_1$'s calculated schedule has been compromised and will be detected when pushing his new schedule. This can be easily resolved by just restarting calculating the plan.
+
+Advantage is that multiple product agents can use the same equiplets to calculate the plans and that these plans don't interfere with each
+
+This has to be researched though since %lang product korte stukjes batch
+
+\subsection{Scheduling algorithm improvements}
+%algorithm needs transportation algorithms built in
+
+\subsection{Simulation improvements}
+%simulation currently simulates in time rather than in amount of products to process.
 
 
-\end{document}
+\end{document}Free scheduling uses the same planning algorithms as locked scheduling. 
