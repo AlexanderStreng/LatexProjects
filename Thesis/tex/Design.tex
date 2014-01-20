@@ -1,19 +1,25 @@
 \documentclass{../local}
 \begin{document}
 
-In this chapter we will describe the results gained in this project. We will tell something about gaining the the stable architecture, and the build up to the precision fair. We will also try to explain the results gained from research and simulation of the heterarchical vs. hierarchical system.
+In this chapter we describe the process of designing and the resulting design of certain elements from the current implementation of REXOS that are subject to change. This includes parts of the architecture that need replacing, such as the current implementation of planning \& scheduling.
 
 \section{REXOS Architecture}
-Throughout the whole project the main subject was constantly improving and modifying the current REXOS architecture. During the first part of the research a deadline was set to write and research feasable demo's for the precision fair. After the precision fair, a simulation had to be written in order to research the advantages of reserving batches (hierarchical control).
+Throughout the whole project the main subject was constantly improving and modifying the current REXOS architecture. During the first part of the research a deadline was set to write and research feasable demo's and achieve a stable architecture for the precision fair. After the precision fair, a simulation had to be written in order to research the advantages of reserving batches (hierarchical control).
 
-\subsection{Stable architecture}
-%smth about how messy the architecture was, is, and will be.
+The REXOS architecture as it was finished last semester was not stable enough to perform without failure. First of all there wasnt an implementation for other modules than the current pen-module and most of the work was poorly documented. The current implementation also lacked proper scheduling. 
 
-\subsubsection{Demo's}
-
+\subsection{Agent communication}
+On the MAS side of the system, certain things needed to change. One of the biggest problems was getting a proper insight in to how the system functioned and how communication was implemented. After some research conclusions figure \ref{AgentCommunicationOverview} was drawn.
+\begin{figure}[h!]
+	\includegraphics[width=1.1\linewidth]{../images/AgentCommunicationOverview.png}
+	%we might want to increase the text on this image..%
+	\caption{Agent communication overview}
+\label{fig:AgentCommunicationOverview}
+\end{figure}
+Marked in red are the changes that need to be made to make all communication FIFA \textbf{insert footnote / ref} compliant.
 
 \subsection{Planning}
-The normal planning algorithm used in the simulator is taken from \emph{L. van Moergestel’s paper ‘Multiagent-based agile manufacturing: from user requirements to product.} \textbf{- INSERT QUOTE HERE - } and the batch scheduling algorithm is described below. Scheduling is done by the product agent, which represents a product.
+The planning algorithm used in REXOS is taken from \emph{L. van Moergestel’s paper ‘Multiagent-based agile manufacturing: from user requirements to product.} \textbf{- INSERT QUOTE HERE - } and the batch scheduling algorithm is described below. Scheduling is done by the product agent, which represents a product.
 The product consists of steps, which are specific tasks defined by a set of parameters. Think of screwing, glueing or welding. All the equiplets in a grid can perform a certain set of these tasks. The ability to perform such a task is called a capability.  Each equiplet only has a limited set of these capabilities.
 
 In the simulation a grid consisting of equiplets is defined. Each equiplet has its own set of capabilities. Now consider a product with an n amount of product steps($\phi$):\\
