@@ -11,15 +11,24 @@ The REXOS architecture as it was finished last semester was not stable enough to
 \subsection{Agent communication}
 \label{sec:AgentComm}
 On the MAS side of the system, certain things needed to change. One of the biggest problems was getting a proper insight in to how the system functioned and how communication was implemented. After some research conclusions figure \ref{AgentCommunicationOverview} was drawn.
-\begin{figure}[h!]
+\begin{center}
 	\includegraphics[width=1.1\linewidth]{../images/AgentCommunicationOverview.pdf}
 	%we might want to increase the text on this image..%
-	\caption{Agent communication overview}
+	\captionof{figure}{Agent communication overview}
 \label{fig:AgentCommunicationOverview}
-\end{figure}
+\end{center}
 Marked in red are the changes that need to be made to make all communication FIFA \textbf{insert footnote / ref} compliant.
 
 \subsection{Knowledge database}
+\label{sec:kdb}
+The knowledge database was initially designed for a centralized platform, which is why, when the research question about switching to heterarchical came up, an agreement was reached that the database needed updating. Around the same time that this happened, reconfiguration was also being discussed, and this was yet another reason to alter the database structure.
+
+The new design incoporated module location and calibration data for the equiplet modules. The full design can be seen in the figure below.
+
+\begin{center}
+  \includegraphics[width=16cm]{../images/kdb.png}
+  \captionof{figure}{Knowledge database design}
+\end{center}
 
 \subsection{Planning}
 The planning algorithm used in REXOS is taken from \emph{L. van Moergestel’s paper ‘Multiagent-based agile manufacturing: from user requirements to product.} \textbf{- INSERT QUOTE HERE - } and the batch scheduling algorithm is described below. Scheduling is done by the product agent, which represents a product.

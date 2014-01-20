@@ -11,24 +11,17 @@ Having a stable architecture is an important aspect of a good platform. During t
 
 \subsubsection{Agent communication}
 %implementation of the 'FIPA compliant' way of communicating
-One of the first things that was discovered was that the communication of the agents in the system was chaotic and inconsistent. This was discovered when a mapping was made of all the messages sent by the agents. This mapping showed that the incorrect ontologies were being used, and that the ontologies were not consistent either, for example: a message sent from agent A with the ontology "IsEquipletBusy" to agent B, would be answered with a different ontology, such as "IsEquipletBusyConfirmed". This usage of different ontologies does not adhere to the FIPA Standard\footnote{http://www.fipa.org/}. The initial agent communication scheme can be found in section \ref{sec:AgentComm}
+One of the first things that was discovered during the project was that the communication of the agents in the system was chaotic and inconsistent. This was discovered when a mapping was made of all the messages sent by the agents. This mapping showed that the incorrect ontologies were being used, and that the ontologies were not consistent either, for example: a message sent from agent A with the ontology "IsEquipletBusy" to agent B, would be answered with a different ontology, such as "IsEquipletBusyConfirmed". This usage of different ontologies does not adhere to the FIPA Standard\footnote{http://www.fipa.org/}. The initial agent communication scheme can be found in section \ref{sec:AgentComm}
 
 After the FIPA Standards were applied to this, the resulting communication scheme looked like the following:
 
-\begin{center} %need to adjust/tweak image
+\begin{center}
   \includegraphics[width=20cm]{../images/RFC-Ontology-Performatives.pdf}
   \captionof{figure}{Agent Communication after FIPA Standard was applied}
 \end{center}
 
 \subsubsection{Knowledge database}
-The next issue that was encountered was a cluttered database. The 'knowledge' database contained information on equiplets as well as part information, module information, software information and services. The information in the database was not the problem however, the issue was how the table relations were designed. To insert a new module or capability into the database required a lot of tables to be modified, making it very difficult to work with.
-
-While improving the system, an agreement was reached that the database should also be updated and or re-designed. The re-design of the database was performed by the interns. At this time, preparations were being made for re-configuration, this resulted in module location information being added to the database. The re-designed knowledge database contains information on the modules, equiplets, capabilities and software. It also has information for calibrating certain modules, such as the camera. The new design for the database can be seen in the figure below.
-
-\begin{center}
-  \includegraphics[width=16cm]{../images/kdb.png}
-  \captionof{figure}{Knowledge database design}
-\end{center}
+The new design for the knowledge database, which can be found in section ~\ref{sec:kdb}, was implemented on an isolated system. This allowed the development of other systems to continue, while MAS was being re-written to use the new database design. The implementation of MAS was not finished however.
 
 \section{Hierarchical scheduling vs. Heterarchical scheduling}
 
