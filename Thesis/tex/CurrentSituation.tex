@@ -3,10 +3,7 @@
 
 \section{REXOS Overall Architecture}
 % How we changed the architecture, and why we made which decisions
-
-
-
-The initial situation in REXOS is students in the previous semester left it. Figure 1 shows a overview of all system components.
+The initial situation in REXOS is how students in the previous semester left it. Figure 1 shows a overview of all current system components.
 \begin{figure}[h!]
 \flushleft
 	\includegraphics[width=1.1\linewidth]{../images/Decentralized_REXOS.jpg}
@@ -18,23 +15,22 @@ The current system houses 2 major components. MAS, which represents the intelleg
 
 \subsection{MAS}
 %Tell smth about implementation of the curr MAS system, what purpose it serves, and how its implemented.%
-The MAS\footnote{Multi agent system. See abbreviations for more detail.} was designed to be the intelligent and cognitive side of the the REXOS platform. It incorperates virtual autonomous entities known as agents and is implemented in JADE \textbf{ref2section}. As shown in figure \textbf{ref to system overview} there are currently 5 agents. 
+The MAS\footnote{Multi agent system. See abbreviations for more detail.} was designed to be the intelligent and cognitive side of the the REXOS platform. It incorperates virtual autonomous entities known as agents and is implemented in JADE \textbf{ref2section}. As shown in figure \textbf{ref to system overview} there are currently 5 agents of which nearly all need to be overhauled. 
 
 \begin{description}
   \item[Product agent] \hfill \\
-		The product agents is a representation of the product. It is responsible for scheduling itself with the equiplets it need for finishing the product it represents.
+		The product agents is a representation of the product. It is responsible for scheduling itself with the equiplets it need for finishing the product it represents. The initial implementation of the product agent had no reasonable schedule algorithm. This needed to be implemented.
   \item[Equiplet agent] \hfill \\
-  		The equiplet agent is responsible for all communication with the product agent. It handles dealing with its own schedule aswell.
+  		The equiplet agent is responsible for all communication with the product agent. It handles dealing with its own schedule aswell. Because we designed a new scheduling algorithm, most parts of the initial scheduling are outdated and are replaced.
   \item[Service agent] \hfill \\
-  		The service agent handles all service level translations. 
+  		The service agent handles all service level translations. Because the initial services are fairly generic, not much needed to be changed.  
   \item[Hardware agent] \hfill \\
   		The hardware agent is responsible for 'controlling' the hardware. It also handles module step translations.
   \item[Logistics agent] \hfill \\
   		The logistics are handles all logistics within a grid. Its responsibilities include providing information about parts.
 \end{description}
 
-The MAS also provides a product abstraction. This means that a product 
-
+The MAS also provides product abstraction. This means that a product spawned by an end user has to be translated to low level hardware instructions. The different agents within MAS provide the capability to do so.
 The current implementation of the MAS is lacking both capability and structure. Previous groups of students have worked on the project and set up the basic version of the MAS. 
 
 \subsubsection{Knowledge database}
@@ -48,15 +44,23 @@ Another poorly implemented part of the REXOS architecture was the scheduling. th
 
 \subsection{ROS}
 %Tell smth about implementation of the curr ROS system, what purpose it serves, and how its implemented.%
-The current ROS side of the system represents all the hardware in code. All ROS actions are non-autonomous and driven by the intelligent side of REXOS. This means that all MAS-Agents take smart and cognitive decisions and ROS executes these. 
+The current ROS side of the system represents all the hardware in code. All ROS actions are non-autonomous and driven by the intelligent side of REXOS. This means that all MAS-Agents take smart and cognitive decisions and ROS executes these.
 
-\subsubsection{Equiplet node}
-%het was ruk
+\subsubsection{Ros Nodes}
+The ROS-layer consists of nodes. Nodes are software entities responsible for handling a specific task. In REXOS Ros nodes represent modules. The ROS node representing the equiplet is called the equiplet node.
+
+\subsubsection*{Equiplet node}
+The equiplet node is responsible for controlling all modules on the ROS side. The equiplet node consists of a single ROS node. All modules attached to the equiplet (ROS nodes aswell) are registered at the equiplet node. This is implemented to allow updating of states throughout all the modules. Currently, the equiplet node is designed as to only allow instructions that are tailor made for drawing (i.e. using the delta robot module with the pen module).
+
+\subsubsection*{Delta robot node}
+They delta robot node is responsible for providing ways to module the delta robot module that can be attached to equiplets. Currently the delta robot module doesnt allow for dynamic coordinates that the new vision system uses. The initial delta robot module is written for use with the pen-module because of which the delta robot module needs an overhaul to function with the rest of the system.
 
 \subsubsection{MAST}
 %het was ruk
+
+
 \subsubsection{Vision}
-%het was ruk
+Previous semester vision was a big obstacle. Since all equiplets operate on a cheap camera, optimised vision algorithms are of key importance. During this research semester, interns working at the Hogeschool implemented the vision parts needed to operate properly.
 
 \subsection{Communication}
 Communication between the layers is an important aspect of REXOS. Communication is defined in distinct ways. All data exchange happens through blackboards.A blackboard is a MongoDB implementation with the advantage of allowing read write permissions. This means that blackboards can be configured to allow for one entity to read and write from it, whilst the other is only allowed to write on it. Communication between agents all happends through the JADE ACL(\textbf{ref /  dingen hier}). Communication between ROS and MAS also happends through blackboards.\\
