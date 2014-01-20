@@ -153,15 +153,7 @@ Combined with the weight of the values in the production matrix, a couple of fea
 After the production plan has been made, the product agent will then schedule its plan at the corresponding equiplets. The schedule of an equiplet has to be easily accessible and easily to manipulate. Also, calculating the load of an equiplet or gaps in the schedule needs to be fast.
 
 \subsubsection{Representation of an equiplet's schedule }
- \textbf{ in paper70 sections 2.1 and 5.6 } it is described that a planning blackboard (BB-planning) represents the schedule of an equiplet. The paper defines that a circular buffer of timeslots is being used for the storage of scheduled product steps. The number of timeslots within this circular buffer is constant. This also means that a product agent cannot schedule steps later than the said constant number of timeslots. 
-
-Using this approach has several disadvantages when used in an agile manufacturing environment. These disadvantages are mainly performance related.
-
-- A circular buffer has limits to its size. For example: given a size of $\phi$ amount of seconds as a timeslot and the buffer size has to be two hours, there has to be $432000 / \phi$ amount of timeslots available in the circular buffer. 
-
-This would also mean that if the $\phi$ amount of seconds has to be in tens of milliseconds, the circular buffer would increase with a factor 100. A timeslot in tens of milliseconds is a valid case since for example modern pick and place robots can move at 200 picks per minute  \footnote{http://www.expo21xx.com/news/new-staubli-tp80-fast-picker-the-next-generation-of-high-speed-pickers/}. The size of the buffer could also increase into several hours since there are for example low cost 3D printers that could take several hours to complete. 
-
-Another requirement of REXOS is that product agents have to be able to schedule a day in the future with a timeslot length of for example 10 milliseconds. This will result in a circular buffer with 8,6 million items for every equiplet. Which is a lot.
+In \textbf{In paper70 sections 2.1 and 5.6 } a planning algorithm is defined. This algorithm has a major drawback however, it is not suitable for use in the current system. 
 
 For REXOS we took another approach to avoid this issue. We abandoned the idea of using a circular buffer, but we still need to store the schedules of equiplets. Parts that have to be saved on these schedules are steps of a product and time information about when that step will be executed and how long that will take. 
 
