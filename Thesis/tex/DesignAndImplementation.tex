@@ -164,18 +164,14 @@ Equiplet 4 & 2.0 & 3.0 & 6.0 & x \\
 \caption{Grid distance matrix}
 \end{table}
 
-% this bit till the end of the subsection is missing data? %
-Now, utilising the production matrix, the product will try and use a path of least resistance algorithm to find the most suitable path within the grid.
+Now, utilising the production matrix, the product will try and use a path of least resistance algorithm to find the most suitable path within the grid.\\
 
-
-
-
-Ignoring all 0 values,  the following possible paths are presented:
- 
+Ignoring all 0 values,  the following possible paths are presented:\\
 
 Combined with the weight of the values in the production matrix, a couple of feasible paths are calculated. These parts are then scheduled sequentially. ( taking the best path first ).
 
 \subsection{Scheduling}
+\label{sec:Scheduling}
 After the production plan has been made, the product agent will then schedule its plan at the corresponding equiplets. The schedule of an equiplet has to be easily accessible and easily to manipulate. Also, calculating the load of an equiplet or gaps in the schedule needs to be fast.
 
 \subsubsection{Representation of an equiplet's schedule }
@@ -242,7 +238,26 @@ The difference between a software error and a hardware error lies within the abi
 When an error happens, the equiplet can only take care of itself, but not for the product. The product agent itself needs to handle according to the situation. I.e. when the equiplet has damaged the product it was working on, the product agent has to restart its product, or just report it has failed. When a product was scheduled at the failing equiplet, it needs to reschedule its steps.
 
 \section{Simulation}
-% todo: short explanation about the simulation?
+% todo: short explanation about the simulation? why it was made, what it's primary purpose is, grid + travel matrix & error stuff
+Collecting performance data on the REXOS platform was neccessary, however, running sets and sets of test cases on the hardware would be very time consuming. For this reason, the decision was made to develop a simulator for the platform. This simulator would be capable of running test cases without requiring the use of the hardware.
+
+\subsection{Mechanics} %any other subsections? There's mechanics, and gui so far..
+%Single threaded with updateables
+The simulator that was developed uses a concept typically found in games, a single threaded update loop in which the simulation is updated in each iteration of that loop. A list of updateables is tracked and these are updated during each iteration, or tick, of the simulation.
+
+The simulator has a graphical user interface which runs on it's own thread, this to preserve the purity of the simulation, and also to be able to keep the user interface updated with live feedback during the simulation.
+
+\subsubsection*{Scheduling}
+%originally developed for MAS, implemented here
+The scheduling algorithm implemented into the simulation was developed during the research semester for the REXOS platform. The algorithm has not actually been implemented into the platform yet though, and so this opportunity was used as a test for the scheduling algorithm as well. More information on the algorithm itself can be found in section ~\ref{sec:Scheduling}.
+
+\subsubsection*{Data Acquisition}
+%data collectors
+Data is gathered using data collectors. These collectors have a collectData method, which is specific for the type of data being collected. For example, there is a data collector for equiplets and one for products. When told to update, the collector checks whether it is time to gather new data, in the case that it is, it tries to process it's specific type of updateables. In the case of equiplets, it retrieves a grid object, and using that object, retrieves all the equiplets in the grid, after which it queries each individual equiplet for it's statistics. In the case of the product data collector, the list of updateables is filtered to get all the product objects, which the collector then uses to gather data from.
+
+\subsubsection*{Spawning Products}
+%dynamic/random product spawners
+Product spawner, batch spawner and dynamic product spawner are the different types of spawners implemented for the simulation. The product spawner and batch spawner read their respective files for product and batch definitions before then adding those products and batches to the simulation process. The product and batches have intervals defined in the files (\emph{for more information on the file format, please check section ~\ref{sec:di-gui}.}), this interval is used as a timer to see when the next wave of products or batches should be spawned. The dynamic product spawner operates in a different manner to the others. It uses the parameters target load, min/max product length and chance of spawning. What it does is continually spawn products in order to reach the specified target load, the products spawned vary in number of product steps, which is what the min and max product length parameters are for. Finally, the chance of spawning parameter is used for a chance calculation, to determine whether or not a particular product spawns or not.
 
 \subsection{GUI}
 \subsubsection{Requirements}
@@ -341,6 +356,7 @@ While it is possible to create a new configuration rapidly using the interface, 
 \end{center}
 
 \subsubsection{Implementation}
+\label{sec:di-gui}
 The main simulation interface was implemented by another team, which is why this section will only cover the simulation editor interface.
 
 Since the goal of the interface is creating virtual objects that represent the objects on the platform, it was decided to create several classes which describe these objects, rather than using the data classes already available. The existing data classes expect certain parameters which are unobtainable while editing the simulation. Due to this restriction, the following descriptive classes were implemented:
