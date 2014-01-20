@@ -223,85 +223,49 @@ The scheduling algorithm implemented into the simulation was developed during th
 
 \subsubsection*{Data Acquisition}
 %data collectors
-Data is gathered using data collectors. These collectors have a collectData method, which is specific for the type of data being collected. For example, there is a data collector for equiplets and one for products. When told to update, the collector checks whether it is time to gather new data, in the case that it is, it tries to process it's specific type of updateables. In the case of equiplets, it retrieves a grid object, and using that object, retrieves all the equiplets in the grid, after which it queries each individual equiplet for it's statistics. In the case of the product data collector, the list of updateables is filtered to get all the product objects, which the collector then uses to gather data from.
+Data is gathered using data collectors. These collectors have a collectData method, which is specific for the type of data being collected. For example, there is a data collector for equiplets and one for products. When told to update, the collector checks whether it is time to gather new data, in the case that it is, it tries to process it's specific type of updateables. In the case of equiplets, it retrieves a grid object, and using that object, retrieves all the equiplets in the grid, after which it queries each individual equiplet for it's statistics. In the case of the product data collector, the list of updateables is filtered to get all the product objects, which the collector then uses to gather data from. For an equiplet, the load, current load, products spawned, products simultaneously in grid, and products failed (total and batch) metrics are recorded and collected. The load is a metric which is calculated by looking at the future schedule window and determining which percentage of that window is scheduled. The current load however, looks at the past interval time between data collections, and it checks whether the equiplet has actually been producing during that time, it then calculates the percentage that he equiplet was busy for. Products spawned indicates the total number of products spawned at the time of collection. The products simultaneously in grid is as the name suggests, the number of products active in the grid at the time of data collection. The products failed metric records the amount of products that fail during the simulation, and of this number, how many are batch products.
 
 \subsubsection*{Spawning Products}
 %dynamic/random product spawners
-Product spawner, batch spawner and dynamic product spawner are the different types of spawners implemented for the simulation. The product spawner and batch spawner read their respective files for product and batch definitions before then adding those products and batches to the simulation process. The product and batches have intervals defined in the files (\emph{for more information on the file format, please check section ~\ref{sec:di-gui}.}), this interval is used as a timer to see when the next wave of products or batches should be spawned. The dynamic product spawner operates in a different manner to the others. It uses the parameters target load, min/max product length and chance of spawning. What it does is continually spawn products in order to reach the specified target load, the products spawned vary in number of product steps, which is what the min and max product length parameters are for. Finally, the chance of spawning parameter is used for a chance calculation, to determine whether or not a particular product spawns or not.
+Product spawner, batch spawner and dynamic product spawner are the different types of spawners implemented for the simulation. The product spawner and batch spawner read their respective files for product and batch definitions before then adding those products and batches to the simulation process. The product and batches have intervals defined in the files (\emph{for more information on the file format, please check section ~\ref{sec:di-gui}.}), this interval is used as a timer to see when the next wave of products or batches should be spawned.
+
+The dynamic product spawner operates in a different manner to the others. It uses the parameters target load, min/max product length and chance of spawning. What it does is continually spawn products in order to reach the specified target load, the products spawned vary in number of product steps, which is what the min and max product length parameters are for. Finally, the chance of spawning parameter is used for a chance calculation, to determine whether or not a particular product spawns or not. There is also an option to simulate peaks in the grid.
 
 \subsection{GUI - TODO}
 \subsubsection{Requirements}
-These requirements were set up using the MoSCoW method. All requirements are listed first, a more detailed description for each requirement can be found directly following the list.
-\begin{enumerate}
-\item Must Have
-	\begin{enumerate}
-	\item Simulation Interface
-		\begin{enumerate}
-		\item Start simulation
-		\item Insert error into equiplet
-		\end{enumerate}
-	\end{enumerate}
-\item Should Have
-	\begin{enumerate}
-	\item Simulation Interface
-		\begin{enumerate}
-		\item Stop simulation
-		\item Read configuration files
-		\item Open simulation editor
-		\end{enumerate}
-	\end{enumerate}
-	\begin{enumerate}
-	\item Simulation Editor Interface
-		\begin{enumerate}
-		\item Create the following virtual objects:
-			\begin{enumerate}
-			\item Capability
-			\item Equiplet
-			\item Product
-			\item Batch
-			\item Grid
-			\end{enumerate}
-		\item When creating the above, be able to assign previously made objects where applicable (ex. Create new capability \{ Saw \}, Create new equiplet with the capability \{ Saw \})
-		\item Output capabilities.csv, products.csv, batches.csv, grid.json
-		\item Read above files and create objects from the parsed input
-		\end{enumerate}
-	\end{enumerate}
-\item Could Have
-	\item Simulation Interface
-		\begin{enumerate}
-		\item Visualize grid
-		\end{enumerate}
-\end{enumerate}
+These requirements were set up using the MoSCoW method.
 
-\begin{description}
-\item[Simulation Interface] \hfill \\
+\paragraph{Must Have}
+
+\begin{enumerate}
+\item Simulation Interface \hfill \\
 The interface used to control the simulation. This interface will also be used to display any feedback given.
 
-\item[Start simulation] \hfill \\
-Used to start running the simulation.
+\item Start simulation \hfill \\
+A way to start running the simulation.
 
-\item[Stop simulation] \hfill \\
-Used to stop running the simulation.
-
-\item[Insert error into equiplet] \hfill \\
+\item Insert error into equiplet \hfill \\
 Used to put a virtual equiplet into a state of error. This can be used to simulate hardware or software failure.
+\end{enumerate}
 
-\item[Visualize grid] \hfill \\
-When simulating a virtual grid of equiplets, it would be more intuitive to see the grid visualized instead of manually checking a single equiplets' position within the grid. It is however, not required for the application to perform.
+\paragraph{Should Have}
+\begin{enumerate}
+\item Stop simulation \hfill \\
+A way to stop running the simulation.
 
-\item[Read configuration files] \hfill \\
+\item Read configuration files \hfill \\
 When running a large number of test simulations, it would save time if the grid configuration, products and capabilities could be read from a file, rather than needing to re-define the composition every time a new simulation is started.
 
-\item[Open simulation editor] \hfill \\
+\item Open simulation editor \hfill \\
 While not strictly necessary, having a button to open the configuration editor saves time and unnecessary complexity when trying to run the application.
 
-\item[Simulation Editor Interface] \hfill \\
+\item Simulation Editor Interface \hfill \\
 This interface will be used to quickly create or modify a configuration. It has the ability to create virtual objects.
 
-\item[Create Objects] \hfill \\
+\item Create Objects \hfill \\
 The sole function of the editor interface is to create virtual objects, therefore it needs to have that feature.
 
-\item[Assign newly made objects to one currently being created] \hfill \\
+\item Assign newly made objects to one currently being created \hfill \\
 Given the following example:
 
 \begin{enumerate}
@@ -311,12 +275,19 @@ Given the following example:
 
 To create a new virtual equiplet, the interface must have a way of selecting previously made capabilities. This also counts for products, batches and the grid.
 
-\item[Output files] \hfill \\
+\item Output files \hfill \\
 The editor exists to simplify the creation of configuration files, making the feature to output the configuration files a must have.
 
-\item[Read and parse files] \hfill \\
+\item Read and parse files \hfill \\
 While it is possible to create a new configuration rapidly using the interface, if one has already been made before, it would be easier to read that configuration and make an adjustment rather than re-creating it from scratch.
-\end{description}
+\end{enumerate}
+
+\paragraph{Could Have}
+\begin{enumerate}
+\item Visualize grid \hfill \\
+When simulating a virtual grid of equiplets, it would be more intuitive to see the grid visualized instead of manually checking a single equiplets' position within the grid. It is however, not required for the application to perform.
+
+\end{enumerate}
 
 \subsubsection{Visual Design}
 
