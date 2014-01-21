@@ -73,6 +73,24 @@ MAST is an abbreviation for MAchine STates and is used for representing the stat
 
 The safe, standby and normal state are active states. The setup, shutdown, start and stop states are transition states. For an entity (equiplet or module) to reach a new active state, it has to successfully traverse the transitional state that precedes it. MAST is setup in such a way that the combined state of all the modules on an equiplet is equal to the highest (furthest from safe) state of any of the modules. This means that if even one module is not in a safe state, the whole equiplet is not safe.
 
+The modules and equiplet can switch between various modes. There is no transition when switching between modes. However, the mode of a module or equiplet determines which states and transitions are allowed.
+
+\begin{itemize}
+\item \textbf{Normal} The normal State Machine mode.
+ \item \textbf{Service} When the module is in Service mode, it enables debug information and it allows service methods for calibration.
+\item \textbf{Error} This mode is used when a non actor module is in error.
+\item \textbf{Critical error} This mode is used when an actor module in in error. The State Machine will then go to safe.
+\item \textbf{Emergency error} This mode is used when the emergency button is pressed.
+\end{itemize}
+
+The possible transitions can be found in figure~\ref{fig:mastmodi}
+
+\begin{center}
+\includegraphics[width=1\linewidth]{../images/MASTModes.png}
+\captionof{figure}{Machine Modes}
+\label{fig:mastmodi}
+\end{center}
+
 \subsubsection{Vision}
 In previous iterations of REXOS vision was a big obstacle. Since all equiplets operate on a cheap camera, optimised vision algorithms are of key importance. The vision library was virtually non-existent and poorly documented. 
 
