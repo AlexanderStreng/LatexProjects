@@ -1,7 +1,8 @@
 \documentclass{../local}
 \begin{document}
 
-In this chapter we will describe the results gained in this project. We will tell something about gaining the the stable architecture, and the build up to the precision fair. We will also try to explain the results gained from research and simulation of the heterarchical vs. hierarchical system.
+In this chapter the results of testing and implementing the different parts are described and analysed. Improving the stability of the REXOS platform and the test cases and results from the simulation are described as well.
+ 
 
 \section{REXOS Architecture}
 Throughout the whole project the main subject was constantly improving and modifying the current REXOS architecture. During the first part of the research a deadline was set to research and write feasable demo's for the precision fair. After the precision fair, a simulation had to be written in order to research the advantages of reserving batches (hierarchical control).
@@ -10,7 +11,6 @@ Throughout the whole project the main subject was constantly improving and modif
 Having a stable architecture is an important aspect of a good platform. During the project, several key issues were identified and dealt with. These key issues, and how they were tackled will be explained in more detail below.
 
 \subsubsection{Agent communication}
-%implementation of the 'FIPA compliant' way of communicating
 One of the first things that was discovered during the project was that the communication of the agents in the system was chaotic and inconsistent. This was discovered when a mapping was made of all the messages sent by the agents. This mapping showed that the incorrect ontologies were being used, and that the ontologies were not consistent either, for example: a message sent from agent A with the ontology "IsEquipletBusy" to agent B, would be answered with a different ontology, such as "IsEquipletBusyConfirmed". This usage of different ontologies does not adhere to the FIPA Standard\footnote{http://www.fipa.org/}. The initial agent communication scheme can be found in section \ref{sec:AgentComm}
 
 After the FIPA Standards were applied to this, the resulting communication scheme looked like the following:
@@ -24,11 +24,18 @@ After the FIPA Standards were applied to this, the resulting communication schem
 The new design for the knowledge database, which can be found in section ~\ref{sec:kdb}, was implemented on an isolated system. This allowed the development of other systems to continue, while MAS was being re-written to use the new database design. The implementation of MAS was not finished however.
 
 \subsubsection{REXOS vision}
-During this semester the interns implemented REXOS vision. This means that they implemented a new vision system which works properly with all the components of the REXOS architecture. The vision system is implemented in ROS, which means it is implemented as a node. The vision node is module specific. By calibrating the camera, distortion and fish eye effect is removed (as much as possible).
+The implementation of the vision system is performed by the interns\footnote{see team for more detail}. The vision system is implemented in ROS as several nodes each with its own responisbilities. figure \ref{Vision_system} shows all different nodes involved.
+
+\begin{center}
+  \includegraphics[width=17cm]{../images/Vision_system.png}
+  \captionof{figure}{Overview of the new vision implementation. Taken from \emph{http://wiki.agilemanufacturing.nl/index.php/Vision\_system}}
+  \label{Vision_system}
+\end{center}
+
+The vision system is designed to work with a multitude of camera's. It provides for means of calibrating the camera, and removing distortion and fish-eye effects.
 
 \subsubsection*{Coordinate system}
-As a by-product of developing a new vision architecture, a new coordinate system was introduced. This systems uses position based parameters to define a precise coordinate system. This way all modules, independend of their location can use a generic convertion to determine their position on the equiplet.
-
+As a by-product of developing a new vision architecture, a new coordinate system was introduced. This systems uses position based parameters to define a precise coordinate system. The coordinate system provides millimeter precision. This way all modules, independend of their location can use a generic convertion to determine their position on the equiplet. In order to translate from equiplet coordinates to coordinates usable by modules, algorithms has been implemented.
 
 \section{Hierarchical scheduling vs. Heterarchical scheduling}
 
@@ -39,8 +46,11 @@ By using the simulation with implemented scheduling algorithm, hierarchical sche
 Hierarchical scheduling in the following test cases is defined as having certain reservations concerning batches. This means that in a grid, certain equiplets can be reserverd on a higher level (thus implying a hierarchy) for the batch. Heterarchical scheduling allows for individualistic scheduling (i.e. no Interference from higher levels) and thus the batch will go through the grid alongside other products.
 
 \subsection{Setup of the example case}
-In this sample test case we try to demonstrate the various advantages and disadvantages hierarchical scheduling can have over normal heterarchical scheduling.  Next we discuss how switching between heterarchical  and hierarchical can negotiate the disadvantages.
-	Throughout this whole case we will use the same products, capabilities and grid - layout unless stated otherwise. The capabilities are as follows:
+%In this sample test case we try to demonstrate the various advantages and disadvantages hierarchical scheduling can have over normal heterarchical scheduling.  Next we discuss how switching between heterarchical  and hierarchical can negotiate the disadvantages.
+When researching the research questions concerning hierarchical scheduling and heterarchical scheduling a simulation setup was defined in order to run simulation test cases. 
+
+Throughout this whole case we will use the same products, capabilities and grid - layout unless stated otherwise. The capabilities are as follows:
+
 	
 \begin{center}
 	\begin{tabular}{ | l | l |}
@@ -49,32 +59,35 @@ In this sample test case we try to demonstrate the various advantages and disadv
 	P & 5  \\ \hline
 	A & 20 \\ \hline
 	S & 10 \\ \hline
-	\end{tabular}
+	\end{tabular}  
+	\captionof{table}{Capabilities and the amount of timeslots}
 \end{center}
 
-The products used are defined next. Throughout testing the minimal deadline is defined in this setup as 50 seconds. This is when 40 products are spawned every 120 seconds in a 3 x 3 grid without reservations as defined below. If the deadline is set to a number smaller than 50 seconds, products start to fail. In order to allow for a little bit of delay, a deadline of 60 seconds is set.
+The products used are defined next. Throughout testing the minimal deadline is defined in this setup as 86 seconds. This is when a constant load of 80\% is maintained in a 3 x 3 grid without reservations as defined below. If the deadline is set to a number smaller than 86 seconds, products start to fail.
 
 \begin{center}
 	\begin{tabular}{ | l | l |}
 	\hline
 	\textbf{Product name} & Test\_Product  \\ \hline
 	\textbf{Sequence of product steps} & P A P S \\ \hline
-	\textbf{deadline} & 00:00:60 ( 60 seconds ) \\ \hline
-	\end{tabular}
+	\textbf{deadline} & 00:01:24 ( 86 seconds ) \\ \hline
+	\end{tabular}  
+	\captionof{table}{Test product definition}
 \end{center}
 
-The batch products are defined to be the same as the normal products in the grid. This is defined in a 3 x 3 grid where equiplet 1, 2 \& 3 are reserved for the batch. Through testing the minimal deadline for batches is defined on 56 seconds. In order to allow for a little bit of delay the deadlines are set to 60 seconds.
+The batch products are defined to be the same as the normal products in the grid. This is defined in a 3 x 3 grid where equiplet 1, 2 \& 3 are reserved for the batch.
 
 \begin{center}
 	\begin{tabular}{ | l | l |}
 	\hline
 	\textbf{Batch product name} & Test\_Batch  \\ \hline
 	\textbf{Sequence of product steps} & P A P S \\ \hline
-	\textbf{deadline} & 00:00:60 ( 60 seconds ) \\ \hline
-	\end{tabular}
+	\textbf{deadline} & 00:01:24 ( 86 seconds ) \\ \hline
+	\end{tabular}  
+	\captionof{table}{Batch product definition}
 \end{center}
 
-In this case we define a grid setup of 3 x 3. Default travel distance between equiplets is set to 2 seconds. Throughout the case we will change some properties of the equiplets, let some throw some errors etc.  Now consider the following grid;
+In this case we define a grid setup of 3 x 3. Default travel distance between equiplets is set to 2 seconds. Throughout the case we will change properties of the equiplets i.e. change their capabilities.  Now consider the following grid:
 
 \begin{center}
 	\begin{tabular}{ | l | l | l |}
@@ -82,7 +95,8 @@ In this case we define a grid setup of 3 x 3. Default travel distance between eq
 	Equiplet 1 - capability(A) & Equiplet 2 - capability(S) & Equiplet 3 - capability(P)  \\ \hline
 	Equiplet 4 - capability(A) & Equiplet 5 - capability(P) & Equiplet 6 - capability(S) \\ \hline
 	Equiplet 7 - capability(A) & Equiplet 8 - capability(S) & Equiplet 9 - capability(P) \\ \hline
-	\end{tabular}
+	\end{tabular}  
+	\captionof{table}{Equiplets and their corresponding capabilities}
 \end{center}
 
 In order to define travel times within the grid, a schedulematrix is constructed. The formula for generating this matrix is as follows:
@@ -106,10 +120,17 @@ which results in the following travel matrix:
 	EQ7 & 40 & 60 & 80 & 20 & 40 & 60 & 0 & 20 & 40\\ \hline
 	EQ8 & 60 & 40 & 60 & 40 & 20 & 40 & 20 & 0 & 20\\ \hline
 	EQ9 & 80 & 60 & 40 & 60 & 40 & 20 & 40 & 20 & 0\\ \hline
-	\end{tabular}
+	\end{tabular}  
+	\captionof{table}{Travel matrix}
 \end{center}
 
-The time given in the travel matrix is the amount of timeslots. So in this case, when travelling from equiplet 1 to equiplet 2, the amount of time required is 20 * (timeslotlength(100ms)) 100 = 2000 ms travel time.
+The time given in the travel matrix is the amount of timeslots. So in this case, when travelling from equiplet 1 to equiplet 2, the amount of time required is (using a timeslot length of 100ms): 
+
+\begin{center}
+	$
+	20 \times timeslotLength = 2000ms
+	$
+\end{center}
 
 \subsection{Batch scheduling}
 In this section, the differences between heterarchical scheduling and hierarchical scheduling ( reservating equiplets for batch ) will be described. This will be done by describing a case and using the simulation to gather data. For this simulation the equiplet and capability setup will be the same as in the example case. The simulation will run for 2 hours. The following batch product will be used:
@@ -169,14 +190,13 @@ Figure ~\ref{BatchSchedulingCurrentLoadHierarchical} shows a high load on all of
 As seen in above graphs, heterarchical is more production efficient. It has a higher throughput, but uses a lot more resources and some products could not finish. The amount of simultaneous products in the grid is more than double than at the hierarchical setup. Also the heterarchical setup has failed products, whereas the hierarchical setup has none. The amount of failed products is 4\% relative to the throughput.
 
 \subsection{Advantages of switching back to heterarchical scheduling}
-As defined in previous paragraph, batch scheduling can be advantagous over heterarchical scheduling. In this section we explain the downsides of batch scheduling, and try pose a possible solution. 
-
+Hierarchical scheduling can be advantagous over heterarchical scheduling. In this section we review the downsides of batch scheduling, and research pose a possible solution. 
 
 \subsubsection*{Equiplet errors}
-One of the major downsides concerning reserved equiplets is what happends when one of those equiplets experiences an error. If the amount of reserved equiplets is small, products may start failing. In the next case a constant load of 80\% is maintained. We are going to throw some errors at equiplet 3 ( capability P ).
+One of the major downsides concerning reserved equiplets is what happends when one of the reserved equiplets experiences an error. If the amount of reserved equiplets is small, products may start failing. In the next case a constant load of 80\% is maintained. We are going to give equiplet 3(capability P) an error.
 
 \begin{center}
-	\begin{tabular}{ | l | l |}
+	\begin{tabular}{ | l | p{7.5cm} |}
 	\hline
 	\textbf{Simulation time} & 2 hours \\ \hline
 	\textbf{Maintained load} & 80\% \\ \hline
@@ -184,7 +204,8 @@ One of the major downsides concerning reserved equiplets is what happends when o
 	\textbf{Equiplets reserved for batch} & equiplet 1, equiplet 2 \& equiplet 3  \\ \hline
 	\textbf{Equiplets in error} & equiplet 3 \\ \hline
 	\textbf{Error interval, duration, start time} & After 1 hour, the equiplet experiences an error lasting 1 hour \\ \hline
-	\end{tabular}
+	\end{tabular}  
+	\captionof{table}{Simulation parameters}
 \end{center}
 
 \begin{center}
@@ -194,9 +215,9 @@ One of the major downsides concerning reserved equiplets is what happends when o
 	\label{fig:CombinedEquipletLoadNotAllowingOutsideReservation}
 \end{center}
 
-Figure ~\ref{CombinedEquipletLoadNotAllowingOutsideReservation} demonstrates that after 1 hour equiplets 1, 2 \& 3 drop to 0\%  load. This is because of the fact that when equiplet 3 has an error, all the batch products fail. Because they cannot schedule somewhere else (they are only allowed to schedule at the reserved equiplets).
-In the next case we are going to look at what happends to the grid as a total when the batches are allowed to switch back to heterarchical scheduling. The same test case is used but this time the batch products are allowed to use the remaining equiplets in the grid as a 'backup'. The products can only use the remaining equiplet when one or more equiplets in the reserved line are in error.
-Lets see what happends to the combined equiplet load;
+Figure ~\ref{CombinedEquipletLoadNotAllowingOutsideReservation} demonstrates that after 1 hour equiplets 1, 2 \& 3 drop to 0\%  load. Batch products are not allowed to be scheduled at equiplets that are not in the reserverd part of the grid. So when equiplet 3 experiences an error, equiplets 1 \& 2 stop producing as well.
+
+The next case shows what happends to the grid as a total when the batches are allowed to switch back to heterarchical scheduling. The same test case is used but this time the batch products are allowed to use the remaining equiplets in the grid as a 'backup'. The products can only use the remaining equiplet when one or more equiplets in the reserved line are in error.
 
 \begin{center}
 		\includegraphics[width=17cm]{../images/CombinedEquipletLoadAllowingOutsideReservation.png}
@@ -205,7 +226,7 @@ Lets see what happends to the combined equiplet load;
 	\label{fig:CombinedEquipletLoadAllowingOutsideReservation}
 \end{center}
 
-As shown in figure ~\ref{CombinedEquipletLoadAllowingOutsideReservation} around the 1 hour mark, right when equiplet 3 has its error, a small decline in load is visible. Right afterwards the reserved equiplets 1 \& 2 begin producing again. This is because the products are allowed to enter the grid for their needs. If we compare the load of all equiplets with the same capability, its becomes apparent what happends;
+As shown in figure ~\ref{CombinedEquipletLoadAllowingOutsideReservation} around the 1 hour mark(timeslot 185), right when equiplet 3 has its error, a small decline in load is visible. Directly afterwards the reserved equiplets 1 \& 2 begin producing again. This is because the products are allowed to enter the grid to schedule. If we compare the load of all equiplets with the same capability, its becomes apparent what happends;
 
 \begin{center}
 		\includegraphics[width=17cm]{../images/CapabilityEquipletLoadNotAllowingOutsideReservation.png}
