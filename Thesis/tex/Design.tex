@@ -21,13 +21,13 @@ Marked in red are the changes that need to be made to make all communication FIF
 
 \subsection{Knowledge database}
 \label{sec:kdb}
-The knowledge database was initially designed for a centralized platform, which is why, when the research question about switching to heterarchical came up, an agreement was reached that the database needed updating. Around the same time that this happened, reconfiguration was also being discussed, and this was yet another reason to alter the database structure.
-
-The new design incoporated module location and calibration data for the equiplet modules. The full design can be seen in the figure below.
+% was done for autonomous 
+The knowledge database was initially designed for a centralized platform. During one of the brainstorms sessions that took place, a decision was made to make equiplets autonomous. To accomodate this change, the knowledge database required re-designing. The task of designing the new database was assigned to one of the interns, T. Bakker. The resulting new design incoporated module location and calibration data for the equiplet modules. The full design can be found in figure~\ref{fig:kdb}.
 
 \begin{center}
   \includegraphics[width=16cm]{../images/kdb.png}
   \captionof{figure}{Knowledge database design}
+  \label{fig:kdb}
 \end{center}
 
 \subsection{Planning}
@@ -229,87 +229,114 @@ The difference between a software error and a hardware error lies within the abi
 When an error happens, the equiplet can only take care of itself, but not for the product. The product agent itself needs to handle according to the situation. I.e. when the equiplet has damaged the product it was working on, the product agent has to restart its product, or just report it has failed. When a product was scheduled at the failing equiplet, it needs to reschedule its steps.
 
 \section{Simulation}
-Collecting performance data on the REXOS platform was neccessary, however, running sets and sets of test cases on the hardware would be very time consuming. For this reason, the decision was made to develop a simulator for the platform. This simulator would be capable of running test cases without requiring the use of the hardware.
+Collecting performance data on the REXOS platform was neccessary, however, running sets and sets of test cases on the equiplets would be very time consuming. For this reason, the decision was made to develop a simulator for the platform. This simulator would be capable of running test cases without requiring the use of the hardware.
+
+The simulator is focused around MAS. Simplified versions of the agents were written to emulate Jade within the simulation. These agents perform every action the original agents do, and communicate with each other as the original agents do, the communication is however, not compliant with the FIPA\footnote{http://www.fipa.org/} Standard. ROS was not simulated completely, in more detail: no hardware actions are simulated, there is however, an equiplet. This equiplet has the possiblity of going into an error state.
 
 \subsection{Mechanics}
 The simulator that was developed uses a concept typically found in games, a single threaded update loop in which the simulation is updated in each iteration of that loop. A list of updateables is tracked and these are updated during each iteration, or tick, of the simulation.
 
-The simulator has a graphical user interface which runs on it's own thread, this to preserve the purity of the simulation, and also to be able to keep the user interface updated with live feedback during the simulation.
+The simulator has a graphical user interface which runs on it's own thread, this to ensure that the simulation is not interrupted, and also to be able to keep the user interface updated with live feedback during the simulation.
 
 \subsubsection*{Scheduling}
-The scheduling algorithm implemented into the simulation was developed during the research semester for the REXOS platform. The algorithm has not actually been implemented into the platform yet though, and so this opportunity was used as a test for the scheduling algorithm as well. More information on the algorithm itself can be found in section ~\ref{sec:Scheduling}.
+The scheduling algorithm implemented into the simulation was developed during the research semester. Although the algorithm was partially implemented into the REXOS platform, it was fully implemented in the simulation. By running test cases, the algorithm can be tested. More information on the algorithm itself can be found in section ~\ref{sec:Scheduling} on page~\pageref{sec:Scheduling}.
 
 \subsubsection*{Data Acquisition}
-Data is gathered using data collectors. These collectors have a collectData method, which is specific for the type of data being collected. For example, there is a data collector for equiplets and one for products. When told to update, the collector checks whether it is time to gather new data, in the case that it is, it tries to process it's specific type of updateables. In the case of equiplets, it retrieves a grid object, and using that object, retrieves all the equiplets in the grid, after which it queries each individual equiplet for it's statistics. In the case of the product data collector, the list of updateables is filtered to get all the product objects, which the collector then uses to gather data from. For an equiplet, the load, current load, products spawned, products simultaneously in grid, and products failed (total and batch) metrics are recorded and collected. The load is a metric which is calculated by looking at the future schedule window and determining which percentage of that window is scheduled. The current load however, looks at the past interval time between data collections, and it checks whether the equiplet has actually been producing during that time, it then calculates the percentage that he equiplet was busy for. Products spawned indicates the total number of products spawned at the time of collection. The products simultaneously in grid is as the name suggests, the number of products active in the grid at the time of data collection. The products failed metric records the amount of products that fail during the simulation, and of this number, how many are batch products.
+Data is gathered using data collectors. These collectors have a collectData method, which is specific for the type of data being collected. There is a data collector for equiplets and one for products. For each update cycle, the collector checks whether it is time to gather new data, in the case that new data needs to be collected, it attempts to process its specific type of updateables. 
+
+In the case of equiplets, it retrieves a grid object, and using that object, retrieves all the equiplets in the grid, after which it queries each individual equiplet for its statistics. In the case of the product data collector, the list of updateables is filtered to get all the product objects, which the collector then uses to gather data from. 
+
+For an equiplet, the load, current load, products spawned, products simultaneously in grid, and products failed (total and batch) metrics are recorded and collected. The load is a metric which is calculated by looking at the future schedule window and determining which percentage of that window is scheduled. The current load however, looks at the past interval time between data collections, and it checks whether the equiplet has actually been producing during that time, it then calculates the percentage that he equiplet was busy for. Products spawned indicates the total number of products spawned at the time of collection. The products simultaneously in grid is as the name suggests, the number of products active in the grid at the time of data collection. The products failed metric records the amount of products that fail during the simulation, and of this number, how many are batch products.
 
 \subsubsection*{Spawning Products}
-Product spawner, batch spawner and dynamic product spawner are the different types of spawners implemented for the simulation. The product spawner and batch spawner read their respective files for product and batch definitions before then adding those products and batches to the simulation process. The product and batches have intervals defined in the files (\emph{for more information on the file format, please check section ~\ref{sec:di-gui}.}), this interval is used as a timer to see when the next wave of products or batches should be spawned.
+The product spawner, batch spawner and dynamic product spawner are the different types of spawners implemented for the simulation. The product spawner and batch spawner read their respective files for product and batch definitions before then adding those products and batches to the simulation process. The product and batches have intervals defined in the files\footnote{for more information on the file format, please check section~\ref{sec:di-gui} on page~\pageref{sec:di-gui}}, this interval is used as a timer to see when the next wave of products or batches should be spawned.
 
-The dynamic product spawner operates in a different manner to the others. It uses the parameters target load, min/max product length and chance of spawning. What it does is continually spawn products in order to reach the specified target load, the products spawned vary in number of product steps, which is what the min and max product length parameters are for. Finally, the chance of spawning parameter is used for a chance calculation, to determine whether or not a particular product spawns or not. There is also an option to simulate peaks in the grid.
+The dynamic product spawner operates in a different manner to the others. It uses the parameters target load, min/max product length and chance of spawning. What it does is continually spawn products in order to reach the specified target load. The products being spawned have a varying number of product steps. The minimum and maximum steps a product can have is controlled by the min and max product length parameters. Finally, the chance of spawning parameter is used for a chance calculation, to determine whether a particular product spawns or is delayed. This is used to simulate peaks in the grid.
 
-\subsection{GUI - TODO}
-\subsubsection{Requirements}
-These requirements were set up using the MoSCoW method.
+\subsection{GUI}
+During the initial stages of development for the simulator, it was decided to create a graphical user interface to accompany it. The goal of this interface is to make running the simulations fast and simple. The interface is split into two parts, the main interface, and the editor interface.
 
-\paragraph{Must Have}
+The main interface will handle operations such as starting and stopping the simulation, as well as showing the progress of the simulation. It will also have the ability to read premade configuration files in order to run the simulation. From this interface, there will be the option to open the editor interface. Optionally, there will be a feature to visualize the grid.
 
-\begin{enumerate}
-\item Simulation Interface \hfill \\
-The interface used to control the simulation. This interface will also be used to display any feedback given.
+The editor interface will handle the easy creation and modification of the configuration files. For this reason, the interface will have the capability of creating virtual representations of capabilities, products, batches, equiplets and the grid. The editor interface will have the ability to output the created configuration to the seperate files.
 
-\item Start simulation \hfill \\
-A way to start running the simulation.
+\subsubsection{Design}
+\label{sec:di-gui}
 
-\item Insert error into equiplet \hfill \\
-Used to put a virtual equiplet into a state of error. This can be used to simulate hardware or software failure.
-\end{enumerate}
+\subsubsection*{Main interface}
+The team of interns is responsible for implementing the main interface. Figure~\ref{fig:maingui} shows a mockup of what the interface will look like. The components of the gui will be explained below.
 
-\paragraph{Should Have}
-\begin{enumerate}
-\item Stop simulation \hfill \\
-A way to stop running the simulation.
-
-\item Read configuration files \hfill \\
-When running a large number of test simulations, it would save time if the grid configuration, products and capabilities could be read from a file, rather than needing to re-define the composition every time a new simulation is started.
-
-\item Open simulation editor \hfill \\
-While not strictly necessary, having a button to open the configuration editor saves time and unnecessary complexity when trying to run the application.
-
-\item Simulation Editor Interface \hfill \\
-This interface will be used to quickly create or modify a configuration. It has the ability to create virtual objects.
-
-\item Create Objects \hfill \\
-The sole function of the editor interface is to create virtual objects, therefore it needs to have that feature.
-
-\item Assign newly made objects to one currently being created \hfill \\
-Given the following example:
+\begin{center}
+	\includegraphics[width=10cm]{../images/MainGUI-MainScreen.pdf}
+	\captionof{figure}{Mockup of main interface}
+	\label{fig:maingui}
+\end{center}
 
 \begin{enumerate}
-\item Create a capability called 'Saw'
-\item Create a virtual equiplet, which has the 'Saw' capability
+\item Start/Stop Simulation button
+\item These fields show whether a premade configuration file was found for each type
+\item The estimated amount of time left for the simulation and a progress bar
 \end{enumerate}
 
-To create a new virtual equiplet, the interface must have a way of selecting previously made capabilities. This also counts for products, batches and the grid.
+Figure~\ref{fig:eqlist} shows a graphical list of the equiplets in the simulation, their state and current load. The list also shows whether an equiplet is reserved for a batch.
 
-\item Output files \hfill \\
-The editor exists to simplify the creation of configuration files, making the feature to output the configuration files a must have.
+\begin{center}
+	\includegraphics[width=14cm]{../images/MainGUI-EquipletList.pdf}
+	\captionof{figure}{Mockup of main interface - equiplet list}
+	\label{fig:eqlist}
+\end{center}
 
-\item Read and parse files \hfill \\
-While it is possible to create a new configuration rapidly using the interface, if one has already been made before, it would be easier to read that configuration and make an adjustment rather than re-creating it from scratch.
-\end{enumerate}
+\subsubsection*{Editor interface}
+Since the goal of the interface is creating virtual representations of the objects on the platform, data classes will need to be used. However, the existing data classes expect certain parameters which are unobtainable while editing the simulation, therefor several classes will be written to describe these objects. The following descriptive classes were decided upon:
 
-\paragraph{Could Have}
-\begin{enumerate}
-\item Visualize grid \hfill \\
-When simulating a virtual grid of equiplets, it would be more intuitive to see the grid visualized instead of manually checking a single equiplets' position within the grid. It is however, not required for the application to perform.
+\begin{itemize}
+\item EquipletDescription
+\item BatchDescription
+\item ProductDescription
+\end{itemize}
 
-\end{enumerate}
+Another goal of the interface is to output the created objects in a particular format, to be used in the simulation itself. The resulting format can be found in the following figures.
 
-\subsubsection{Visual Design}
+\begin{center}
+	\includegraphics[width=7cm]{../images/capabilityFormat.png}
+	\captionof{figure}{Capability Format}
+	\label{fig:capformat}
+\end{center}
+
+Figure~\ref{fig:capformat} above shows the format in which capabilities are exported. It's a comma-seperated values file (csv), in which the first field represents the name of a capability, and where the second field represents how long a step of this type would take, noted in timeslots.
+
+\begin{center}
+	\includegraphics[width=15cm]{../images/productFormat.png}
+	\captionof{figure}{Product Format}
+	\label{fig:prodformat}
+\end{center}
+
+Figure~\ref{fig:prodformat} shows the product format used for the simulation. On the left side of the file, the fields are listed, while on the right side an example is shown. The example product is a smoothie. It has 30 minutes to be prepared and it's made by adding apples, oranges, bananas and ice, followed by blending these ingredients.
+
+\begin{center}
+	\includegraphics[width=10cm]{../images/batchFormat.png}
+	\captionof{figure}{Batch Format}
+	\label{fig:batchformat}
+\end{center}
+
+Figure~\ref{fig:batchformat} shows the format used for batches. The format is very similar to the one used for products. The amount indicates how many of these products should be made, and the interval specifies the time in seconds before another batch of products is started.
+
+\begin{center}
+	\includegraphics[width=13cm]{../images/equipletLayoutFormat.png}
+	\captionof{figure}{Equiplet Layout Format}
+	\label{fig:eqlayout}
+\end{center}
+
+Figure~\ref{fig:eqlayout} shows the format used to save the equiplet layout (the layout of equiplets within a grid). Instead of a csv format or a regular text format, this file is coded in JSON. Each equiplet has a name, an array of capability names, specifies whether the equiplet is reserved for a particular batch id number and has an array of optional equiplet error entries. These equiplet errors are defined as being a hardware or software error, how often they appear and for how long, and also whether the product currently being made on the equiplet breaks due to the error.
+
+The file further specifies the grid, which is an array of arrays, each subarray represents a row of equiplets. Which means this example defines a grid of two rows of each two equiplets.
 
 \begin{center}
 	\includegraphics[width=12cm]{../images/EditorGUI-MainScreen}
-	\captionof{figure}{The Simulation Editor Interface}
+	\captionof{figure}{Mockup of the simulation editor interface}
+	\label{fig:edgui}
 \end{center}
+
+Figure~\ref{fig:edgui} shows what the editor interface should look like.
 
 \end{document}
