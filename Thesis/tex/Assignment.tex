@@ -3,27 +3,27 @@
 
 % ================================== Problem analysis =================================== %
 \section{Problem Analysis}
-In this chapter we strive to explain something about the initial situation in current day manufacturing, the solution REXOS offers and try to analyse the problems and challenges with the current REXOS architecture.
+In this chapter we strive to explain something about the initial situation in current day manufacturing, the solution REXOS offers and analyse the problems and challenges in the current REXOS architecture.
 
-\subsection{Initial Situation in manufacturing}
+\subsection{Initial situation in manufacturing}
 \label{sec:InitialSituation}
 
-\subsubsection{Current manufacturing systems - TODO}
+\subsubsection{Current manufacturing systems}
 %smth about current manufacturing systems and why there so fcked%
-Most current day manufacturing systems consist of large production lines able to produce only one type of product at high speeds. A prime example of these are \emph{dedicated manufacturing lines} (DML) which specialize on producing a specific product at a specific capacity. The capacity of the DML and volume of products produced are high, but the diversity of products is low. This results in a high volume - low mix production process. Preparing these kinds of production lines takes time and makes it impossible to quickly develop and test new kinds of products. In order to keep up with current global demand, a more flexible way of producing needs to be invented. That is where FMS\footnote{Flexible manufacturing systems - see definition of terms for more detail.} and RMS\footnote{Reconfigurable Machines} come into play. \textbf{Still needs refs}
+Most current day manufacturing systems consist of large production lines able to produce only one type of product at high speeds. A prime example of these are \emph{dedicated manufacturing lines} (DML) which specialize in producing a specific product at a specific capacity. The capacity of the DML and volume of products produced are high, but the diversity of products is low. This results in a high volume - low mix production process. Preparing these kinds of production lines takes time and makes it impossible to quickly develop and test new kinds of products. In order to keep up with current global demand, a more flexible way of producing needs to be researched. That is where FMS and RMS come into play.
 
-\subsubsection{New manufacturing paradigms - TODO}
+\subsubsection{New manufacturing paradigms}
 \label{sec:newmanufacturingparadigms}
 %Lets tell smth about new paradigms, flexible manufacturing, agile etc%
-In order to overcome the downsides of static manufacturing, new manufacturing paradigms will have to be invented. A feasible new paradigm is FMS. Y. Koren describes FMS as '\emph{Flexible manufacturing systems (FMS) consist of computer numerically controlled (CNC) machines and other programmable automation and can produce a variety of products on the same system.}\cite{Koren} which results in production machines that can produce a multitude of products. This way, a higher mix of products can be achieved. A second solution is the use of RMs. Y. Koren describes RMS as '\emph{Reconfigurable machines (RMs) are machines whose structures can be changed to provide alternative functionality or/and upgradeable capacity on demand}'\footnote{General RMS Characteristics. Comparison with Dedicated and Flexible Systems}\textbf{INSERT PROPER REF SEE FOETNOOT} which relies on the configurability of the production machines in order to archieve a high mix of products in the production line. A third solution could be the use of 'Grid Manufacturing', which is based on the use of RMS. Grids use a set of reconfigurable machine systems, called ’equiplets’ to offer a diversity of generic services. In this concept an equiplet is a simple, autonomous low cost platform that is highly standardized so it can easily be reconfigured to offer new manufacturing capabilities. Hence, equiplets are able to quickly adapt to new market needs.\cite{GRIDPARADIGM}
+In order to overcome the downsides of static manufacturing, new manufacturing paradigms will have to be researched. A feasible new paradigm is FMS. Y. Koren describes FMS as '\emph{Flexible manufacturing systems (FMS) consist of computer numerically controlled (CNC) machines and other programmable automation and can produce a variety of products on the same system.}\cite{Koren} which results in production machines that can produce a multitude of products. This way, a higher mix of products can be achieved. A second solution is the use of RMS. Y. Koren describes RMS as '\emph{Reconfigurable machines (RMS) are machines whose structures can be changed to provide alternative functionality or/and upgradeable capacity on demand}'\cite{KorenRMS} which relies on the configurability of the production machines in order to achieve a high mix of products in the production line. A third solution could be the use of 'Grid Manufacturing', which is based on the use of RMS. \emph{Grids use a set of reconfigurable machine systems, called ’equiplets’ to offer a diversity of generic services. In this concept an equiplet is a simple, autonomous low cost platform that is highly standardized so it can easily be reconfigured to offer new manufacturing capabilities. Hence, equiplets are able to quickly adapt to new market needs.}\cite{GRIDPARADIGM}
 
 
 \subsubsection{REXOS as an answer}
 \label{sec:rexosasananswer}
 %Tell smth about the GOALS and PURPOSES of rexos, and why it was invented.%
-The Utrecht University of applied sciences formulated their own solution regarding production. The project is called REXOS for Reconfigurable equiplets operating system, REQs-OS. The heart and soul of the REXOS project is the equiplet, which is a low cost, reconfigurable and autonomous production machine. An equiplet consists of interchangable modules which can perform a specific task. These equiplets will be used in groups to make a complete manufacturing environment. The group of equiplets will have a dynamic logistic set-up, so products and parts can be transported between all systems. A group of equiplets is called a 'grid'.  When operating in a grid, equiplets can cooperate in order to archieve a common goal, producing a product. 
+The University of applied sciences Utrecht formulated their own solution regarding production. The project is called REXOS for Reconfigurable equiplets operating system, REQs-OS. The main component of the REXOS project is the equiplet. An equiplet consists of interchangable modules which can perform a specific task. These equiplets will be used in groups to make a complete manufacturing environment. The group of equiplets will have a dynamic logistic set-up, so products and parts can be transported between all systems. A group of equiplets is called a 'grid'.  When operating in a grid, equiplets can cooperate in order to achieve a common goal, producing a product. 
 
-Having these low cost and agile production robots, a large variety of products can be produced. This is also the main vision of REXOS. Having a manufacturing environment that can produce products of low amounts and with a high variety between them ( low volume, high mix ).
+Having these low cost and agile production robots, a large variety of products can be produced. Having a manufacturing environment that is able to produce low amounts of products in a high variety is a goal in the REXOS idealogy\textbf{footnote}
 
 \subsubsection{Equiplets}
 %smth about the current implementation of the equiplets - respresented by a MAS & ROS side etcetc%
@@ -53,12 +53,13 @@ These equiplets are placed in a way that is optimal for a particular situation. 
 
 \subsection{Reconfiguring}
 %Tell smth about the possibility of reconfiguring, its importance etc%
-An important aspect of agile manufacturing is the ability to reconfigure the production machines \textbf{Insert ref here}. The current REXOS architecture didnt provide such a feature. An important focus was to research this, and document it so that future participants of the project would be able to use this information and implement it.
+An important aspect of agile manufacturing is the ability to reconfigure the production machines\cite{Koren}. Reconfiguring the equiplet would provide means to a dynamic production grid, allowing to change modules attached to equiplets on the fly. Whilst it had been previously researched, the current REXOS implementation did not provides the reconfiguring of equiplets.
 
-
-\subsection{Switchable architecture (hierarchical  control vs heterarchical control)}
+\subsection{Switchable control}
 %Tell smth about the how switchable architectures came to exist, why it can be advantageous%
-Another idea that was coined during the project was that of implementing a switchable architecture. This would mean that during normal operation the system operates in a hierarchical fashion, whilst whenever an error occures the system switches to heterarchical control. \textbf{Explain things - Normal heter control $->$ in batches hierarch control.}
+%Another idea that was coined during the project was that of implementing a switchable architecture. This would mean that during normal operation the system operates in a hierarchical fashion, whilst whenever an error occures the system switches to heterarchical control.
+Tyhe original implementation of REXOS only provided 1 type of control, heterarchically. When scheduling heterarchically equiplets are all given the same priority when it comes to scheduling. This is how REXOS defines its grids, all equiplets are autonomous entities.\cite{Puik2010} However, scheduling hierarchically can be advantageous in certain situations. This has not been researched before.
+
 
 \subsection{Simulation}
 %smth bout the sim, what we done with it, what its purposes are.%
