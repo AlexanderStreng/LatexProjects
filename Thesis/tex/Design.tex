@@ -4,20 +4,18 @@
 In this chapter we describe the process of designing and the resulting design of certain elements from the current implementation of REXOS that are subject to change. This includes parts of the architecture that need replacing, such as the current implementation of planning \& scheduling.
 
 \section{REXOS Architecture}
-Throughout the whole project the main subject was constantly improving and modifying the current REXOS architecture. During the first part of the research a deadline was set to write and research feasable demo's and achieve a stable architecture for the precision fair. After the precision fair, a simulation had to be written in order to research the advantages of reserving batches (hierarchical control).
-
-The REXOS architecture as it was finished last semester was not stable enough to perform without failure. First of all there wasnt an implementation for other modules than the current pen-module and most of the work was poorly documented. The current implementation also lacked proper scheduling. 
+In this section the main defects from the current implementation of the REXOS architecture are analysed and new design implementations are proposed.
 
 \subsection{Agent communication}
 \label{sec:AgentComm}
-On the MAS side of the system, certain things needed to change. One of the biggest problems was getting a proper insight in to how the system functioned and how communication was implemented. After some research conclusions figure \ref{AgentCommunicationOverview} was drawn.
+On the MAS side of the system, certain things needed to change. One of the biggest problems was getting a proper overview on how the system functioned and how communication was implemented. After some research figure \ref{AgentCommunicationOverview} was drawn.
 \begin{center}
 	\includegraphics[width=1.1\linewidth]{../images/AgentCommunicationOverview.pdf}
 	%we might want to increase the text on this image..%
 	\captionof{figure}{Agent communication overview}
 \label{fig:AgentCommunicationOverview}
 \end{center}
-Marked in red are the changes that need to be made to make all communication FIFA \textbf{insert footnote / ref} compliant.
+Marked in red are the changes that need to be made to make all communication FIPA compliant\footnote{http://www.fipa.org/specs/fipa00086/XC00086D.pdf}. This has to be done in order to have a coherent system.
 
 \subsection{Knowledge database}
 \label{sec:kdb}
@@ -32,34 +30,32 @@ The new design incoporated module location and calibration data for the equiplet
 
 \subsection{Planning}
 \label{sec:planningalgorithm}
-The planning algorithm used in REXOS is taken from \emph{L. van Moergestel’s paper ‘Multiagent-based agile manufacturing: from user requirements to product.} \textbf{- INSERT QUOTE HERE - } and the batch scheduling algorithm is described below. Scheduling is done by the product agent, which represents a product.
-The product consists of steps, which are specific tasks defined by a set of parameters. Think of screwing, glueing or welding. All the equiplets in a grid can perform a certain set of these tasks. The ability to perform such a task is called a capability.  Each equiplet only has a limited set of these capabilities.
+The scheduling algorithm that was present in REXOS did by far not suffice for optimizing scheduling within the grid. Because a new scheduling algorithm was needed, research was conducted on implementing the algorithm from Moergestel's paper \emph{‘Multiagent-based agile manufacturing: from user requirements to product.}\cite{PAPER70} A few changes to the implementation of this algorithm had to be made. In this section the implementation of the algorithm in REXOS is explained.
+Consider a product with an n amount of product steps($\alpha$):\\
 
-In the simulation a grid consisting of equiplets is defined. Each equiplet has its own set of capabilities. Now consider a product with an n amount of product steps($\phi$):\\
+$< \alpha_1, \alpha_2, ... \alpha_n >$\\
 
-$< \phi_1, \phi_2, ... \phi_n >$\\
+Once the product agent spawns, it will match all possible equiplets to complete all of its steps. Meaning that it compiles a collection containing equiplets combined with the product steps they can perform. The resulting collection is:\\
 
-Once the product (agent) spawns, it will match all possible equiplets to complete all of its steps. Meaning that it compiles a collection containing equiplets combined with the product steps they can perform. That seems like a lot, but the equiplets do not have a large set of capabilities. The resulting collection is:\\
+$< EQ_{1}(\alpha_1, \alpha_3), EQ_{2}(\alpha_2, \alpha_3, \alpha_1), EQ_{3}(\alpha_1) >$\\
 
-$< E1(\phi_1, \phi_3), E2(\phi_2, \phi_3, \phi_1), E3(\phi_1) >$\\
+Once this collection has been compiled,  the product agent starts negotiating with the equiplets. It informs with each of the equiplets to evaluate whether or not the step can be performed with the given parameters at the given equiplet.  Once all equiplets have been queried and matched, the actual planning begins.
+The first step in the planning consist of minimizing switching between equiplets. First a production matrix is constructed. The rows represent the equiplets while the columns represent the product steps.
 
-Once this collection has been compiled,  the product(agent) starts negotiating with the equiplets. It informs with each of the equiplets to evaluate whether or not the step can be performed with the given parameters at the given equiplet.  Once all equiplets have been queried and matched, the actual planning begins.
-The first step in the planning consist of reducing the transition time between product steps. First a production matrix is constructed. The rows represent the equiplets while the columns represent the product steps.
-goog
 \begin{table}[htbp]
 \centering
 \normalsize
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
-	& $\phi$1 & $\phi$2 & $\phi$3 & $\phi$4 & $\phi$5 \\
+	& $\alpha$1 & $\alpha$2 & $\alpha$3 & $\alpha$4 & $\alpha$5 \\
 \hline
-Equiplet 1 & 1.0 & 0.0 & 1.0 & 1.0 & 1.0 \\
+$EQ_{1}$ & 1.0 & 0.0 & 1.0 & 1.0 & 1.0 \\
 \hline
-Equiplet 2 & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 \\
+$EQ_{2}$ & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 \\
 \hline
-Equiplet 3 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 \\
+$EQ_{3}$ & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 \\
 \hline
-Equiplet 4 & 1.0 & 0.0 & 1.0 & 1.0 & 0.0 \\
+$EQ_{4}$ & 1.0 & 0.0 & 1.0 & 1.0 & 0.0 \\
 \hline
 \end{tabular}
 \caption{Initial production matrix}
@@ -67,24 +63,22 @@ Equiplet 4 & 1.0 & 0.0 & 1.0 & 1.0 & 0.0 \\
 
 First off, all equiplets that are capable of performing a step have their value raised to 1.
 The next step is to minimize transition. 
-
-
-To prevent excess transition between equiplets during manufacturing, all equiplets with sequential steps being performed on the same equiplet have their value raised by the length of the sequence -1.  Resulting in the following matrix:
+To prevent excess switching between equiplets during manufacturing, all equiplets with sequential steps being performed on the same equiplet have their value raised by the length of the sequence -1.  Resulting in the following matrix:
 
 \begin{table}[htbp]
 \centering
 \normalsize
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
-	& $\phi$1 & $\phi$2 & $\phi$3 & $\phi$4 & $\phi$5 \\
+	& $\alpha$1 & $\alpha$2 & $\alpha$3 & $\alpha$4 & $\alpha$5 \\
 \hline
-Equiplet 1 & 1.0 & 0.0 & 3.0 & 3.0 & 3.0 \\
+$EQ_{1}$ & 1.0 & 0.0 & 3.0 & 3.0 & 3.0 \\
 \hline
-Equiplet 2 & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 \\
+$EQ_{2}$ & 0.0 & 1.0 & 0.0 & 0.0 & 0.0 \\
 \hline
-Equiplet 3 & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 \\
+$EQ_{3}$ & 0.0 & 0.0 & 0.0 & 0.0 & 1.0 \\
 \hline
-Equiplet 4 & 1.0 & 0.0 & 2.0 & 2.0 & 0.0 \\
+$EQ_{4}$ & 1.0 & 0.0 & 2.0 & 2.0 & 0.0 \\
 \hline
 \end{tabular}
 \caption{Production matrix after transition optimisation}
@@ -93,7 +87,7 @@ Equiplet 4 & 1.0 & 0.0 & 2.0 & 2.0 & 0.0 \\
 As is shown in figure (above) E1 is able to perform step 3, 4 \& 5. The corresponding values where increased by 2 ( sequence length is 3, minus 1 ).
 
 Another easy but important optimization is load balancing. All equiplets are responsible for their own schedule which makes calculating the load at any given time feasible.
-Consider a product querying a equiplet to calculate its load for scheduling its 57’th step. This step has to be carried out not at release time, but at release time + $\Delta$ ( where $\Delta$ delta is the time the previous 56 steps will take, including travel time. ) meaning that the equiplet has to calculate load over that time ( called a window).
+Consider a product querying a equiplet to calculate its load for scheduling its 57’th step. This step has to be carried out not at release time, but at release time + $\Delta$ (where $\Delta$ delta is the time the previous 56 steps will take, including travel time.) meaning that the equiplet has to calculate load over that time (called a window). In order to calculate an accurate load the window length is defined to be the product deadline.
 
 Consider the following 2 schedules:
 
@@ -104,59 +98,55 @@ Consider the following 2 schedules:
 	\caption{Equiplet schedules}
 \end{figure}
 
-If the equiplet would calculate load over release time + window length, it would not be a correct calculation. In above image equiplet 1 has a load of 90\% whereas equiplet 2 has a load of 20\%.
-In order to favor the equiplets with least load, all numbers in the matrix are multiplied with ( 1 – (load) ).
+If the equiplet would calculate load over release time + product deadline, it would not be a correct calculation. In above image equiplet 1 has a load of 90\% whereas equiplet 2 has a load of 20\%.
+In order to favor the equiplets with least load, all numbers in the matrix are multiplied with (1 - (load)).
 
-Applying this to our current production matrix, and a imaginary constant load ( E1 – 60\%, E2 – 20\%, E3 – 40\% and E4 – 10\% ), the matrix will result in:
+Applying this to our current production matrix, and a imaginary constant load (E1 - 60\%, E2 – 20\%, E3 – 40\% and E4 – 10\%), the matrix will result in:
 
 \begin{table}[htbp]
 \centering
 \normalsize
 \begin{tabular}{|l|l|l|l|l|l|}
 \hline
-	& $\phi$1 & $\phi$2 & $\phi$3 & $\phi$4 & $\phi$5 \\
+	& $\alpha$1 & $\alpha$2 & $\alpha$3 & $\alpha$4 & $\alpha$5 \\
 \hline
-Equiplet 1 & 0.4 & 0.0 & 1.2 & 1.2 & 1.2 \\
+$EQ_{1}$ & 0.4 & 0.0 & 1.2 & 1.2 & 1.2 \\
 \hline
-Equiplet 2 & 0.0 & 0.8 & 0.0 & 0.0 & 0.0 \\
+$EQ_{2}$ & 0.0 & 0.8 & 0.0 & 0.0 & 0.0 \\
 \hline
-Equiplet 3 & 0.0 & 0.0 & 0.0 & 0.0 & 0.6 \\
+$EQ_{3}$ & 0.0 & 0.0 & 0.0 & 0.0 & 0.6 \\
 \hline
-Equiplet 4 & 0.4 & 0.0 & 1.2 & 1.2 & 0.0 \\
+$EQ_{4}$ & 0.4 & 0.0 & 1.2 & 1.2 & 0.0 \\
 \hline
 \end{tabular}
 \caption{Production matrix after load balancing}
 \end{table}
 
-(steps Ø 3,Ø 4 \& Ø 5 on E1 are multiplied by ( 1 – 0.6 ) which results in 3 * 0.4  )
+(steps Ø 3,Ø 4 \& Ø 5 on E1 are multiplied by (1 - 0.6) which results in 3 $\times$ 0.4)
 As seen in the figure above, E1 which has a load of 60\% is suddenly not the best option for steps 3 \& anymore. This way, a proper load balance between the equiplets is achieved.
 
-Another important optimization is reducing the travel time between steps. Much like reducing the transition time between steps that can be executed on the same equiplet, this optimization is meant to reduce travel time within the grid. In order to do so, a distance matrix is utilized. This matrix has equiplets in both the rows as columns, and travel times between these as values ( in amount of timeslots required to travel  from 1 to another ):
+Another important optimization is reducing the travel time between steps. Much like reducing the transition time between steps that can be executed on the same equiplet, this optimization is meant to reduce travel time within the grid. In order to do so, a distance matrix is utilized. This matrix has equiplets in both the rows as columns, and travel times between these as values (in amount of timeslots required to travel  from 1 to another):
 
 \begin{table}[htbp]
 \centering
 \normalsize
 \begin{tabular}{|l|l|l|l|l|}
 \hline
-	& Equiplet 1 & Equiplet 2 & Equiplet 3 & Equiplet 4  \\
+	& $EQ_{1}$ & $EQ_{2}$ & $EQ_{3}$ & $EQ_{4}$  \\
 \hline
-Equiplet 1 & x & 3.0 & 1.0 & 2.0 \\
+$EQ_{1}$ & x & 3.0 & 1.0 & 2.0 \\
 \hline
-Equiplet 2 & 3.0 & x & 6.0 & 3.0 \\
+$EQ_{2}$ & 3.0 & x & 6.0 & 3.0 \\
 \hline
-Equiplet 3 & 1.0 & 6.0 & x & 6.0 \\
+$EQ_{3}$ & 1.0 & 6.0 & x & 6.0 \\
 \hline
-Equiplet 4 & 2.0 & 3.0 & 6.0 & x \\
+$EQ_{4}$ & 2.0 & 3.0 & 6.0 & x \\
 \hline
 \end{tabular}
 \caption{Grid distance matrix}
 \end{table}
 
 Now, utilising the production matrix, the product will try and use a path of least resistance algorithm to find the most suitable path within the grid.\\
-
-Ignoring all 0 values,  the following possible paths are presented:\\
-
-Combined with the weight of the values in the production matrix, a couple of feasible paths are calculated. These parts are then scheduled sequentially. ( taking the best path first ).
 
 \subsection{Scheduling}
 \label{sec:Scheduling}
