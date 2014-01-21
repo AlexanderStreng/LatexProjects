@@ -2,40 +2,45 @@
 \begin{document}
  
 \section{Research Questions}
-In this chapter answers to the research questions are given. First all sub-questions are analyzed and answered, after which a answer to the main question is posed.
+In this chapter answers to the research questions will be given. First all sub-questions are analyzed and answered, after which an answer to the main question is posed.
 
 \subsection{What is the performance and stability of the system and how can this be improved?}
 
 \subsubsection{Is the scheduling algorithm defined in paper: 'Multiagent-based agile manufacturing' suitable for implementation in REXOS?}
-The scheduling algorithm desribed in the paper has its up and downsides. The biggest downside is that the scheduling algorithm described has been designed to work in theory. When trying to implement this algorithm in REXOS, several problems occured.
+The scheduling algorithm desribed in the paper has its up and downsides. The algorithm described in the paper has been used except for two major differences: changes to the circular buffer and the travel distances.
 
-\textbf{In paper70 sections 2.1 and 5.6 } it is described that a planning blackboard (BB-planning) represents the schedule of an equiplet. The paper defines that a circular buffer of timeslots is being used for the storage of scheduled product steps. The number of timeslots within this circular buffer is constant. This also means that a product agent cannot schedule steps later than the said constant number of timeslots. 
+\subsubsection*{Circular buffer}
+in sections 2.1 and 5.6 it is described that a planning blackboard (BB-planning) represents the schedule of an equiplet. The paper defines that a circular buffer of timeslots is being used for the storage of scheduled product steps. The number of timeslots within this circular buffer is constant. This also means that a product agent cannot schedule steps later than the said constant number of timeslots. 
 
-Using this approach has several disadvantages when used in an agile manufacturing environment. These disadvantages are mainly performance related.
+For REXOS, this is not optimal and a choice has been made to use a linked list to represent the schedule of an equiplet. Usage of this will make make the schedule a lot more scalable.
 
-\subsubsection*{Which parts of the algorithm are suitable for REXOS?}
-Mosts parts of the algorithm where used. There were only 2 parts that we couldnt use for implementation, mostly because they where tailor made for a specific situation. As explained in section \textbf{REF TO SECTION ABOVE} the circular buffer used in the paper cannot be used. The paper specifies a way to reduce travel times as well, but this was not implemented due to time constraints. 
-
-\subsubsection*{If some parts can't be implemented directly, what is a better way to implement these?}
-A circular buffer has limits to its size. For example: given a size of $\tau$ amount of seconds as a timeslot and the buffer size has to be two hours, there has to be $432000 / \tau$ amount of timeslots available in the circular buffer. 
-
-This would also mean that if the $\tau$ amount of seconds has to be in tens of milliseconds, the circular buffer would increase with a factor 100. A timeslot in tens of milliseconds is a valid case since for example modern pick and place robots can move at 200 operations per minute  \footnote{http://www.expo21xx.com/news/new-staubli-tp80-fast-picker-the-next-generation-of-high-speed-pickers/}. The size of the buffer could also increase into several hours since there are for example low cost 3D printers that could take several hours to complete. 
+\subsubsection*{Travel Distances}
+ The paper specifies a way to optimize travel distances, but this was not implemented due to time constraints.
 
 \subsubsection*{What is the performance of this scheduling algorithm?}
 Due to time limitations we where not able to research the performance of this scheduling algorithm. We did however implement it in the simulation and tested the algorithm for functionality. 
 
+While the performance of the algorithm was not studied thoroughly, the results of the simulations that were run in section \ref{HierarchicalVSHeterarchical} did indicade how the algorithm performed.
+
+A part of the algorithm was to distribute the load over the available equiplets. When looking at the current load graphs of the simulations' results, it is visible that all of the equiplets' loads (with the same capabilities) were distributed equally. This indicated that the load balancing had good results.
+
+The algorithm also looked at sequences of product steps that could be executed by a single equiplet. This was not visible in the results of the simulations. A proper way to know if the sequences had effect on the planning is to determine by give a view on when a product is transferring to another equiplet.
+
 \subsubsection*{Discussion}
 This project started as the second iteration in the development of the autonomous \& cognitive part of the REXOS framework. Whilst the first iteration was implemented to be a mere 'proof of concept' alot of the current principles and mechanics stay in place. No error handling was present. Also implmenentation wise alot of improvement had to be performed. 
 
-The first improvement that was to be made was stabilizing the system. This meant searching for errors that would commonly crash the system and think of ways handle these. After stabilizing the system, improvements could be made. A new planning algorithm was implemented. The way agents communicate within the MAS layer has been generalized and made compliant with FIPA standards. A new knowledge database has been designed and implemented. 
+The first improvement that was to be made was stabilizing the system. This meant searching for errors that would commonly crash the system and think of ways handle these. After stabilizing the system, improvements could be made. A new planning algorithm was implemented. The way agents communicate within the MAS layer has been generalized and made compliant with FIPA standards. A new knowledge database has been designed and implemented.
 
 Due to the complex nature of the project, constant changes are required. Just after researching, stabilizing and implementing most of the parts of the architecture, major new changes where announced but left unimplemented.
 
+After the stabilization of the system, a scheduling algorithm has been implemented. The algorithm needs to be thoroughly tested. This was not done because of time constraints.
 
 \subsection{Is REXOS best suited for a hierarchical or a heterarchical setup?}
 
 \subsubsection*{Is it possible to combine these setups?}
 The major drawback of operating in a hierarchical fashon is the handling of errors. When a reserved line within the grid experiences a failure, a lot of products will fail (as shown in section \ref{HierarchicalVSHeterarchical}). Switching back to heterarchical takes care of this problem. As shown in the results, switching back to heterarchical can prevent products from failing whenever the reserved equiplets experience errors. 
+
+Operating in a heterarchical setup can be a disadvantage to the use of resources. When a large heterarchical grid is being used, products tend to travel a lot from equiplet to equiplet. This results in a high amount of products in the grid simultaneously, as seen in section \ref{HierarchicalVSHeterarchical} figure \ref{fig:BatchSchedulingProductsSimultaneouslyInGrid}.
 
 \subsubsection*{Discussion}
 By aiming for high configurability in REXOS, both setups should be feasable. In order to determine which setup would work best, the differences between both setups are researched and analysed. In chapter \ref{ChapterResults} test results are compiled. The test results indicate that when producing large batches it can be advantageous to switch to an hierarchical setup. Due to the fact that when equiplets are reserved, higher efficiency can be achieved. This means reserving equiplets in a certain 'production line' within the current production line. However, reserving equiplets can have its drawbacks. whenever one of the reserved equiplets experiences an error, products start failing. Switching back to heterachical scheduling can provide the 'back-up' needed in this situation. 
