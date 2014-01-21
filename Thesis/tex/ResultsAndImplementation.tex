@@ -8,11 +8,11 @@ In this chapter the results of testing and implementing the different parts are 
 \section{REXOS Architecture}
 Throughout the whole project the main subject was constantly improving and modifying the current REXOS architecture. During the first part of the research a deadline was set to research and write feasable demo's for the precision fair. After the precision fair, a simulation had to be written in order to research the advantages of reserving batches (hierarchical control).
 
-\subsection{Stable architecture - TODO}
-Having a stable architecture is an important aspect of a good platform. During the project, several key issues were identified and dealt with. These key issues, and how they were tackled will be explained in more detail below.
+\subsection{Stable architecture}
+Having a stable architecture is an important aspect of a good platform. During the project, several key issues were identified and dealt with. These key issues, and how they were tackled will be explained in the following sections.
 
 \subsubsection{Agent communication}
-One of the first things that was discovered during the project was that the communication of the agents in the system was chaotic and inconsistent. This was discovered when a mapping was made of all the messages sent by the agents. This mapping showed that the incorrect ontologies were being used, and that the ontologies were not consistent either, for example: a message sent from agent A with the ontology "IsEquipletBusy" to agent B, would be answered with a different ontology, such as "IsEquipletBusyConfirmed". This usage of different ontologies does not adhere to the FIPA Standard\footnote{http://www.fipa.org/}. The initial agent communication scheme can be found in section \ref{sec:AgentComm}
+One of the first things that was discovered during the project was that the communication between the agents in the system was confusing and inconsistent. This was discovered when a mapping was made of all the messages sent by the agents. This mapping showed that the incorrect ontologies were being used, and that the ontologies were not consistent either, for example: a message sent from agent A with the ontology \emph{IsEquipletBusy} to agent B, would be answered with a different ontology, such as \emph{IsEquipletBusyConfirmed}. This usage of different ontologies does not adhere to the FIPA Standard\footnote{http://www.fipa.org/repository/aclspecs.html}. The initial agent communication scheme can be found in section \ref{sec:AgentComm} on page~\pageref{sec:AgentComm}
 
 After the FIPA Standards were applied to this, the resulting communication scheme looked like the following:
 
@@ -22,7 +22,7 @@ After the FIPA Standards were applied to this, the resulting communication schem
 \end{center}
 
 \subsubsection{Knowledge database}
-The new design for the knowledge database, which can be found in section ~\ref{sec:kdb}, was implemented on an isolated system. This allowed the development of other systems to continue, while MAS was being re-written to use the new database design. The implementation of MAS was not finished however.
+The new design for the knowledge database, which can be found in section ~\ref{sec:kdb}, was implemented on an seperate system. This allowed the development of other systems to continue, while MAS was being re-written to use the new database design. The implementation of MAS was incomplete however.
 
 \subsubsection{REXOS vision}
 The implementation of the vision system is performed by the interns\footnote{see team for more detail}. The vision system is implemented in ROS as several nodes each with its own responisbilities. figure \ref{Vision_system} shows all different nodes involved.
