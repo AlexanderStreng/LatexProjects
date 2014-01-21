@@ -1,14 +1,10 @@
 \documentclass{../local}
 \begin{document}
  
-\section{Research Questions - TODO}
+\section{Research Questions}
+In this chapter answers to the research questions are given. First all sub-questions are analyzed and answered, after which a answer to the main question is posed.
 
 \subsection{What is the performance and stability of the system and how can this be improved?}
-This project started as the second iteration in the development of the autonomous \& cognitive part of the REXOS framework. Whilst the first iteration was implemented to be a mere 'proof of concept' alot of the current principles and mechanics stay in place. For starters, no error handling was present. Also implmenentation-wise alot of improvement had to be performed. 
-
-The first improvement that was to be made was stabilizing the system. This meant searching for errors that would commonly crash the system and think of ways handle these. After stabilizing the system, improvements could be made. A new planning algorithm was implemented. The way agents communicate within the MAS layer has been generalized and made compliant with FIPA standards. A new knowledge database has been designed and implemented. 
-
-Due to the complex nature of the project, constant changes are required. Just after researching, stabilizing and implementing most of the parts of the architecture, major new changes where announced but left unimplemented.
 
 \subsubsection{Is the scheduling algorithm defined in paper: 'Multiagent-based agile manufacturing' suitable for implementation in REXOS?}
 The scheduling algorithm desribed in the paper has its up and downsides. The biggest downside is that the scheduling algorithm described has been designed to work in theory. When trying to implement this algorithm in REXOS, several problems occured.
@@ -21,18 +17,28 @@ Using this approach has several disadvantages when used in an agile manufacturin
 Mosts parts of the algorithm where used. There were only 2 parts that we couldnt use for implementation, mostly because they where tailor made for a specific situation. As explained in section \textbf{REF TO SECTION ABOVE} the circular buffer used in the paper cannot be used. The paper specifies a way to reduce travel times as well, but this was not implemented due to time constraints. 
 
 \subsubsection*{If some parts can't be implemented directly, what is a better way to implement these?}
-A circular buffer has limits to its size. For example: given a size of $\phi$ amount of seconds as a timeslot and the buffer size has to be two hours, there has to be $432000 / \phi$ amount of timeslots available in the circular buffer. 
+A circular buffer has limits to its size. For example: given a size of $\tau$ amount of seconds as a timeslot and the buffer size has to be two hours, there has to be $432000 / \tau$ amount of timeslots available in the circular buffer. 
 
-This would also mean that if the $\phi$ amount of seconds has to be in tens of milliseconds, the circular buffer would increase with a factor 100. A timeslot in tens of milliseconds is a valid case since for example modern pick and place robots can move at 200 operations per minute  \footnote{http://www.expo21xx.com/news/new-staubli-tp80-fast-picker-the-next-generation-of-high-speed-pickers/}. The size of the buffer could also increase into several hours since there are for example low cost 3D printers that could take several hours to complete. 
+This would also mean that if the $\tau$ amount of seconds has to be in tens of milliseconds, the circular buffer would increase with a factor 100. A timeslot in tens of milliseconds is a valid case since for example modern pick and place robots can move at 200 operations per minute  \footnote{http://www.expo21xx.com/news/new-staubli-tp80-fast-picker-the-next-generation-of-high-speed-pickers/}. The size of the buffer could also increase into several hours since there are for example low cost 3D printers that could take several hours to complete. 
 
 \subsubsection*{What is the performance of this scheduling algorithm?}
-Due to time limitations we where not able to research the performance of this scheduling algorithm. We did however implement it in the simulation and tested it. 
+Due to time limitations we where not able to research the performance of this scheduling algorithm. We did however implement it in the simulation and tested the algorithm for functionality. 
+
+\subsubsection*{Discussion}
+This project started as the second iteration in the development of the autonomous \& cognitive part of the REXOS framework. Whilst the first iteration was implemented to be a mere 'proof of concept' alot of the current principles and mechanics stay in place. No error handling was present. Also implmenentation wise alot of improvement had to be performed. 
+
+The first improvement that was to be made was stabilizing the system. This meant searching for errors that would commonly crash the system and think of ways handle these. After stabilizing the system, improvements could be made. A new planning algorithm was implemented. The way agents communicate within the MAS layer has been generalized and made compliant with FIPA standards. A new knowledge database has been designed and implemented. 
+
+Due to the complex nature of the project, constant changes are required. Just after researching, stabilizing and implementing most of the parts of the architecture, major new changes where announced but left unimplemented.
+
 
 \subsection{Is REXOS best suited for a hierarchical or a heterarchical setup?}
-Due to the nature of REXOS, both setups should be feasable. In order to determine which setup would work best, the differences between both setups are researched and analysed. In chapter \textbf{REF TO CHAPEETER Results} test results are compiled. Test results show that when producing large batches it can be advantageous to switch to an hierarchical setup. This means reserving equiplets in a certain 'production line' within the current production line. 
 
 \subsubsection*{Is it possible to combine these setups?}
-The major drawback of operating in a hierarchical fashon is the handling of errors. When a reserved line within the grid experiences a failure, a lot of products will fail \textbf{ref to section resulsta -> switching}. Switching back to heterarchical takes care of this problem. As shown in the results, switching back to heterarchical can prevent products from failing whenever the reserved equiplets experience errors. 
+The major drawback of operating in a hierarchical fashon is the handling of errors. When a reserved line within the grid experiences a failure, a lot of products will fail (as shown in section \ref{HierarchicalVSHeterarchical}). Switching back to heterarchical takes care of this problem. As shown in the results, switching back to heterarchical can prevent products from failing whenever the reserved equiplets experience errors. 
+
+\subsubsection*{Discussion}
+By aiming for high configurability in REXOS, both setups should be feasable. In order to determine which setup would work best, the differences between both setups are researched and analysed. In chapter \ref{ChapterResults} test results are compiled. The test results indicate that when producing large batches it can be advantageous to switch to an hierarchical setup. Due to the fact that when equiplets are reserved, higher efficiency can be achieved. This means reserving equiplets in a certain 'production line' within the current production line. However, reserving equiplets can have its drawbacks. whenever one of the reserved equiplets experiences an error, products start failing. Switching back to heterachical scheduling can provide the 'back-up' needed in this situation. 
 
  
 \end{document}

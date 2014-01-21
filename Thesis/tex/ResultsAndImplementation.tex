@@ -1,5 +1,6 @@
 \documentclass{../local}
 \begin{document}
+\label{ChapterResults}
 
 In this chapter the results of testing and implementing the different parts are described and analysed. Improving the stability of the REXOS platform and the test cases and results from the simulation are described as well.
  
@@ -38,12 +39,13 @@ The vision system is designed to work with a multitude of camera's. It provides 
 As a by-product of developing a new vision architecture, a new coordinate system was introduced. This systems uses position based parameters to define a precise coordinate system. The coordinate system provides millimeter precision. This way all modules, independend of their location can use a generic convertion to determine their position on the equiplet. In order to translate from equiplet coordinates to coordinates usable by modules, algorithms has been implemented.
 
 \section{Hierarchical scheduling vs. Heterarchical scheduling}
+\label{HierarchicalVSHeterarchical}
 
-By utilizing the previously designed and implemented tools and components of REXOS, progress on the research question "Is REXOS best suited for a hierarchical or a heterarchical setup?" can be made. Scheduling products in the is one of the main components in REXOS. A lot of optimization can be reached on this matter. 
+By utilizing the previously designed components of REXOS, progress on the research question "Is REXOS best suited for a hierarchical or a heterarchical setup?" can be made. By using the simulation with the implemented scheduling algorithm, hierarchical scheduling versus heterarchical scheduling can be tested. In this section, the execution and results of these tests are described.
 
-By using the simulation with implemented scheduling algorithm, hierarchical scheduling versus heterarchical scheduling can be tested. In this section, the execution and results of these tests are described.
+Hierarchical scheduling in the following test cases is defined as having certain reservations concerning batches. Batches are defined as a single type of product with a high amount that has to be manufactured. This means for a grid, that certain equiplets can be reserverd on a higher level (thus implying a hierarchy) for the batch. Other types of products can not be produced at these reserved equiplets, and the batch cannot be produced outside the reserved equiplets. This is called exclusive reservation and can be seen as if the batch is being produced in a seperate grid.
 
-Hierarchical scheduling in the following test cases is defined as having certain reservations concerning batches. This means that in a grid, certain equiplets can be reserverd on a higher level (thus implying a hierarchy) for the batch. Heterarchical scheduling allows for individualistic scheduling (i.e. no Interference from higher levels) and thus the batch will go through the grid alongside other products.
+Heterarchical scheduling allows for individualistic scheduling (i.e. no interference from higher levels). If there is a batch that has to be produced in a heterarchical setup, the batch will be produced alongside the other products. 
 
 \subsection{Setup of the example case}
 %In this sample test case we try to demonstrate the various advantages and disadvantages hierarchical scheduling can have over normal heterarchical scheduling.  Next we discuss how switching between heterarchical  and hierarchical can negotiate the disadvantages.
@@ -70,7 +72,7 @@ The products used are defined next. Throughout testing the minimal deadline is d
 	\hline
 	\textbf{Product name} & Test\_Product  \\ \hline
 	\textbf{Sequence of product steps} & P A P S \\ \hline
-	\textbf{deadline} & 00:01:24 ( 86 seconds ) \\ \hline
+	\textbf{deadline} & 00:01:26 ( 86 seconds ) \\ \hline
 	\end{tabular}  
 	\captionof{table}{Test product definition}
 \end{center}
@@ -82,7 +84,7 @@ The batch products are defined to be the same as the normal products in the grid
 	\hline
 	\textbf{Batch product name} & Test\_Batch  \\ \hline
 	\textbf{Sequence of product steps} & P A P S \\ \hline
-	\textbf{deadline} & 00:01:24 ( 86 seconds ) \\ \hline
+	\textbf{deadline} & 00:01:26 ( 86 seconds ) \\ \hline
 	\end{tabular}  
 	\captionof{table}{Batch product definition}
 \end{center}
@@ -133,7 +135,7 @@ The time given in the travel matrix is the amount of timeslots. So in this case,
 \end{center}
 
 \subsection{Batch scheduling}
-In this section, the differences between heterarchical scheduling and hierarchical scheduling ( reservating equiplets for batch ) will be described. This will be done by describing a case and using the simulation to gather data. For this simulation the equiplet and capability setup will be the same as in the example case. The simulation will run for 2 hours. The following batch product will be used:
+In this section, the differences between heterarchical scheduling and hierarchical scheduling (reserving equiplets for batch) will be tested. This will be done by describing a case and using the simulation to gather data. For this simulation the equiplet and capability setup will be the same as in the example case. The simulation will run for 2 hours. The following batch product will be used:
 
 \begin{center}
 	\begin{tabular}{ | l | l |}
@@ -143,51 +145,57 @@ In this section, the differences between heterarchical scheduling and hierarchic
 	\textbf{Deadline} & 00:01:26 ( 86 seconds ) \\ \hline
 	\textbf{Spawn interval} & 1 product per 2 seconds \\ \hline
 	\end{tabular}
+	\captionof{table}{Batch product definition}
 \end{center}
 
 For the hierarchical setup, Equiplets 1, 2 and 3 will be reserved for the batch. For the products that will run on the rest of the grid, a dynamic product spawner will be used to simulate real life situations. This product spawner will spawn 35000 products of which are 3600 products of Batch1. These amount of products are chosen so that the grid will perform at approximately 80\% load.
 
-In the results, we will look at the production efficiency of the equiplets. Concerning the products, we will look at throughput, failed products and amount of products simultaneously in the grid.
+In the results, we will look at the production efficiency of the grid. Concerning the products, we will look at throughput, failed products and amount of products simultaneously in the grid.
 
 \subsubsection*{Heterarchical simulation}
 
 \begin{center}
-	\begin{figure}[h!]
 		\includegraphics[width=17cm]{../images/BatchSchedulingCurrentLoadHeterarchical.png}
-		\centering
-		\caption{Current load of equiplets - Heterarchical}
-	\end{figure}
-	\label{fig:BatchSchedulingCurrentLoadHeterarchical}
+		\captionof{figure}{Current load of equiplets - Heterarchical}
+		\label{fig:BatchSchedulingCurrentLoadHeterarchical}
 \end{center}
 
-Figure ~\ref{BatchSchedulingCurrentLoadHeterarchical} shows a high load on all the equiplets. The equiplets with the longest capability duration takes the longest. Equiplet 9 is most of the time not needed for all of the products, but needs to help out to be able to produce all the products. The overall average current load of these equiplets is 77\%
+Figure \ref{fig:BatchSchedulingCurrentLoadHeterarchical} shows a high load on all the equiplets. The equiplets with the longest capability duration takes the longest. Equiplet 9 is mostly not producing, but needs to help out at certain momemts. The following average current loads were measured:
+
+\begin{tabular}{ | l | l | l | l | l | l | l | l | l | l |}
+	\hline
+	EQ1 & EQ2 & EQ3 & EQ4 & EQ5 & EQ6 & EQ7 & EQ8 & EQ9 & Overall \\ \hline
+	100\% & 94\% & 99\% & 100\% & 97\% & 89\% & 100\% & 88\% & 77\% & 93\% \\ \hline
+\end{tabular}
 
 \subsubsection*{Hierarchical simulation}
-
 \begin{center}
-	\begin{figure}[h!]
 		\includegraphics[width=17cm]{../images/BatchSchedulingCurrentLoadHierarchical.png}
-		\centering
-		\caption{Current load of equiplets - Hierarchical}
-	\end{figure}
-	\label{fig:BatchSchedulingCurrentLoadHierarchical}
+		\captionof{figure}{Current load of equiplets - Hierarchical}
+		\label{fig:BatchSchedulingCurrentLoadHierarchical}
 \end{center}
 
-Figure ~\ref{BatchSchedulingCurrentLoadHierarchical} shows a high load on all of the equiplets. Equiplets 1, 2 and 3 have a constant load, which is to be expected since they are a optimized setup and the batch can only access these equiplets. The remaining equiplets have a high load, but is lower than the load of the Heterarchical setup. The average current load of this grid is 69\%
+Figure \ref{fig:BatchSchedulingCurrentLoadHierarchical} shows a high load on all of the equiplets. Equiplets 1, 2 and 3 have a constant load. which is to be expected since the equiplets are setup in such a way that the batch can be produced optimally. The remaining equiplets have a high load, but is lower than the load of the heterarchical setup. The following average current loads were measured:
 
-\newpage
+\begin{tabular}{ | l | l | l | l | l | l | l | l | l | l |}
+	\hline
+	EQ1 & EQ2 & EQ3 & EQ4 & EQ5 & EQ6 & EQ7 & EQ8 & EQ9 & Overall \\ \hline
+	100\% & 50\% & 50\% & 84\% & 91\% & 80\% & 77\% & 81\% & 69\% & 76\% \\ \hline
+\end{tabular}
+
 \subsubsection*{Products}
-
+\begin{center}
 	\includegraphics[width=16cm]{../images/BatchSchedulinThroughputFailedProducts.png}
 	\captionof{figure}{Failed products - Created products}
-	\begin{center}
+\end{center}
+\begin{center}
 	\includegraphics[width=8cm]{../images/BatchSchedulingProductsSimultaneouslyInGrid.png}
 	\captionof{figure}{products being produced simultaneously}
 	\end{center}
 %\caption{Current load of equiplets - Hierarchical}
 %\label{fig:BatchSchedulingCurrentLoadHierarchical}
 
-As seen in above graphs, heterarchical is more production efficient. It has a higher throughput, but uses a lot more resources and some products could not finish. The amount of simultaneous products in the grid is more than double than at the hierarchical setup. Also the heterarchical setup has failed products, whereas the hierarchical setup has none. The amount of failed products is 4\% relative to the throughput.
+As seen in above graphs, heterarchical is more production efficient. It has a higher throughput, but uses a lot more resources and some products could not finish. The amount of simultaneous products in the grid is more than double than at the hierarchical setup. Also the heterarchical setup has failed products, whereas the hierarchical setup has none. The amount of failed products is 4\% of the throughput.
 
 \subsection{Advantages of switching back to heterarchical scheduling}
 Hierarchical scheduling can be advantagous over heterarchical scheduling. In this section we review the downsides of batch scheduling, and research pose a possible solution. 
@@ -210,7 +218,6 @@ One of the major downsides concerning reserved equiplets is what happends when o
 
 \begin{center}
 		\includegraphics[width=17cm]{../images/CombinedEquipletLoadNotAllowingOutsideReservation.png}
-		\centering
 		\captionof{figure}{Combined load of all equiplets in the grid}
 	\label{fig:CombinedEquipletLoadNotAllowingOutsideReservation}
 \end{center}
