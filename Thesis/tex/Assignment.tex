@@ -19,6 +19,7 @@ In order to overcome the downsides of static manufacturing, new manufacturing pa
 
 
 \subsubsection{REXOS as an answer}
+\label{sec:rexosasananswer}
 %Tell smth about the GOALS and PURPOSES of rexos, and why it was invented.%
 The Utrecht University of applied sciences formulated their own solution regarding production. The project is called REXOS for Reconfigurable equiplets operating system, REQs-OS. The heart and soul of the REXOS project is the equiplet, which is a low cost, reconfigurable and autonomous production machine. An equiplet consists of interchangable modules which can perform a specific task. These equiplets will be used in groups to make a complete manufacturing environment. The group of equiplets will have a dynamic logistic set-up, so products and parts can be transported between all systems. A group of equiplets is called a 'grid'.  When operating in a grid, equiplets can cooperate in order to archieve a common goal, producing a product. 
 
@@ -27,36 +28,35 @@ Having these low cost and agile production robots, a large variety of products c
 \subsubsection{Equiplets}
 %smth about the current implementation of the equiplets - respresented by a MAS & ROS side etcetc%
 \begin{wrapfigure}{r}{0.5\textwidth}
-\includegraphics[width=5cm]{../images/Equiplet}
+\includegraphics[width=7cm]{../images/Equiplet}
+\caption{Prototype of an equiplet}
 \end{wrapfigure}
-Equiplets were first designed by the Institute for Engineering \& Design at the University Utrecht.
+Equiplets were first designed at the University of Engineering \& Design Utrecht.
 
-The first versions of the equiplets were standalone robots that only had software to move the module that was installed on. The REXOS platform did not exist at that time. Now with the REXOS platform, equiplets are a lot more sophisticated.
+The first versions of the equiplets were standalone robots that only had software to operate the module that was installed on it. The REXOS platform did not exist at that time. Now with the REXOS platform, equiplets are a lot more sophisticated.
 
-As stated in the previous section, equiplets need to be flexible and reconfigurable, but also applicable for industrial systems. In order to achieve this, a hybrid system of MAS and ROS is used\cite{MASTA2013}.
+As stated in section \ref{sec:rexosasananswer}, equiplets need to be flexible and reconfigurable, but also applicable for industrial systems. In order to achieve this, a hybrid system of MAS and ROS is used\cite{MASTA2013}. The MAS part represents the cognitive side of the equiplet, while the ROS part represents the reactive side.
 
-The current version of the equiplet now is represented by an agent entity, which is responsible for the negotiation between products and interpretation of tasks, and a ROS side, which is responsible for the hardware. The agent entity will respond to negotiations from product agents. These negotiations involve scheduling of steps ( product steps ) that the product agent needs done by the equiplet. When these negotiations are done, the agent entity of the equiplet sends data to the ROS part to execute the product step.
+The low cost of the equiplet is reached by using cheap materials and components. This should have a negative impact to the precision of the modules installed on the equiplet, but by using techniques to create and place these components with micro precision, this is avoided. 
 
-Using this software for the equiplet, it is now capable to perform simple tasks with a high precision and high flexibility. 
-
-\newpage
 \subsection{Grid}
 
-\begin{figure}[h!]
-	\centering
+\begin{center}
 	\includegraphics[width=12cm]{../images/Grid.png}
-	\caption{A equiplet grid}
+	\captionof{figure}{An equiplet grid}
 	\label{gridLayout}
-\end{figure}
+\end{center}
 
-The aforementioned equiplets needs to work together to create products constructed of various product steps. In order to let these equiplets work together, they are placed in a so called grid. Figure \ref{gridLayout} shows an example of this grid with nine equiplets. These equiplets are placed in a square with space inbetween the equiplets. The space allows products to travel from equiplet to equiplet. In future REXOS this grid has to be able to add and/or remove equiplets without shutdown of the system.
+The aforementioned equiplets needs to work together to create products consisting of various product steps. In order to let these equiplets work together, they are placed in a so called grid. Figure \ref{gridLayout} shows an example of this grid with nine equiplets. 
 
-\subsection{Reconfiguring - TODO}
+These equiplets are placed in a way that is optimal for a particular situation. For example, equiplets are placed in a square with space in between them. The space allows products to travel from equiplet to equiplet. In future REXOS this grid needs to be able to add and/or remove equiplets without shutting down the system.
+
+\subsection{Reconfiguring}
 %Tell smth about the possibility of reconfiguring, its importance etc%
 An important aspect of agile manufacturing is the ability to reconfigure the production machines \textbf{Insert ref here}. The current REXOS architecture didnt provide such a feature. An important focus was to research this, and document it so that future participants of the project would be able to use this information and implement it.
 
 
-\subsection{Switchable architecture (hierarchical  control vs heterarchical control) - TODO}
+\subsection{Switchable architecture (hierarchical  control vs heterarchical control)}
 %Tell smth about the how switchable architectures came to exist, why it can be advantageous%
 Another idea that was coined during the project was that of implementing a switchable architecture. This would mean that during normal operation the system operates in a hierarchical fashion, whilst whenever an error occures the system switches to heterarchical control. \textbf{Explain things - Normal heter control $->$ in batches hierarch control.}
 
@@ -76,10 +76,9 @@ In order to gather performance data, the decision was made to create a simulator
 
 %==================================Research questions===================================%
 \section{Research Questions}
-Not all of the research questions that have been formulated in the research plan have been researched and analyzed. Reason for this is that the project supervisor's needs have changed during the project. Below is a list of the research questions that were originally formulated.
+Not all of the research questions that have been formulated in the research plan have been researched and analyzed. The reason for this is that the project supervisor's needs changed during the project. Below is a list of the research questions that were originally formulated.
 \begin{itemize}
-\item How can reconfigurability of equiplets efficiently be implemented into the system?
-\item And how will this impact the rest of the system?
+\item How can reconfigurability of equiplets efficiently be implemented into the system, and how will this impact the rest of the system?
 	\begin{itemize}
 		\item What methods of implementation exist?
 		\item What kind of impact do these methods have on the system?
@@ -97,9 +96,9 @@ Not all of the research questions that have been formulated in the research plan
 	\end{itemize}
 \end{itemize}
 
-The research question 'How can reconfigurability efficiently be implemented into the system?' and 'And how will this impact the rest of the system?' has not been researched. The reason for this is that conclusions have been made during brainstorm sessions that other issues had to be taken care of before above questions could be answered. 
+The research questions 'How can reconfigurability efficiently be implemented into the system?' and 'And how will this impact the rest of the system?' have not been researched. The reason for this is that conclusions were made during brainstorm sessions that other issues had to be taken care of before above questions could be answered. Such as, improving the REXOS platform by implementing a proper scheduling algorithm.
 
-When an equiplet needs reconfiguration, this will impact products that need producing, especially the schedules of these products will be affected. There was no scheduling alogrithm implemented in REXOS before the project. The project supervisor's decision was that a scheduling algorigthm in REXOS was more important than reconfiguration of an equiplet. A scheduling algorithm for REXOS was already researched and described in the paper: 'Multiagent-based agile manufacturing\cite{PAPER70}'. This resulted in the following new research questions:
+A scheduling algorithm for REXOS was already researched and described in the paper: 'Multiagent-based agile manufacturing\cite{PAPER70}'. This resulted in the following new research questions:
 
 \begin{itemize}
 \item Is the scheduling algorithm defined in paper: 'Multiagent-based agile manufacturing\cite{PAPER70}' suitable for implementation in REXOS?
@@ -110,7 +109,7 @@ When an equiplet needs reconfiguration, this will impact products that need prod
 	\end{itemize}
 \end{itemize}
 
-Another research question came up during the project that had a high priority. During brainstorm sessions questions came up concerning whether REXOS should have a hierarchical or heterarchical setup. Stated was that both setups had their own advantages and disadvantages. Choosing a right setup is neccesary. 
+Another research question came up during the project that had a high priority. During brainstorm sessions questions came up concerning whether REXOS should have a hierarchical or heterarchical setup. Stated was that both setups had their own advantages and disadvantages. Choosing the right setup is crucial.
 
 \begin{itemize}
 \item Is REXOS best suited for a hierarchical or a heterarchical setup?
@@ -124,21 +123,19 @@ The addition of this new research question resulted in a lower priority for the 
 \section{Goals}
 In short the goals of the project are:
 \begin{itemize}
-\item having a stable platform to have reliable research results and that future projects can continue without big issues, also the performance has been improved
-\item having a new implemented scheduling algorithm
-\item answering the question if a hierarchical or heterarchical setup is better for REXOS. 
+\item Having a stable platform to have reliable research results and that future projects can continue without big issues, also the performance has been improved.
+\item Having a scheduling algorithm in REXOS.
+\item Answering the question if a hierarchical or heterarchical setup is better for REXOS. 
 \end{itemize}
-Below these goals are described more in detail.
+These goals are described in the following sections:
 
 \subsection{Stable REXOS platform}
-Prior to the research that has to be done. The current platform's stability has to be improved. This has to be done because testing solutions or performing tests will be more accurate and reliable. Also when a stable platform is provided for the next project, developing or researching using that platform will be easier and more reliable. Stabilizing a platform can be done continuously, but in this project it will have a time limit and when the project supervisor thinks that the platform is stable enough.
-
-After the platform has been stabilized, the platform will be tested. After testing, there will be a picture of where the bottlenecks of the system are. The goal is that these bottlenecks will be resolved.
+Prior to the research that has to be done, the current platform's stability has to be improved. This needs to be done because testing solutions or performing tests will be more accurate and reliable. Also when a stable platform is provided for the next project, developing or researching using that platform will be easier and more reliable. Stabilizing the REXOS platform can be done continuously, but is limited by time or if other subjects need more attention.
 
 \subsection{Scheduling}
-Current implementation of scheduling for products at equiplets don't exist yet in REXOS.  The goal is that at the end of the project an efficient scheduling algorithm will be functional and working in REXOS. This implementation can then be tested afterwards for efficiency with proper tools.
+Current implementation of scheduling for products at equiplets doesn't exist yet in REXOS. The goal is that at the end of the project an efficient scheduling algorithm will be functional and working in REXOS. This implementation should then be tested afterwards.
 
 \subsection{Hierarchical or heterarchical}
-Choosing the right setup for REXOS could determine the flexibility, scalability and efficiency of the platform. Using testing tools with different cases, a decision can be made what setup is better for certain cases. The goal of this project is to find out when hierarchical is better than heterarchical and vice versa.
+Choosing the most efficient setup for REXOS could impact the flexibility, scalability and efficiency of the platform. Using a variety of test cases, a conclusion can be made which setup is better for which case. The goal is to find out when hierarchical is better than heterarchical and vice versa.
 
 \end{document}
