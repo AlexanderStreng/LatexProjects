@@ -1,36 +1,37 @@
 \documentclass{../local}
 \begin{document}
 
-In this chapter we describe the process of designing and the resulting design of certain elements from the current implementation of REXOS that are subject to change. This includes parts of the architecture that need replacing, such as the current implementation of planning \& scheduling.
+In this chapter we describe the process of designing and the resulting designs of certain elements from the current implementation of REXOS that are subject to change. This includes parts of the architecture that need replacing, such as the implementation of planning \& scheduling.
 
 \section{REXOS Architecture}
-In this section the main defects from the current implementation of the REXOS architecture are analysed and new design implementations are proposed.
+In this section the key issues with the implementation of the REXOS architecture are analysed and new design implementations are proposed.
 
 \subsection{Agent communication}
 \label{sec:AgentComm}
-On the MAS side of the system, certain things needed to change. One of the biggest problems was getting a proper overview on how the system functioned and how communication was implemented. After some research figure \ref{AgentCommunicationOverview} was drawn.
+On the MAS side of the system, certain elements need to change. One of the biggest problems is getting a proper overview on how the system functions and how communication is implemented. After some research figure \ref{fig:AgentCommunicationOverview} was drawn.
 \begin{center}
 	\includegraphics[width=1.1\linewidth]{../images/AgentCommunicationOverview.pdf}
 	%we might want to increase the text on this image..%
 	\captionof{figure}{Agent communication overview}
-\label{fig:AgentCommunicationOverview}
+	\label{fig:AgentCommunicationOverview}
 \end{center}
-Marked in red are the changes that need to be made to make all communication FIPA compliant\footnote{http://www.fipa.org/specs/fipa00086/XC00086D.pdf}. This has to be done in order to have a coherent system.
+Marked in red are the changes that need to be made to make all communication FIPA compliant\footnote{http://www.fipa.org/specs/fipa00086/XC00086D.pdf}. This needs to be done in order to have a consistant system.
 
 \subsection{Knowledge database}
 \label{sec:kdb}
 % was done for autonomous 
-The knowledge database was initially designed for a centralized platform. During one of the brainstorms sessions that took place, a decision was made to make equiplets autonomous. To accomodate this change, the knowledge database required re-designing. The task of designing the new database was assigned to one of the interns, T. Bakker. The resulting new design incoporated module location and calibration data for the equiplet modules. The full design can be found in figure~\ref{fig:kdb}.
+The knowledge database was initially designed for a centralized platform. This is not the intented way. Equiplets need to be able to run autonomously, so the centralized knowledge database needed to be decentralized. To accomodate this change, the knowledge database requires re-designing. The task of designing the new database was assigned to one of the interns, T. Bakker. The resulting new design incorporated module location and calibration data for the equiplet modules. The full design can be found in figure~\ref{fig:kdb}.
 
 \begin{center}
   \includegraphics[width=16cm]{../images/kdb.png}
-  \captionof{figure}{Knowledge database design}
+  \captionof{figure}{Knowledge database design by T. Bakker}
   \label{fig:kdb}
 \end{center}
 
 \subsection{Planning}
 \label{sec:planningalgorithm}
-The scheduling algorithm that was present in REXOS did by far not suffice for optimizing scheduling within the grid. Because a new scheduling algorithm was needed, research was conducted on implementing the algorithm from Moergestel's paper \emph{‘Multiagent-based agile manufacturing: from user requirements to product.}\cite{PAPER70} A few changes to the implementation of this algorithm had to be made. In this section the implementation of the algorithm in REXOS is explained.
+The scheduling algorithm that was present in REXOS did not suffice for optimizing scheduling within the grid. Because a new scheduling algorithm was required, research was conducted on implementing the algorithm from Moergestel's paper \emph{‘Multiagent-based agile manufacturing: from user requirements to product.}\cite{PAPER70} A few changes to the implementation of this algorithm needed to be made. In this section the implementation of the algorithm in REXOS is explained.
+
 Consider a product with an n amount of product steps($\alpha$):\\
 
 $< \alpha_1, \alpha_2, ... \alpha_n >$\\
@@ -82,26 +83,27 @@ $EQ_{4}$ & 1.0 & 0.0 & 2.0 & 2.0 & 0.0 \\
 \hline
 \end{tabular}
 \caption{Production matrix after transition optimisation}
+\label{ProductionMatrixAfterTransition}
 \end{table}
 
-As is shown in figure (above) E1 is able to perform step 3, 4 \& 5. The corresponding values where increased by 2 ( sequence length is 3, minus 1 ).
+As is shown in table \ref{ProductionMatrixAfterTransition} $EQ_1$ is able to perform step 3, 4 \& 5. The corresponding values where increased by 2 ( sequence length is 3, minus 1 ).
 
-Another easy but important optimization is load balancing. All equiplets are responsible for their own schedule which makes calculating the load at any given time feasible.
-Consider a product querying a equiplet to calculate its load for scheduling its 57’th step. This step has to be carried out not at release time, but at release time + $\Delta$ (where $\Delta$ delta is the time the previous 56 steps will take, including travel time.) meaning that the equiplet has to calculate load over that time (called a window). In order to calculate an accurate load the window length is defined to be the product deadline.
+Another important optimization is load balancing. All equiplets are responsible for their own schedule which makes it feasible calculating the load at any time.
+Consider a product querying an equiplet to calculate its load for scheduling its 57’th step. This step has to be carried out not at release time, but at release time + $\Delta$ (where $\Delta$ delta is the time the previous 56 steps will take, including travel time.) meaning that the equiplet has to calculate load over that time (called a window). In order to calculate an accurate load the window length is defined to be the product deadline.
 
-Consider the following 2 schedules:
+Consider the following two schedules:
 
-\begin{figure}[h!]
+\begin{center}
 \flushleft
 	\includegraphics[width=1.1\linewidth]{../images/EquipletLoadWindowExample.jpg}
 	%we might want to increase the text on this image..%
-	\caption{Equiplet schedules}
-\end{figure}
+	\captionof{figure}{Equiplet schedules}
+\end{center}
 
 If the equiplet would calculate load over release time + product deadline, it would not be a correct calculation. In above image equiplet 1 has a load of 90\% whereas equiplet 2 has a load of 20\%.
-In order to favor the equiplets with least load, all numbers in the matrix are multiplied with (1 - (load)).
+In order to favor the equiplets with least load, all numbers in the matrix are multiplied with (1 - load).
 
-Applying this to our current production matrix, and a imaginary constant load (E1 - 60\%, E2 – 20\%, E3 – 40\% and E4 – 10\%), the matrix will result in:
+Applying this to our current production matrix, and a imaginary constant load ($EQ_1$ - 60\%, $EQ_2$ – 20\%, $EQ_3$ – 40\% and $EQ_4$ – 10\%), the matrix will result in:
 
 \begin{table}[htbp]
 \centering
@@ -122,8 +124,8 @@ $EQ_{4}$ & 0.4 & 0.0 & 1.2 & 1.2 & 0.0 \\
 \caption{Production matrix after load balancing}
 \end{table}
 
-(steps Ø 3,Ø 4 \& Ø 5 on E1 are multiplied by (1 - 0.6) which results in 3 $\times$ 0.4)
-As seen in the figure above, E1 which has a load of 60\% is suddenly not the best option for steps 3 \& anymore. This way, a proper load balance between the equiplets is achieved.
+(steps Ø 3,Ø 4 \& Ø 5 on $EQ_1$ are multiplied by (1 - 0.6) which results in 3 $\times$ 0.4)
+As seen in the figure above, $EQ_1$ which has a load of 60\% is suddenly not the best option for steps 3 \& 4 anymore. This way, a proper load balance between the equiplets has been achieved.
 
 Another important optimization is reducing the travel time between steps. Much like reducing the transition time between steps that can be executed on the same equiplet, this optimization is meant to reduce travel time within the grid. In order to do so, a distance matrix is utilized. This matrix has equiplets in both the rows as columns, and travel times between these as values (in amount of timeslots required to travel  from 1 to another):
 
@@ -146,7 +148,7 @@ $EQ_{4}$ & 2.0 & 3.0 & 6.0 & x \\
 \caption{Grid distance matrix}
 \end{table}
 
-Now, utilising the production matrix, the product will try and use a path of least resistance algorithm to find the most suitable path within the grid.\\
+Now, utilizing the production matrix, the product will try and use a path of least resistance algorithm to find the most suitable path within the grid.\\
 
 \subsection{Scheduling}
 \label{sec:Scheduling}
@@ -155,17 +157,11 @@ An equiplet agent offers its services to product agents that needs his steps to 
 \subsubsection{Representation of an equiplet's schedule }
 In article "\emph{Multiagent-based agile manufacturing: from user requirements to product}" section 2.1 and 5.6\cite{PAPER70}  it is described that a planning blackboard (BB-planning) represents the schedule of an equiplet. The paper defines that a circular buffer of timeslots is being used for the storage of scheduled product steps. The number of timeslots within this circular buffer is constant. This means that a product agent cannot schedule steps later than the said constant number of timeslots.
 
-Using this approach has a disadvantage when used in an agile manufacturing environment and will be discussed below.
-
-A circular buffer has limits to its size. For example: given a size of $\tau$ amount of seconds as a timeslot and the buffer size has to be two hours, there has to be $432000 / \tau$ amount of timeslots available in the circular buffer. 
-
-This would also mean that if the $\tau$ amount of seconds needs to be in tens of milliseconds, the circular buffer would increase with a factor 100. A timeslot in tens of milliseconds is a valid case since modern pick and place robots can move at 200 picks per minute \footnote{http://www.expo21xx.com/news/new-staubli-tp80-fast-picker-the-next-generation-of-high-speed-pickers/}. The size of a timeslot could also increase into several hours since there are for example low cost 3D printers that could take several hours to complete.
-
-In REXOS, it is possible that a product can consist of a lot of complex product steps and thus take a day to complete. Given the above timeslot length of ten milliseconds, the amount of items in the circular buffer length would result in: (timeslot milliseconds to hours, times 24 hours) $ 10 * 100 * 3600 * 24 = 86400000$ timeslots. This is a huge amount for an equiplet that has to be low cost.
+Using this approach has a disadvantage when used in an agile manufacturing environment. In short, the circular buffer would not be scalable enough for REXOS. This will be discussed in detail at section REF TO SECTION .
 
 For REXOS we took another approach to avoid this issue. We abandoned the idea of using a circular buffer, but we still need to store the schedules of equiplets. Parts that have to be saved on these schedules are steps of a product and time information about when that step will be executed and how long that will take. 
 
-In real life situations an equiplet operates from product step to product step. When an equiplet does not have a product step planned, it doesnt have to do anything special. Translating this to software means that having a linked list of product steps is enough to let the equiplet function. The issue with using a circular buffer is that all timeslots will be stored regardless of whether they are empty or not. If the equiplet needs to execute 20\% of the time, would mean that that 80\% of the timeslots in the circular buffer would be empty. This is unneccessary used memory. A linked list will resolve this issue. It would make the schedule of an equiplet more scalable and less memory heavy.
+In real life situations an equiplet operates from product step to product step. When an equiplet does not have a product step planned, it doesnt have to operate. Translating this to software means that having a linked list of product steps is enough to let the equiplet function. The issue with using a circular buffer is that all timeslots will be stored regardless of whether they are empty or not. If the equiplet operates 20\% of the time, this would mean that 80\% of the timeslots in the circular buffer would be empty. This is unneccessary used memory. Using a linked list will resolve this issue. It would make the schedule of an equiplet more scalable and less memory heavy.
 
 Calculating available free time slots for a given product step would be faster using the aforementioned solution. Rather than iterating through and counting all of the elements when using a circular buffer, a free time slot can be calculated between two elements of the linked list solution. The same applies to calculating the load of an equiplet.
 
@@ -173,9 +169,9 @@ Calculating available free time slots for a given product step would be faster u
 \label{sec:schedulelock}
 In REXOS, there is a high possibility that multiple product agents will be scheduling at the same equiplet simultaneously. When this happens, it is likely that the product agents will try to schedule at the same time. Resulting in concurrency errors.
 
-To prevent these situations, the planning and scheduling operations have to be atomic actions\cite{PAPER70}. Once a product agent starts requesting information of the schedule of an equiplet with the intention of scheduling new product steps, the equiplet will lock its schedule and give the lock to that product agent. Other product agents needing to schedule cannot request any information of the schedule of this 'locked' equiplet's schedule. Once the product agent that received the lock of the equiplet's schedule is done scheduling, the product agent will unlock this schedule and other product agents will be able to schedule at this equiplet again.
+To prevent these situations from methoding, the planning and scheduling operations have to be atomic actions\cite{PAPER70}. Once a product agent starts requesting information of the schedule of an equiplet with the intention of scheduling new product steps, the equiplet will lock its schedule and give the lock to that product agent. Other product agents needing to schedule cannot request any information of the equiplet's 'locked' schedule. Once the product agent that received the lock of the equiplet's schedule is done scheduling, the product agent will unlock this schedule and other product agents will be able to schedule at this equiplet again.
 
-Using the planning algorithm in section \ref{planningalgorithm} will result in a lot of equiplet's schedules used and locked by the product agent. Given the following situation: There are three equiplets providing capability one (drilling). When a product agent spawns, consisting of 'drilling' product steps, and wants to schedule, it will lock all of the three equiplet's schedule. When a second product agent that needs the same capability wants to schedule its product steps, it cannot receive the lock of any of the required equiplet's schedule. This product agent cannot resume its planning.
+Using the planning algorithm in section \ref{sec:planningalgorithm} will result in a lot of equiplet's schedules locked by the product agent. Given the following situation: There are three equiplets providing capability one (drilling). When a product agent spawns, consisting of 'drilling' product steps, and wants to schedule, it will lock all of the three equiplet's schedule. When a second product agent that needs the same capability wants to schedule its product steps, it cannot receive the lock of any of the required equiplet's schedule. This product agent cannot resume its planning.
 
 The most efficient way of resolving this issue is to let the second product agent wait until the equiplet's schedules are unlocked. The main reason for this is that the planning algorithm has the best results when all of the possible equiplets for the required product steps are used. Excluding some of the equiplets from the algorithm will eventually result in an inefficient production route for some products.
 
@@ -186,13 +182,13 @@ Using the above solution for the problem could cause a major software deadlock i
 \captionof{figure}{Product agents locking equiplet schedules}
 \end{center}
 
-In the above picture two product agents are spawned at the same time and need the same equiplets. In the MAS system, the product agent will send lock request messages to the equiplets. Due to latency, it is possible that the last sent lock request message (the message to EQ$_3$ from PA$_2$) will be received before the lock request message from PA$_1$. In above situation PA$_1$'s messages are received in order from EQ$_1$ to EQ$_3$ and PA$_2$'s messages from EQ$_3$ to EQ$_1$. For this example messages are processed at 1 message per tick.
+In the above picture two product agents are spawned at the same time and need the same equiplets. In the MAS system, the product agent will send lock request messages to the equiplets. Due to latency, it is possible that the last sent lock request message (the message to EQ$_3$ from PA$_2$) will be received before the lock request message from PA$_1$. In above situation PA$_1$'s messages are received in order from EQ$_1$ to EQ$_3$ and PA$_2$'s messages from EQ$_3$ to EQ$_1$. In this example messages are processed at 1 message per tick.
 
 After the first tick, PA$_1$ has the lock of EQ$_1$ and PA$_2$ has the lock of EQ$_3$. After the second tick a race condition appears and in this case PA$_1$ gets the lock of EQ$_2$. Now for the next tick, there is a problem. PA$_1$ requests the lock of EQ$_3$, but is not given the lock because PA$_2$ already has the lock. For the same reason the lock of EQ$_1$ cannot be given to PA$_2$. Given the above solution we end up in a deadlock because PA$_1$ will wait for the lock of EQ$_3$ to release and PA$_2$ will wait for the release of the lock of EQ$_1$.
 
-To solve this problem, this situation has to be detected and resolved. Detection can be done as following: When an product agent (PA$_1$) cannot get the lock of an equiplet's schedule (EQ$_3$), it will request the address of the product agent that locked EQ$_3$, resulting in the address of PA$_2$. PA$_1$ will then send a message to PA$_2$, notifying PA$_2$ that PA$_1$ is in need of the locked EQ$_3$. When PA$_2$  will detect a locked EQ$_1$ that is locked by PA$_1$, by asking EQ$_1$ the address of the locker, PA$_2$ will compare the address returned with its notification list and will detect the deadlock of two product agents that need each others locked equiplets.
+To solve this problem, this situation has to be detected and resolved. Detection can be done as following: When an product agent (PA$_1$) cannot get the lock of an equiplet's schedule (EQ$_3$), it will request the address of the product agent that locked EQ$_3$, resulting in the address of PA$_2$. PA$_1$ will then send a message to PA$_2$, notifying PA$_2$ that PA$_1$ is in need of the locked EQ$_3$. When PA$_2$ detects a locked EQ$_1$ that is locked by PA$_1$, by asking EQ$_1$ the address of the locker, PA$_2$ will compare the address returned with its notification list and will detect the deadlock of two product agents that need each others locked equiplets.
 
-There is another case where the above solution will not detect a deadlock with three or more product agents. Given the following case with three product agents: PA$_1$ needs EQ$_1$ and $_2$, PA$_2$ needs EQ$_2$ and EQ$_3$ and PA$_3$ needs EQ $_3$ and EQ$_1$. all three product agents will lock their first equiplet at the same time. At the the second lock round, A circle of waits will be created ( see figure 2 ), but two product agents aren't waiting on eachother like the first case. 
+There is another case where the above solution will not detect a deadlock with three or more product agents. Given the following case with three product agents: PA$_1$ needs EQ$_1$ and EQ$_2$, PA$_2$ needs EQ$_2$ and EQ$_3$ and PA$_3$ needs EQ $_3$ and EQ$_1$. all three product agents will lock their first equiplet at the same time. At the the second lock round, A circle of waits will be created ( see figure 2 ), but two product agents aren't waiting on eachother like the first case. 
 
 \begin{center}
 \includegraphics{../images/CircleDeadlock}
@@ -205,44 +201,43 @@ Resolving the deadlock is the same for both cases, the detector will start a neg
 
 \subsection{Equiplet Error}
 \label{EquipletError}
-In real life situations, the hardware or software of equiplets can fail at any given time. There are two kinds of errors, hardware errors and software errors. Software errors could occur when runtime undefined exceptions could occur. When the software cannot handle this exception, it will be put into an error state. Hardware errors will occur when the hardware does not act expected. When the software detects this deviant behaviour of the hardware and cannot resolve it, the software will also put the equiplet into an error state.
+In real life situations, the hardware and software of equiplets can fail at any given time. There are two kinds of errors, hardware errors and software errors. Software errors could occur when runtime undefined exceptions occur. When the software cannot handle this exception, it will be put into an error state. Hardware errors will occur when the hardware does not act as expected. When the software detects this deviant behaviour of the hardware and cannot resolve it, the software will also put the equiplet into an error state.
 
-When one of these errors occur, depending of the state of the equiplet, a number of decisions has to be made. The equiplet has to made decisions about the following: 
+When one of these errors occur, depending of the state of the equiplet, a number of decisions has to be made. The equiplet has to make decisions about the following: 
 \begin{itemize}
 \item When products have planned their steps at the failing equiplet, what happens to their planned steps?
-\item When the equiplet is producing, what does it have to do with the current product?
+\item When the equiplet is producing, what does it need to do with the current product?
 \end{itemize}
 
-the equiplet will cancel its current action and notify the products that have been scheduled at this equiplet, that the equiplet has failed. With the current implementation, the products affected will reschedule all of its steps. In real life situations, it is possible that the error will be resolved early on and some products will not be affected since they are scheduled later on. But the equiplet does not know when the error will be resolved. Later implementations can improve this by allowing schedules' deadline to expire (soft deadlines) or predicting when the error will be resolved by learning from previous errors.
+The equiplet will cancel its current action and notify the products that have been scheduled at this equiplet, that the equiplet has failed. With the current implementation, the products affected will reschedule all of their steps. In real life situations, it is possible that the error will be resolved early on and some products will not be affected since they are scheduled later on. But the equiplet does not know when the error will be resolved. Later implementations can improve this by allowing schedules' deadline to expire (soft deadlines) or predicting when the error will be resolved by learning from previous errors.
 
-The difference between a software error and a hardware error lies within the ability to solve these errors autonomous. In most hardware error cases, some hardware needs replacing (often done by an operator), and the equiplet can’t do this itself. Software errors can always be resolved by an equiplet, whether it will be a reset of the equiplet or by processing the error. Both of these errors can result in the destruction of the product it was working on, i.e. the time lost due to error handling can cause the product to fail when it needs to apply adhesive and the adhesive will be dried before the equiplet could restore and continue producing. It always depends on the situation if the product will be damaged during a software or hardware error.
+The difference between a software error and a hardware error lies within the ability to solve these errors autonomously. In most hardware error cases, some hardware needs replacing (often done by an operator), and the equiplet can't do this itself. Software errors can always be resolved by an equiplet, whether it will be a reset of the equiplet or by processing the error. Both of these errors can result in the destruction of the product it was working on, i.e. the time lost due to error handling can cause the product to fail when it needs to apply adhesive and the adhesive will be dried before the equiplet could restore and continue producing. It always depends on the situation if the product will be damaged during a software or hardware error.
 
 When an error happens, the equiplet can only take care of itself, but not for the product. The product agent itself needs to handle according to the situation. I.e. when the equiplet has damaged the product it was working on, the product agent has to restart its product, or just report it has failed. When a product was scheduled at the failing equiplet, it needs to reschedule its steps.
-
 \section{Simulation}
-Collecting performance data on the REXOS platform was neccessary, however, running extensive sets of test cases on the equiplets nearly impossible. For this reason, the decision was made to develop a simulator that simulates the cognitive part of REXOS. This simulator would be capable of running test cases without requiring the equiplets themselves. The simulater could then also process a said timeframe as fast as possible.
+Collecting performance data on the REXOS platform was neccessary, however, running extensive sets of test cases on the equiplets would be very time consuming. For this reason, the decision was made to develop a simulator that simulates the cognitive part of REXOS. This simulator will be capable of running test cases without requiring the equiplets. The simulater can then also process a given timeframe as fast as possible.
 
-The simulator is focused around MAS. To simulate the entities in the MAS part of REXOS, simplified versions of the agents have to be written. These entities would be classes that would have the same features as the agents. The communication part between agents has been removed by doing this; method calls are used to simulate this. Using ACL messages of the jade platform would be slow to use in a simulation.
+The simulator is focused around MAS. To simulate the entities in the MAS part of REXOS, simplified versions of the agents need to be written. These entities will be classes that would have the same features as the agents. The communication part between agents will be replaced by method calls which are used to simulate this. Using ACL messages of the jade platform would be too slow to use in a simulation.
 
-The hardware execution parts in REXOS has been implemented in te simulation, but limited. Three parts will be implemented: capabilities and hardware actions and equiplet errors. Capabilities will be available just as in the REXOS variant. Hardware actions will be simulated as if they will be executed correctly every time. Finally, equiplet errors have been added. When an equiplet is being put in error, products can no longer be produced there. The design in section \ref{EquipletError}.
+Equiplets have been implemented in the simulation, but in a limited capacity. Three parts will be implemented: capabilities, hardware actions and equiplet errors. Capabilities will be available just as REXOS. Hardware actions will be simulated as if they were executed correctly every time. Finally, equiplet errors have been added. When an equiplet is being put in an error state, products can no longer be produced there. The design can be found in section~\ref{EquipletError}.
 
 \subsection{Mechanics}
-The simulator that was developed uses a concept typically found in games, a single threaded update loop in which the simulation is updated in each iteration of that loop. A list of updateables is tracked and these are updated during each iteration, or tick, of the simulation. This would however limit the ability to simulate the lock design described in section \ref{sec:schedulelock}. Instead, the lock action is always being accepted since there is only one thread.
+The simulator that was developed uses a concept typically found in games, a single threaded update loop in which the simulation is updated in each iteration of that loop. A list of updateables is tracked and these are updated during each iteration, or tick, of the simulation. This would however limit the ability to simulate the lock design described in section~\ref{sec:schedulelock}. Instead, the lock action is always accepted considering there is only one thread.
 
-The simulator has a graphical user interface which runs on it's own thread, this to ensure that the simulation is not interrupted, and also to be able to keep the user interface updated with live feedback during the simulation.
+The simulator has a graphical user interface which runs on its own thread, this is to ensure that the simulation is not interrupted, and also to be able to keep the user interface updated with live feedback during the simulation.s
 
 \subsubsection*{Scheduling}
-The scheduling algorithm implemented into the simulation was developed during the research semester. Although the algorithm was partially implemented into the REXOS platform, it was fully implemented in the simulation. By running test cases, the algorithm can be tested. More information on the algorithm itself can be found in section ~\ref{sec:Scheduling} on page~\pageref{sec:Scheduling}.
+The scheduling algorithm implemented into the simulation was developed during the research semester. Although the algorithm was only partially implemented into the REXOS platform, it was fully implemented in the simulation. By running test cases, the algorithm can be tested. More information on the algorithm itself can be found in section~\ref{sec:Scheduling}.
 
 \subsubsection*{Data Acquisition}
-Data is gathered using data collectors. These collectors have a collectData method, which is specific for the type of data being collected. There is a data collector for equiplets and one for products. For each update cycle, the collector checks whether it is time to gather new data, in the case that new data needs to be collected, it attempts to process its specific type of updateables.
+Data is gathered using data collectors. These collectors have a collectData method, which is specific for the type of data being collected. There is a data collector for equiplets and one for products. For each update cycle, the collector checks whether it is time to gather new data, in the event that new data needs to be collected, it attempts to process its specific type of updateables.
 
 In the case of equiplets, it retrieves a grid object, and using that object, retrieves all the equiplets in the grid, after which it queries each individual equiplet for its statistics. In the case of the product data collector, the list of updateables is filtered to get all the product objects, which the collector then uses to gather data from.
 
 For an equiplet, the load, current load, products spawned, products simultaneously in grid, and products failed (total and batch) metrics are recorded and collected. The load is a metric which is calculated by looking at the future schedule window and determining which percentage of that window is scheduled. The current load however, looks at the past interval time between data collections, and it checks whether the equiplet has actually been producing during that time, it then calculates the percentage that he equiplet was busy for. Products spawned indicates the total number of products spawned at the time of collection. The products simultaneously in grid is as the name suggests, the number of products active in the grid at the time of data collection. The products failed metric records the amount of products that fail during the simulation, and of this number, how many are batch products.
 
 \subsubsection*{Spawning Products}
-The product spawner, batch spawner and dynamic product spawner are the different types of spawners implemented for the simulation. The product spawner and batch spawner read their respective files for product and batch definitions before then adding those products and batches to the simulation process. The product and batches have intervals defined in the files\footnote{for more information on the file format, please check section~\ref{sec:di-gui} on page~\pageref{sec:di-gui}}, this interval is used as a timer to see when the next wave of products or batches should be spawned.
+The product spawner, batch spawner and dynamic product spawner are the different types of spawners implemented for the simulation. The product spawner and batch spawner read their respective files for product and batch definitions before then adding those products and batches to the simulation process. The product and batches have intervals defined in their respective files\footnote{for more information on the file format, please check section~\ref{sec:di-gui} on page~\pageref{sec:di-gui}} of this document, this interval is used as a timer to see when the next wave of products or batches should be spawned.
 
 The dynamic product spawner operates in a different manner to the others. It uses the parameters target load, min/max product length and chance of spawning. What it does is continually spawn products in order to reach the specified target load. The products being spawned have a varying number of product steps. The minimum and maximum steps a product can have is controlled by the min and max product length parameters. Finally, the chance of spawning parameter is used for a chance calculation, to determine whether a particular product spawns or is delayed. This is used to simulate peaks in the grid.
 
@@ -251,7 +246,7 @@ During the initial stages of development for the simulator, it was decided to cr
 
 The main interface will handle operations such as starting and stopping the simulation, as well as showing the progress of the simulation. It will also have the ability to read premade configuration files in order to run the simulation. From this interface, there will be the option to open the editor interface. Optionally, there will be a feature to visualize the grid.
 
-The editor interface will handle the easy creation and modification of the configuration files. For this reason, the interface will have the capability of creating virtual representations of capabilities, products, batches, equiplets and the grid. The editor interface will have the ability to output the created configuration to the seperate files.
+The editor interface will feature easy creation and modification of the configuration files. For this reason, the interface will have the capability of creating virtual representations of capabilities, products, batches, equiplets and the grid. The editor interface will have the ability to output the created configuration to the seperate files.
 
 \subsubsection{Design}
 \label{sec:di-gui}
