@@ -24,9 +24,9 @@ Further research was not conducted since addressing other components of REXOS ha
 \subsubsection*{Discussion}
 The research for this question ended up being conducted in a different way than was initially intended. At the outset, it was thought that components needed fixing to improve the overall system, thereby implying they were in some way broken or flawed. Instead the implementation of new components into REXOS resolved some of these issues.
 
-First, an overview of components within REXOS that have not been implemented correctly (i.e. according to the requirements) or were missing was made, as seen in chapter \ref{cha:InitialSituation} Initial situation.
+First, an overview of components within REXOS that have not been implemented correctly (i.e. according to the requirements) or were missing was made, as seen in chapter \ref{cha:InitialSituation} \emph{Initial situation}.
 
-Using this overview, designs were made to address and fix these issues. These designs can be found in chapter \ref{cha:Designs} Designs.
+Using this overview, designs were made to address and fix these issues. These designs can be found in chapter \ref{cha:Designs} \emph{Designs}.
 
 These designs resulted in new components of REXOS, for example the simulation. These new components were then used to generate data to answer other research questions. Also by implementing these new designs, issues could be fixed.
 
@@ -36,7 +36,7 @@ A lot of functionality that has been implemented and/or fixed has not been descr
 The scheduling algorithm desribed in the paper has its advantages and disadvantages. The algorithm described in the paper has been used except for two major differences: changes to the circular buffer and optimizing the travel distances.
 
 \subsubsection*{Circular buffer}
-in sections 2.1 and 5.6 of paper 'Multiagent-based agile manufacturing' it is described that a planning blackboard (BB-planning) represents the schedule of an equiplet. The paper defines that a circular buffer of timeslots is being used for the storage of scheduled product steps. The number of timeslots within this circular buffer is constant. This also means that a product agent cannot schedule steps later than the said constant number of timeslots. 
+In sections 2.1 and 5.6 of paper 'Multiagent-based agile manufacturing' it is described that a planning blackboard (BB-planning) represents the schedule of an equiplet. The paper defines that a circular buffer of timeslots is being used for the storage of scheduled product steps. The number of timeslots within this circular buffer is constant. This also means that a product agent cannot schedule steps later than the said constant number of timeslots. 
 
 For REXOS, this is not optimal and a choice has been made to use a linked list to represent the schedule of an equiplet. Usage of this will make make the schedule a lot more scalable. In discussion the reason why this was chosen will be described.
 
