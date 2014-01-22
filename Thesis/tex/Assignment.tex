@@ -3,27 +3,27 @@
 
 % ================================== Problem analysis =================================== %
 \section{Problem Analysis}
-In this chapter we strive to explain something about the initial situation in current day manufacturing, the solution REXOS offers and analyse the problems and challenges in the current REXOS architecture.
+In this chapter the initial situation and problems in current day manufacturing are explained, and possible solutions like REXOS are explored. Problems and challenges in REXOS are analysed.
 
-\subsection{Initial situation in manufacturing}
+\subsection{Initial situation in current manufacturing}
 \label{sec:InitialSituation}
 
 \subsubsection{Current manufacturing systems}
 %smth about current manufacturing systems and why there so fcked%
-Most current day manufacturing systems consist of large production lines able to produce only one type of product at high speeds. A prime example of these are \emph{dedicated manufacturing lines} (DML) which specialize in producing a specific product at a specific capacity. The capacity of the DML and volume of products produced are high, but the diversity of products is low. This results in a high volume - low mix production process. Preparing these kinds of production lines takes time and makes it impossible to quickly develop and test new kinds of products. In order to keep up with current global demand, a more flexible way of producing needs to be researched. That is where FMS and RMS come into play.
+Most current day manufacturing systems consist of large production lines able to produce only one type of product at high speeds. A prime example of these are \emph{dedicated manufacturing lines}\cite{Koren} (DML) which specialize in producing a specific product at a specific capacity. The capacity of the DML and volume of products produced are high, but the diversity of products is low. This results in a high volume - low mix production process. Preparing these kinds of production lines takes time and makes it impossible to quickly develop and test new kinds of products. In order to keep up with current global demand, a more flexible way of producing needs to be researched. That is where FMS and RMS come into play.
 
 \subsubsection{New manufacturing paradigms}
 \label{sec:newmanufacturingparadigms}
 %Lets tell smth about new paradigms, flexible manufacturing, agile etc%
-In order to overcome the downsides of static manufacturing, new manufacturing paradigms will have to be researched. A feasible new paradigm is FMS. Y. Koren describes FMS as '\emph{Flexible manufacturing systems (FMS) consist of computer numerically controlled (CNC) machines and other programmable automation and can produce a variety of products on the same system.}\cite{Koren} which results in production machines that can produce a multitude of products. This way, a higher mix of products can be achieved. A second solution is the use of RMS. Y. Koren describes RMS as '\emph{Reconfigurable machines (RMS) are machines whose structures can be changed to provide alternative functionality or/and upgradeable capacity on demand}'\cite{KorenRMS} which relies on the configurability of the production machines in order to achieve a high mix of products in the production line. A third solution could be the use of 'Grid Manufacturing', which is based on the use of RMS. \emph{Grids use a set of reconfigurable machine systems, called ’equiplets’ to offer a diversity of generic services. In this concept an equiplet is a simple, autonomous low cost platform that is highly standardized so it can easily be reconfigured to offer new manufacturing capabilities. Hence, equiplets are able to quickly adapt to new market needs.}\cite{GRIDPARADIGM}
+In order to overcome the downsides of static manufacturing, new manufacturing paradigms will need to be researched. A feasible new paradigm is FMS. Y. Koren describes FMS as "\emph{Flexible manufacturing systems (FMS) consist of computer numerically controlled (CNC) machines and other programmable automation and can produce a variety of products on the same system.}\cite{Koren} which results in production machines that can produce a multitude of products. This way, a higher mix of products can be achieved. A second solution is the use of RMS. Y. Koren describes RMS as "\emph{Reconfigurable machines (RMS) are machines whose structures can be changed to provide alternative functionality or/and upgradeable capacity on demand}"\cite{KorenRMS} which relies on the configurability of the production machines in order to achieve a high mix of products in the production line. A third solution could be the use of "Grid Manufacturing", which is based on the use of RMS. "\emph{Grids use a set of reconfigurable machine systems, called ’equiplets’ to offer a diversity of generic services. In this concept an equiplet is a simple, autonomous low cost platform that is highly standardized so it can easily be reconfigured to offer new manufacturing capabilities. Hence, equiplets are able to quickly adapt to new market needs.}"\cite{GRIDPARADIGM}
 
 
 \subsubsection{REXOS as an answer}
 \label{sec:rexosasananswer}
 %Tell smth about the GOALS and PURPOSES of rexos, and why it was invented.%
-The University of applied sciences Utrecht formulated their own solution regarding production. The project is called REXOS for Reconfigurable equiplets operating system, REQs-OS. The main component of the REXOS project is the equiplet. An equiplet consists of interchangable modules which can perform a specific task. These equiplets will be used in groups to make a complete manufacturing environment. The group of equiplets will have a dynamic logistic set-up, so products and parts can be transported between all systems. A group of equiplets is called a 'grid'.  When operating in a grid, equiplets can cooperate in order to achieve a common goal, producing a product. 
+The University of applied sciences Utrecht formulated their own solution regarding production. The project is called REXOS which is short for Reconfigurable equiplets operating system, REQs-OS. The main component of REXOS is the equiplet. An equiplet consists of interchangable modules which can perform a specific task. These equiplets will be used in groups to make a complete manufacturing environment. A group of equiplets will have a dynamic logistic set-up, so products and parts can be transported between all systems. A group of equiplets is called a "grid".  When operating in a grid, equiplets can cooperate in order to achieve a common goal, producing a product. 
 
-Having these low cost and agile production robots, a large variety of products can be produced. Having a manufacturing environment that is able to produce low amounts of products in a high variety is a goal in the REXOS idealogy\textbf{footnote}
+Having these low cost and agile production robots, a large variety of products can be produced. Having a manufacturing environment that is able to produce low amounts of products in a high variety is a goal in the REXOS idealogy.\cite{Puik2010}
 
 \subsubsection{Equiplets}
 %smth about the current implementation of the equiplets - respresented by a MAS & ROS side etcetc%
@@ -33,11 +33,11 @@ Having these low cost and agile production robots, a large variety of products c
 \end{wrapfigure}
 Equiplets were first designed at the University of Engineering \& Design Utrecht.
 
-The first versions of the equiplets were standalone robots that only had software to operate the module that was installed on it. The REXOS platform did not exist at that time. Now with the REXOS platform, equiplets are a lot more sophisticated.
+The first versions of the equiplets were standalone robots that only had software to operate the modules that were installed on them. The REXOS platform did not exist at that time. Combining equiplets with the REXOS platform, equiplets are a lot more sophisticated.
 
 As stated in section \ref{sec:rexosasananswer}, equiplets need to be flexible and reconfigurable, but also applicable for industrial systems. In order to achieve this, a hybrid system of MAS and ROS is used\cite{MASTA2013}. The MAS part represents the cognitive side of the equiplet, while the ROS part represents the reactive side.
 
-The low cost of the equiplet is reached by using cheap materials and components. This should have a negative impact to the precision of the modules installed on the equiplet, but by using techniques to create and place these components with micro precision, this is avoided. 
+The low cost of the equiplet is achieved by using cheap materials and components. This would normally have a negative impact to the precision of the modules installed on the equiplet, but by using techniques to create and place these components with micro precision, this is minimized. 
 
 \subsection{Grid}
 
@@ -47,23 +47,23 @@ The low cost of the equiplet is reached by using cheap materials and components.
 	\label{gridLayout}
 \end{center}
 
-The aforementioned equiplets needs to work together to create products consisting of various product steps. In order to let these equiplets work together, they are placed in a so called grid. Figure \ref{gridLayout} shows an example of this grid with nine equiplets. 
+The aforementioned equiplets need to work together to create products consisting of various product steps. In order to let these equiplets work together, they are placed in a grid. Figure \ref{gridLayout} shows an example of a grid with nine equiplets. 
 
-These equiplets are placed in a way that is optimal for a particular situation. For example, equiplets are placed in a square with space in between them. The space allows products to travel from equiplet to equiplet. In future REXOS this grid needs to be able to add and/or remove equiplets without shutting down the system.
+These equiplets are placed in a way that is optimal for a particular situation. For example, equiplets could be placed in a square with space in between them. The space allows products to travel from equiplet to equiplet. In future iterations of REXOS it needs to be possible to add and/or remove equiplets to a grid without shutting down the system.
 
 \subsection{Reconfiguring}
 %Tell smth about the possibility of reconfiguring, its importance etc%
-An important aspect of agile manufacturing is the ability to reconfigure the production machines\cite{Koren}. Reconfiguring the equiplet would provide means to a dynamic production grid, allowing to change modules attached to equiplets on the fly. Whilst it had been previously researched, the current REXOS implementation did not provides the reconfiguring of equiplets.
+An important aspect of agile manufacturing is the ability to reconfigure the production machines\cite{Koren}. Reconfiguring the equiplet would provide means to a dynamic production grid, allowing the switching of modules attached to equiplets on the fly. Whilst it had been previously researched, the current REXOS implementation did not provide the reconfiguring of equiplets.
 
 \subsection{Switchable control}
 %Tell smth about the how switchable architectures came to exist, why it can be advantageous%
 %Another idea that was coined during the project was that of implementing a switchable architecture. This would mean that during normal operation the system operates in a hierarchical fashion, whilst whenever an error occures the system switches to heterarchical control.
-Tyhe original implementation of REXOS only provided 1 type of control, heterarchically. When scheduling heterarchically equiplets are all given the same priority when it comes to scheduling. This is how REXOS defines its grids, all equiplets are autonomous entities.\cite{Puik2010} However, scheduling hierarchically can be advantageous in certain situations. This has not been researched before.
+The original implementation of REXOS only provided one type of control, heterarchically. When scheduling heterarchically,   equiplets are all given the same priority when it comes to scheduling. This is how REXOS defines its grids, all equiplets are autonomous entities.\cite{Puik2010} However, scheduling hierarchically can be advantageous in certain situations. This has not been researched before.
 
 
 %==================================Research questions===================================%
 \section{Research Questions}
-Not all of the research questions that have been formulated in the research plan have been researched and analyzed. The reason for this is that the project supervisor's needs changed during the project. Below is a list of the research questions that were originally formulated.
+Not all of the research questions that were formulated in the research plan have been researched and analyzed. The reason for this is that the project supervisor"s needs changed during the project. Below is a list of the research questions that were originally formulated.
 \begin{itemize}
 \item How can reconfigurability of equiplets efficiently be implemented into the system, and how will this impact the rest of the system?
 	\begin{itemize}
@@ -83,20 +83,20 @@ Not all of the research questions that have been formulated in the research plan
 	\end{itemize}
 \end{itemize}
 
-The research questions 'How can reconfigurability efficiently be implemented into the system?' and 'And how will this impact the rest of the system?' have not been researched. The reason for this is that conclusions were made during brainstorm sessions that other issues had to be taken care of before above questions could be answered. Such as, improving the REXOS platform by implementing a proper scheduling algorithm.
+The research questions "How can reconfigurability efficiently be implemented into the system?" and "And how will this impact the rest of the system?" have not been researched. This is because conclusions were made during brainstorm sessions that other issues had to be taken care of before above questions could be answered. Such as improving the REXOS platform by implementing a proper scheduling algorithm.
 
-A scheduling algorithm for REXOS was already researched and described in the paper: 'Multiagent-based agile manufacturing\cite{PAPER70}'. This resulted in the following new research questions:
+A scheduling algorithm for REXOS was already researched and described in the paper: "Multiagent-based agile manufacturing\cite{PAPER70}". This resulted in the following new research questions:
 
 \begin{itemize}
-\item Is the scheduling algorithm defined in paper: 'Multiagent-based agile manufacturing\cite{PAPER70}' suitable for implementation in REXOS?
+\item Is the scheduling algorithm defined in paper: "Multiagent-based agile manufacturing\cite{PAPER70}" suitable for implementation in REXOS?
 	\begin{itemize}
 	\item Which parts of the algorithm are suitable for REXOS?
-	\item If some parts can't be implemented directly, what is a better way to implement these?
+	\item If some parts can"t be implemented directly, what is a better way to implement these?
 	\item What is the performance of this scheduling algorithm?
 	\end{itemize}
 \end{itemize}
 
-Another research question came up during the project that had a high priority. During brainstorm sessions questions came up concerning whether REXOS should have a hierarchical or heterarchical setup. Stated was that both setups had their own advantages and disadvantages. Choosing the right setup is crucial.
+Another research question came up during the project with a higher priority. During brainstorm sessions questions came up concerning whether REXOS should have a hierarchical or heterarchical setup. Stated was that both setups had their own advantages and disadvantages. Choosing the right setup is crucial.
 
 \begin{itemize}
 \item Is REXOS best suited for a hierarchical or a heterarchical setup?
@@ -105,10 +105,10 @@ Another research question came up during the project that had a high priority. D
 	\end{itemize}
 \end{itemize}
 
-The addition of this new research question resulted in a lower priority for the 'performance and stability' research question.
+The addition of this new research question resulted in a lower priority for the "performance and stability" research question.
 %==================================Goals===================================%
 \section{Goals}
-In short the goals of the project are:
+The goals of this part of the project are:
 \begin{itemize}
 \item Having a stable platform to have reliable research results and that future projects can continue without big issues, also the performance has been improved.
 \item Having a scheduling algorithm in REXOS.
@@ -117,12 +117,12 @@ In short the goals of the project are:
 These goals are described in the following sections:
 
 \subsection{Stable REXOS platform}
-Prior to the research that has to be done, the current platform's stability has to be improved. This needs to be done because testing solutions or performing tests will be more accurate and reliable. Also when a stable platform is provided for the next project, developing or researching using that platform will be easier and more reliable. Stabilizing the REXOS platform can be done continuously, but is limited by time or if other subjects need more attention.
+Prior to the research that needed to be done, the initial platform's stability had to be improved. This had to be done because testing solutions or performing tests will not be accurate or reliable on the current system due to it being incomplete. Also when a stable platform is provided for the next project, developing or researching using that platform will be easier and more reliable. Stabilizing the REXOS platform can be done continuously.
 
 \subsection{Scheduling}
-Current implementation of scheduling for products at equiplets doesn't exist yet in REXOS. The goal is that at the end of the project an efficient scheduling algorithm will be functional and working in REXOS. This implementation should then be tested afterwards.
+The initial implementation of scheduling for products at equiplets doesn't exist yet in REXOS. The goal was that at the end of the project an efficient scheduling algorithm was functional and working in REXOS.
 
 \subsection{Hierarchical or heterarchical}
-Choosing the most efficient setup for REXOS could impact the flexibility, scalability and efficiency of the platform. Using a variety of test cases, a conclusion can be made which setup is better for which case. The goal is to find out when hierarchical is better than heterarchical and vice versa.
+Choosing the most efficient setup for REXOS could impact the flexibility, scalability and efficiency of the platform. Using a variety of test cases, a conclusion can be drawn about which setup is better for which case. The goal was to find out when hierarchical is better than heterarchical and vice versa.
 
 \end{document}
