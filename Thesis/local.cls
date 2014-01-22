@@ -10,6 +10,7 @@
 \usepackage{caption}
 \usepackage{array}
 \usepackage{tocloft}
+\usepackage{pdfpages}
 
 \titleformat{\chapter}
   {\Large\bfseries} % format
