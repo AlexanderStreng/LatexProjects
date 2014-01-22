@@ -2,75 +2,63 @@
 
 \begin{document}
 
-\section{Acronyms}
+\section{Abbreviations}
 \begin{description}
 	\item[ROS] Robot operating system
 	\item[MAS] Multi-agent system
-	\item[MAST] MAchine STate
-	\item[GM] Grid manufacturing
+	\item[MAST] MAchine STates
+	\item[GM] Grid Manufacturing
 	\item[RMS] Reconfigurable manufacturing system(s)
 	\item[FMS] Flexible manufacturing system(s)
 	\item[HU] Hogeschool Utrecht, this is the dutch name for the University of Applied Sciences Utrecht
-	\item[JADE] Java Agent DEvelopment framework, for more information see section ~\ref{sec:mat}
+	\item[JADE] Java Agent DEvelopment framework
 \end{description}
 
 \section{Definition of terms}
 
 \subsection*{Agents}
-One of the most commonly known definitions of an agent is as defined by Wooldridge \cite{Woolridge95} \emph{"An agent is an encapsulated computer system that is situated in some environment and that is capable of
- flexible, autonomous action in that environment in order to
-meet its design objectives."}
+One of the most commonly known definitions, that is used throughout the project, of an agent is as defined by Wooldridge \cite{Woolridge95} \emph{"An agent is an encapsulated computer system that is situated in some environment and that is capable of flexible, autonomous action in that environment in order to meet its design objectives."}
 
 \subsection*{REXOS}
-REXOS is abbreviated from \emph{REQS} to be short for Reconfigurable equiplets.
+REXOS is an abbreviated form of \emph{REQs-OS}, which is short for Reconfigurable Equiplets Operating System.
 
 \subsection*{MAS}
-A proper definition of an multi-agent system is as said by Zhang;
+A proper definition of an multi-agent system is defined by Zhang as;
 \emph{"A multiagent system is a distributed system consisting of multiple software agents, 
 which form “a loosely coupled network, called a multiagent 
 system (MAS), to work together to solve problems that are 
 beyond their individual capabilities or knowledge of each entity."}\cite{Zhang}.
 
 \subsection*{Grid}
-An collection of equiplets that are able to produce in parallel is called an grid.\cite{GRID}
+An collection of equiplets that is able to produce in parallel is called an grid\cite{GRID}. Where a single equiplet has limits on the complexity of the product it can create, a grid of equiplets working together can overcome these limits.
 
-\subsection*{Reconfigurable Manufacturing Systems}
-According to Y. Koren RMS consists of several reconfigurable components; \emph{"A Reconfigurable Manufacturing System (RMS) is designed at the outset for rapid change in structure, as well as in hardware and software components, in order to quickly adjust production capacity and functionality within a part family in response to sudden changes in market or in regulatory requirements."} \cite{Koren}
+\subsection*{RMS}
+According to Y. Koren RMS consist of several reconfigurable components; \emph{"A Reconfigurable Manufacturing System (RMS) is designed at the outset for rapid change in structure, as well as in hardware and software components, in order to quickly adjust production capacity and functionality within a part family in response to sudden changes in market or in regulatory requirements."}\cite{Koren}
  
 \subsection*{MAST}
-MAST stands for 'Machine States' of equiplets in REXOS. In order to use the equiplets properly and safe, proper machine states have to be implemented. A previous project researched this topic and had results in a paper\cite{FAIM2013}.
+MAST stands for 'Machine States' of equiplets \& modules in REXOS. In order to use the equiplets properly and safely, proper machine states are needed. A previous project researched this topic, the results can be found in their paper\cite{FAIM2013}.
 
 \subsection*{ROS}
 Ros is an operating system targeted at providing core abilities to develop code for robots. According to their own site
 \emph{"ROS (Robot Operating System) provides libraries and tools to help software developers create robot applications. It provides hardware abstraction, device drivers, libraries, visualizers, message-passing, package management, and more. ROS is licensed under an open source, BSD license."}\footnote{http://wiki.ros.org/}
 
 \subsection*{Equiplet}
- In project REXOS all RMS are modular and can be reconfigured. They are named \emph{equiplets} \cite{Puik2010}. Equipltes are special production platforms that are cheap, agile and easy configurable. 
-These platforms can operate in parallel.
-
-\subsection*{ROS}
-Ros is an operating system targeted at providing core abilities to develop code for robots.
-\emph{"ROS (Robot Operating System) provides libraries and tools to help software developers create robot applications. It provides hardware abstraction, device drivers, libraries, visualizers, message-passing, package management, and more. ROS is licensed under an open source, BSD license."}\cite{ROS}
+ In project REXOS all RMS are modular and can be reconfigured. They are named \emph{equiplets} \cite{Puik2010}. Equiplets are special production platforms that are cheap, agile and easily configurable. These platforms are able to operate in parallel.
 
 \subsection*{Product Agent}
-Every product that is being is virtually represented in software by an autonomous entity. In the MAS system it is implemented as a 'Product Agent' \cite{FAIM2013}. The product agent will monitor and guide the lifecycle of a product.
+A product agent is a virtual representation of its product\cite{FAIM2013}. A product agent will monitor and guide the lifecycle of its product.
 
 \subsection*{Module}
-\emph{"each of a set of standardized parts or independent units that can be used to construct a more complex structure"}\footnote{oxford dictionary}
-An module within ROS is a specific piece of hardware equipment used to perform specific actions. (eg. a pen module is used to print dots)
+The oxford dictionary describes a module as \emph{"each of a set of standardized parts or independent units that can be used to construct a more complex structure"}\footnote{oxford dictionary}
+A module within ROS is a specific piece of hardware used to perform specific actions. (eg. a pen module is used to print dots)
 
 \subsection*{Node}
-Nodes are processes that perform computation. ROS is
-designed to be modular at a fine-grained scale: a system
-is typically comprised of many nodes. In this context, the
-term "node" is interchangable with "software module."\cite{ROS}
+Nodes are processes that perform computational tasks. ROS is designed to be modular at a fine-grained scale: a system is typically comprised of many nodes. In this context, the term "node" is interchangable with "software module."\cite{ROS}
 
-\subsection*{Stewart platform}
-The Stewart Platform mechanism, originally suggested by D. 
-Stewart in [1], is a parallel kinematic structure that can be used as 
-a basis for controlled motion with 6 degrees of freedom (dof).
+\subsection*{Stewart Gough platform}
+The Stewart Gough Platform mechanism, originally suggested by D. Stewart in \emph{"Platform with six degrees of freedom"}\cite{STEWART}, is a parallel kinematic structure that can be used as a basis for controlled motion with 6 degrees of freedom (dof).
 
 \subsection*{Product / service / equiplet step}
-A representation of an product within the REXOS platform consists of 'product' steps. These steps represent the various steps needed to completely construct a product. These steps are used to create service steps, a less abstract step used to calculate production time needed. Lastly these service steps are used to create equiplet steps, which are instructions for the equiplet.
+A representation of a product within the REXOS platform consists of 'product' steps. Product steps represent the various steps needed to completely construct a product. These steps are used to create service steps, a less abstract step used to calculate production time needed. Lastly service steps are used to create equiplet steps, which are instructions for the equiplet.
 
 \end{document}
