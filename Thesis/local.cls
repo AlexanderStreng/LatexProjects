@@ -9,6 +9,7 @@
 \usepackage[a4paper]{geometry}
 \usepackage{caption}
 \usepackage{array}
+\usepackage{tocloft}
 
 \titleformat{\chapter}
   {\Large\bfseries} % format

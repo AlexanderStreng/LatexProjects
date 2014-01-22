@@ -11,32 +11,7 @@
 \begin{document}
  
 \maketitle
-\tableofcontents \clearpage
-
-\section*{Versioning}
-\begin{tabular}{ | l | l | l | p{7.5cm} |}
-\hline
-Version & When & Who & What \\ \hline
-0.1 & 06-01-2014 & Alexander Streng & Created initial document \& set                                                                                                                                                                                                                                                                                                                                                                                                                                                                           up all sections.\\ \hline
-0.1.1 & 06-01-2014 & Alexander Streng & Added Planning algorithm\\ \hline
-0.2 & 06-01-2014 & Duncan Jenkins & Added sections: project background, team, organization.\\ \hline
-0.2.1 & 07-01-2014 & Duncan Jenkins & Added section: assignment introduction. \\ \hline
-0.2.2 & 09-01-2014 & Duncan Jenkins & Added section: design \& implementation: gui \\ \hline
-0.2.3 & 09-01-2014 & Duncan Jenkins & Spellchecked/corrected most of the document \\ \hline
-0.3 & 15-01-2014 & Alexander Streng & Wrote part of results, added introduction and started writing on Heterarchical scheduling vs hierarchical scheduling.  \\ \hline
-0.4 & 15-01-2014 & Duncan Jenkins & Re-organized requirements under design \& implementation for gui. Added piece about test cases under simulation \& edited simulation text. \\ \hline
-0.4.1 & 15-01-2014 & Duncan Jenkins & Added some new tools \& methods. Updated communication and scrum pieces in Approach \\ \hline
-0.5 & 15-01-2014 & Roy Scheefhals & finished research questions part, finished goals part and added design and implementation part: equiplet schedule and equiplet schedule lock\\ \hline
-0.5.1 & 15-01-2014 & Roy Scheefhals & finished research questions part, finished goals part and added design and implementation part: equiplet schedule and equiplet schedule lock\\ \hline
-0.6 & 15-01-2014 & Alexander Streng & Finished equiplet error results part\\ \hline
-0.61 & 15-01-2014 & Alexander Streng & Redid some structures, started working on design and implementation of rexos architecture.\\ \hline
-0.62 & 15-01-2014 & Alexander Streng & Finished d\&i on rexos architecture. Added current situation.\\ \hline
-0.7 & 20-01-2014 & Duncan Jenkins & Finished d\&i on simulation.\\ \hline
-0.8 & 20-01-2014 & Alexander Streng & Did some major overhauling, wrote introductions for chapters \& finished design of rexos implementation.\\ \hline
-0.81 & 20-01-2014 & Alexander Streng & Wrote conclusions\\ \hline
-\end{tabular}
-\clearpage
-
+\newpage\null\thispagestyle{empty}\newpage
 
 \renewcommand{\thesection}{\Roman{section}}
 
@@ -44,14 +19,38 @@ Version & When & Who & What \\ \hline
 
 \clearpage
 
-%Foreword, acronyms definition of terms 
-\subfile{Preface}
+\section*{Versioning}-
+\begin{tabular}{ | l | l | l | p{7.5cm} |}
+\hline
+Version & When & Who & What \\ \hline
+0.1 & 06-01-2014 & Alexander Streng & Created initial document \& set                                                                                                                                                                                                                                                                                                                                                                                                                                                                           up all sections.\\ \hline
+0.1.1 & 06-01-2014 & Alexander Streng & Added Planning algorithm\\ \hline
+0.2 & 06-01-2014 & Duncan Jenkins & Added sections: project background, team, organization. \& Added section: design \& implementation: gui / Spellchecked/corrected most of the document \& Added section: assignment introduction.\\ \hline
+0.3 & 15-01-2014 & Alexander Streng & Wrote part of results, added introduction and started writing on Heterarchical scheduling vs hierarchical scheduling.  \\ \hline
+0.4 & 15-01-2014 & Duncan Jenkins & Re-organized requirements under design \& implementation for gui. Added piece about test cases under simulation \& edited simulation text.\& Added some new tools \& methods. Updated communication and scrum pieces in Approach  \\ \hline
+0.5 & 15-01-2014 & Roy Scheefhals & finished research questions part, finished goals part and added design and implementation part: equiplet schedule and equiplet schedule lock \& finished research questions part, finished goals part and added design and implementation part: equiplet schedule and equiplet schedule lock\\ \hline
+0.6 & 15-01-2014 & Alexander Streng & Finished equiplet error results part \& Redid some structures, started working on design and implementation of rexos architecture. \& Finished d\&i on rexos architecture. Added current situation.\\ \hline
+0.7 & 20-01-2014 & Duncan Jenkins & Finished d\&i on simulation.\\ \hline
+0.8 & 20-01-2014 & Alexander Streng & Did some major overhauling, wrote introductions for chapters \& finished design of rexos implementation. \& Wrote conclusions\\ \hline
+\end{tabular}
 \clearpage
 
 \subfile{Summary}
 \clearpage
 
+%Foreword, acronyms definition of terms 
+\subfile{Preface}
+\clearpage
+
+\newpage\null\thispagestyle{empty}\newpage
+
 \renewcommand{\thesection}{\arabic{section}}
+
+% TOC
+\thispagestyle{empty}
+\setcounter{page}{0}
+\tableofcontents
+\clearpage
 
 \chapter{Introduction} 
 \subfile{Introduction}
