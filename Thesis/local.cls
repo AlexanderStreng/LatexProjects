@@ -9,6 +9,7 @@
 \usepackage[a4paper]{geometry}
 \usepackage{caption}
 \usepackage{array}
+\usepackage{tocloft}
 \usepackage{pdfpages}
 
 \titleformat{\chapter}
