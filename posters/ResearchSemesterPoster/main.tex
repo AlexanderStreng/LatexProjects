@@ -48,6 +48,18 @@
     }
 }
 
+\newcommand{\threecolumnsblock}[4][Title]{
+    \columnblock[#1]{
+        \begin{multicols}{2}
+            #2
+            \newpage
+            #3
+            \newpage
+            #4
+        \end{multicols}
+    }
+}
+
 \begin{document}
 
 
@@ -62,7 +74,7 @@ Manufacturing paradigms such as Agile Manufacturing (AM) and Reconfigurable Mach
             \columnblock[image heter(2)]{
             \justifying 
 			\includegraphics[trim= 15cm 0cm 15cm 0cm, clip=true, width=.98\linewidth]{GridEquipletHeter.jpg}\\
-			In this setup a 
+			In this setup a hierarchical grid is displayed.
     }
                       
 		\end{column}
