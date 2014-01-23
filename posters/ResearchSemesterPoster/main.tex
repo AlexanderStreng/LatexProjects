@@ -48,6 +48,18 @@
     }
 }
 
+\newcommand{\threecolumnsblock}[4][Title]{
+    \columnblock[#1]{
+        \begin{multicols}{2}
+            #2
+            \newpage
+            #3
+            \newpage
+            #4
+        \end{multicols}
+    }
+}
+
 \begin{document}
 
 
@@ -59,18 +71,18 @@ Manufacturing paradigms such as Agile Manufacturing (AM) and Reconfigurable Mach
 	
     \begin{columns}[t]   
 		\begin{column}{.48\textwidth}
-            \columnblock[image heter(2)]{
+            \columnblock[Heterarchical setup]{
             \justifying 
 			\includegraphics[trim= 15cm 0cm 15cm 0cm, clip=true, width=.98\linewidth]{GridEquipletHeter.jpg}\\
-			In this setup a 
+			In this setup a typical heterarchical grid is displayed. Capabilities are displayed as $\alpha$, $\beta$ \& $\gamma$. In this setup all equiplets are equal.
     }
                       
 		\end{column}
 		\begin{column}{.48\textwidth} 
- 			\columnblock[image hier(3)]{
+ 			\columnblock[Hierarchical setup]{
             \justifying 
             \includegraphics[trim= 15cm 0cm 15cm 0cm, clip=true, width=.98\linewidth]{GridEquipletHier.jpg}\\
-            
+			In this setup a possible hierarchical grid is displayed. Capabilities are displayed as $\alpha$, $\beta$ \& $\gamma$. In this setup the top 3 equiplets are reserved for batch production.
     }
     
 \end{column}
