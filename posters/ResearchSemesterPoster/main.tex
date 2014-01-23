@@ -71,18 +71,18 @@ Manufacturing paradigms such as Agile Manufacturing (AM) and Reconfigurable Mach
 	
     \begin{columns}[t]   
 		\begin{column}{.48\textwidth}
-            \columnblock[image heter(2)]{
+            \columnblock[Heterarchical setup]{
             \justifying 
 			\includegraphics[trim= 15cm 0cm 15cm 0cm, clip=true, width=.98\linewidth]{GridEquipletHeter.jpg}\\
-			In this setup a hierarchical grid is displayed.
+			In this setup a typical heterarchical grid is displayed. Capabilities are displayed as $\alpha$, $\beta$ \& $\gamma$. In this setup all equiplets are equal.
     }
                       
 		\end{column}
 		\begin{column}{.48\textwidth} 
- 			\columnblock[image hier(3)]{
+ 			\columnblock[Hierarchical setup]{
             \justifying 
             \includegraphics[trim= 15cm 0cm 15cm 0cm, clip=true, width=.98\linewidth]{GridEquipletHier.jpg}\\
-            
+			In this setup a possible hierarchical grid is displayed. Capabilities are displayed as $\alpha$, $\beta$ \& $\gamma$. In this setup the top 3 equiplets are reserved for batch production.
     }
     
 \end{column}
@@ -117,13 +117,13 @@ Manufacturing paradigms such as Agile Manufacturing (AM) and Reconfigurable Mach
 				\columnblock[9]{
 				\justifying 
 %PRODUCTS IN GRID SIMULTANEOUSLY (1)
-As seen in the results, heterarchical scheduling can produce more per timeframe. Hierarchical scheduling has lower throughput, this can be linked to the fact the current load of the equiplets in a hierarchical setup.
+As seen in the graphs above, using heterarchical scheduling causes a higher production throughput within a certain timeframe. Hierarchical scheduling  on the other hand has a lower throughput due to the fact that the equiplets have a lower load.
 
 %Throughput (2)
-When using a hierarchical setup, products and batch products will be placed in a more controlled situation and thus will have lower transportation needs. Heterarchical will have higher transportation needs since the maximal transportation distance is higher.
+When using a hierarchical setup, products and batch products will be placed in a more controlled situation resulting in lower transportation needs. Heterarchical has higher transportation needs because products need to travel further to get to the equiplet which was chosen.
 
 %FAILED Products (3)
-An heterarchical setup tends to be more 'chaotic'. Production is faster, but products will be longer in the grid with a higher chance of failing products. These failing products have failed because their deadline has been expired, which can result because of long transport times.
+A heterarchical setup tends to be more chaotic than a hierarchical setup. Production is faster, but products will stay in the grid for longer periods of time causing them to have a higher chance of failing. These products fail because their deadline has expired, which is the result of long transport times.
 				}   
 
             \end{column}
@@ -132,9 +132,10 @@ An heterarchical setup tends to be more 'chaotic'. Production is faster, but pro
    \begin{columns}[t]  
 			\begin{column}{.65\textwidth}
 							\columnblock[Conclusion(10)]{
-							\justifying 
-Using a heterarchical schedulng setup, equiplets will have a higher throughput, but at the cost of transportation higher costs. Giving the grid a high load could also result in more failed products. This setup can be desired when there are only a lot of varying products that need to be produced at the same time.
-Hierarchical scheduling is recommended when there are limited transportation resources or if there is a need to control production. Reserving equiplets for batches of products can be desired to be sure the batch will be finished in time.
+							\justifying
+Using a heterarchical scheduling setup, equiplets will have a higher throughput, but at the cost of transportation. Putting a high load on the grid could also result in more failed products. A heterarchical setup is recommended when there are a lot of varying products that need to be produced simultaneously.
+
+Hierarchical scheduling is more efficient when there are limited transportation resources or if there is a need to control production. Reserving equiplets for batches of products could be desired to make sure the batch will be finished in time.
 				}
             \end{column}
             \begin{column}{.30\textwidth}
