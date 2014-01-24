@@ -48,65 +48,48 @@
     }
 }
 
-\newcommand{\threecolumnsblock}[4][Title]{
-    \columnblock[#1]{
-        \begin{multicols}{2}
-            #2
-            \newpage
-            #3
-            \newpage
-            #4
-        \end{multicols}
-    }
-}
-
 \begin{document}
 
 
 \begin{frame}{}
-    \columnblock[Introduction(1)]{
-    \justifying 
-Manufacturing paradigms such as Agile Manufacturing (AM) and Reconfigurable Machine Systems (RMS) revolve around flexibility. The REXOS project utilizes a Grid Manufacturing setup, which is based on RMS. In Grid Manufacturing, different approaches can be used for scheduling, namely hierarchical and heterarchical. This poster compares the two approaches using a simulation program. And explores the pros and cons considering both setups.
-	} 
-	
     \begin{columns}[t]   
+		\begin{column}{.48\textwidth}
+   			\columnblock[Introduction]{
+    		\justifying 
+Manufacturing paradigms such as Agile Manufacturing (AM) and Reconfigurable Machine Systems (RMS) revolve around flexibility. The REXOS project utilizes a Grid Manufacturing (GM) setup, which is based on RMS. In GM, different approaches can be used for scheduling, namely hierarchical and heterarchical. This poster compares the two approaches using a simulation program. And explores the pros and cons considering both setups.
+		} 
+	
+ 			\columnblock[Hierarchical setup]{
+            \justifying 
+            \includegraphics[clip=true, width=\linewidth, height=17cm]{GridEquipletHier.jpg}\\
+			In this setup a possible hierarchical grid is displayed. Capabilities are displayed as $\alpha$, $\beta$ \& $\gamma$. In this setup the top 3 equiplets are reserved for batch production.
+		}
+		\end{column}
 		\begin{column}{.48\textwidth}
             \columnblock[Heterarchical setup]{
             \justifying 
-			\includegraphics[trim= 15cm 0cm 15cm 0cm, clip=true, width=.98\linewidth]{GridEquipletHeter.jpg}\\
+			\includegraphics[clip=true, width=\linewidth, height=17cm]{GridEquipletHeter.jpg}\\
 			In this setup a typical heterarchical grid is displayed. Capabilities are displayed as $\alpha$, $\beta$ \& $\gamma$. In this setup all equiplets are equal.
-    }
-                      
-		\end{column}
-		\begin{column}{.48\textwidth} 
- 			\columnblock[Hierarchical setup]{
-            \justifying 
-            \includegraphics[trim= 15cm 0cm 15cm 0cm, clip=true, width=.98\linewidth]{GridEquipletHier.jpg}\\
-			In this setup a possible hierarchical grid is displayed. Capabilities are displayed as $\alpha$, $\beta$ \& $\gamma$. In this setup the top 3 equiplets are reserved for batch production.
-    }
-    
-\end{column}
-    \end{columns}
-    
-       \begin{columns}[t]  
-			\begin{column}{.98\textwidth}
-			\columnblock[intro to resulsts(6)]{
-			text eHIER
+    		}
+    		\columnblock[Simulation setup]{
+			The simulation will simulate 2 hours of production time with the 9 equiplets setup. Once with the heterarchical setup and once for the hierarchical setup. The simulation will be given a random amount of products and a batch of products. A batch is defined as a single type of product produced at a high volume. In below graphs, EQ stands for Equiplet and the numbers correspond to the equiplets illustrated above from top left to bottom right. Current load stands for the amount of work the equiplet has done in that moment.
 				\justifying 
-				}
-            \end{column}
-    \end{columns}
+			}
     
-       \begin{columns}[t]  
+			\end{column}
+    	\end{columns}
+       	\begin{columns}[t]  
 			\begin{column}{.48\textwidth}
-				\columnblock[Graphs(7)]{
+				\columnblock[Hetarchical Equiplet Load]{
+				\includegraphics[width=.98\linewidth]{BatchSchedulingCurrentLoadHeterarchical.png}\\
 			text en graphs hier
 				\justifying 
 				}
             \end{column}
 			\begin{column}{.48\textwidth}
-			\columnblock[Graphs(8)]{
-			text en graphs hier
+			\columnblock[Hierarchical Equiplet Load]{
+				\includegraphics[width=.98\linewidth]{BatchSchedulingCurrentLoadHierarchical.png}\\
+			Production is distributed on all of the equiplets. Equiplet 1, 2 and 3 are producing constant since it has a batch to produce.
 				\justifying 
 				}
             \end{column}
@@ -114,21 +97,21 @@ Manufacturing paradigms such as Agile Manufacturing (AM) and Reconfigurable Mach
     
         
        \begin{columns}[t]  
-			\begin{column}{.32\textwidth}
+			\begin{column}{.3125\textwidth}
 				\columnblock[Throughput]{
 				\includegraphics[width=.98\linewidth]{BatchSchedulingThroughput.png}\\
 			As seen in the graph above, using heterarchical scheduling causes a higher production throughput within a certain timeframe. Hierarchical scheduling on the other hand has a lower throughput due to the fact that the equiplets have a lower current load.
 				\justifying 
 				}
             \end{column}
-			\begin{column}{.32\textwidth}
+			\begin{column}{.3125\textwidth}
 			\columnblock[products in grid]{
 			\includegraphics[width=.98\linewidth]{BatchSchedulingProductsSimultaneouslyInGrid.png}\\
 When using a hierarchical setup, products and batch products will be placed in a more controlled situation resulting in lower transportation needs. Heterarchical has higher transportation needs because the maximal transport distance is higher for the products.
 				\justifying 
 				}
             \end{column}
-            \begin{column}{.32\textwidth}
+            \begin{column}{.3125\textwidth}
 			\columnblock[failed products]{
 			\includegraphics[width=.98\linewidth]{BatchSchedulingFailedProducts.png}\\
 A heterarchical setup tends to be more chaotic than a hierarchical setup. Production is faster, but products will stay in the grid for longer periods of time causing them to have a higher chance of failing. These products fail because their deadline has expired, which is the result of long transport times.
@@ -139,17 +122,17 @@ A heterarchical setup tends to be more chaotic than a hierarchical setup. Produc
 
    \begin{columns}[t]  
 			\begin{column}{.65\textwidth}
-							\columnblock[Conclusion(10)]{
+							\columnblock[Conclusion]{
 							\justifying
 Using a heterarchical scheduling setup, equiplets will have a higher throughput, but at the cost of transportation. Putting a high load on the grid could also result in more failed products. A heterarchical setup is recommended when there are a lot of varying products that need to be produced simultaneously.
 
 Hierarchical scheduling is more efficient when there are limited transportation resources or if there is a need to control production. Reserving equiplets for batches of products could be desired to make sure the batch will be finished in time.
 				}
             \end{column}
-            \begin{column}{.30\textwidth}
-               \columnblock[References(14)]{
+            \begin{column}{.3138\textwidth}
+               \columnblock[References]{
 				\justifying 
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin molestie tincidunt velit dictum auctor. Duis eu 		metus ac metus egestas venenatis. Lorem ipsum dolor 		sit amet, consectetur adipiscing elit. Mauris quis neque vel justo dapibus tincidunt. Vestibulum pellentesque bibendum tempor. Sed velit leo, dignissim vel lobortis non, 	aliquet id augue. Etiam vehicula lorem urna, ac condimentum ligula tempor id. Vestibulum rutrum lobortis odio. Vivamus ac porta arcu.
+				asfd
 	}
             \end{column}
     \end{columns}
