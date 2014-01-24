@@ -3,7 +3,7 @@
 {
   \usetheme{I6pd2}
 }
-\graphicspath{{figures/}} % e.g. where you have your logos
+\graphicspath{{figures/}} 
 
 \usepackage{epstopdf}
 \usepackage{times}
@@ -56,7 +56,7 @@
 		\begin{column}{.48\textwidth}
    			\columnblock[Introduction]{
     		\justifying 
-Manufacturing paradigms such as Agile Manufacturing (AM) and Reconfigurable Machine Systems (RMS) revolve around flexibility. The REXOS project utilizes a Grid Manufacturing (GM) setup, which is based on RMS. In GM, different approaches can be used for scheduling, namely hierarchical and heterarchical. This poster compares the two approaches using a simulation program. And explores the pros and cons considering both setups.
+Manufacturing paradigms such as Agile Manufacturing (AM) and Reconfigurable Machine Systems (RMS) revolve around flexibility \cite{KorenRMS}. The REXOS project utilizes a Grid Manufacturing (GM) setup, which is based on RMS \cite{GRIDPARADIGM}. In GM, different approaches can be used for scheduling, namely hierarchical and heterarchical. This poster compares the two approaches using a simulation program. And explores the pros and cons considering both setups.
 		} 
 	
  			\columnblock[Hierarchical setup]{
@@ -82,7 +82,7 @@ Manufacturing paradigms such as Agile Manufacturing (AM) and Reconfigurable Mach
 			\begin{column}{.48\textwidth}
 				\columnblock[Hetarchical Equiplet Load]{
 				\includegraphics[width=.98\linewidth]{BatchSchedulingCurrentLoadHeterarchical.png}\\
-			text en graphs hier
+			The equiplets are producing almost continuously. Equiplet 9 needs to help out sometimes, but is most of the time unneccesary.
 				\justifying 
 				}
             \end{column}
@@ -120,7 +120,7 @@ A heterarchical setup tends to be more chaotic than a hierarchical setup. Produc
             \end{column}
     \end{columns}
 
-   \begin{columns}[t]  
+   	\begin{columns}[t]
 			\begin{column}{.65\textwidth}
 							\columnblock[Conclusion]{
 							\justifying
@@ -132,7 +132,16 @@ Hierarchical scheduling is more efficient when there are limited transportation 
             \begin{column}{.3138\textwidth}
                \columnblock[References]{
 				\justifying 
-				asfd
+				
+\begin{thebibliography}{9}
+				\bibitem{GRIDPARADIGM}
+				Daniel Telgen et al,
+				\emph{Agile Control Architecture for Reconfigurable Manufacturing Systems}, Research Centre Technology \& 					Innovation, HU University of Applied Sciences Utrecht
+				\bibitem{KorenRMS}
+				Y. Koren,
+				\emph{General RMS Characteristics. Comparison with Dedicated and Flexible Systems}
+\end{thebibliography}
+
 	}
             \end{column}
     \end{columns}
